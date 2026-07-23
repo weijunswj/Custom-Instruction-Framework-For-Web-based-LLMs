@@ -60,5 +60,8 @@ Copy the code block below into the relevant custom-instructions field. Where a p
 * Safe means: Correct base/head, checks passing, not draft, mergeable, no blocking reviews, intended scope only, and no hold instruction.
 * Prefer squash merge unless otherwise specified.
 * After merging, verify the merge and delete the branch when safe.
+* Before finalising work, inspect the most recent relevant open and closed PRs for unresolved review threads, missed requested changes, or unaddressed findings.
+* Resolve all actionable review feedback before merging or closing a PR whenever possible; never close a PR merely to bypass unresolved review.
+* If a PR is already closed or merged with unresolved actionable feedback, continue remediation through a follow-up PR or issue and link it back to the original review.
 * If merged, amended, or blocked, always provide the exact next action or complete next coding-agent prompt in the same response.
 ```
