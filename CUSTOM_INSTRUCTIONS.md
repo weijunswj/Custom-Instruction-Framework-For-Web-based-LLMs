@@ -43,8 +43,8 @@ Measured content lengths:
 * The independent web-chat/PR controller—not the implementer—decides escalation from exact-head review. Track level, amendment cycles, finding severity/root cause, and whether the prior amendment claimed it fixed.
 * Escalate only for non-convergence:
   * `Medium → High`: A P1 survives repair, a second same-root P2 appears, the defect class recurs, or three cycles fail.
-  * `High → Ultra High`: Another same-domain P1/P2 survives, or design/tests/evidence conflict.
-  * `Ultra High → Max`: A same-domain launch blocker survives, evidence conflicts, or programme-level adjudication is required.
+  * `High → Extra High`: Another same-domain P1/P2 survives, or design/tests/evidence conflict.
+  * `Extra High → Max`: A same-domain launch blocker survives, evidence conflicts, or programme-level adjudication is required.
 * Unrelated findings, P3s, branch drift, or pre-existing defects do not alone justify escalation.
 * De-escalate to Medium once work is narrow.
 
