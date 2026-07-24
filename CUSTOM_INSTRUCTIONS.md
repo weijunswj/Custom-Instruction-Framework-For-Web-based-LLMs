@@ -1,6 +1,7 @@
 # Custom Instructions for Web-Based LLMs
 
-Canonical copy-ready instruction set split across the two available fields. **More about you is used only as overflow instruction space, not as a personal profile.**
+* Canonical copy-ready instruction set split across the two available fields.
+* **More about you is used only as overflow instruction space, not as a personal profile.**
 
 Measured content lengths:
 
