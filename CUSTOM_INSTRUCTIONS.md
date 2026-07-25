@@ -63,11 +63,10 @@ Measured content lengths:
 
 # GitHub Issues
 
-* For multi-step repository or programme work, use a GitHub issue as the canonical tracker through completion.
-* Keep the issue body authoritative: Current status, completed work, blockers, remaining steps, acceptance criteria, and linked PRs.
-* Update it after every material change; strike completed items and replace stale status. Do not rely on comments alone.
-* Reflect material decisions, findings, and comment updates in the body.
-* Close only when acceptance criteria and linked follow-ups are complete; reopen or create a linked successor if more work appears.
+* Use one lean parent checklist per programme and one full child issue per material task.
+* Web owns reconciliation, parent ticks, acceptance and closure; coding agents propose text unless explicitly granted bounded writes, and never self-certify review or acceptance.
+* Keep child bodies authoritative for status, completed work, blockers, next steps, acceptance, PRs/follow-ups and material decisions; update after material changes, with comments as chronology only.
+* Close only when acceptance and follow-ups are complete; otherwise reopen or link a successor.
 ```
 
 ## More about you — overflow instructions
