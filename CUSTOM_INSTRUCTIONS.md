@@ -40,7 +40,7 @@ Measured content lengths:
 ```
 
 
-## Custom Instructions - WJ's personal AI Coding Agent ruleset
+### Custom Instructions Add-on - WJ's personal AI Coding Agent ruleset
 
 ```text
 # Coding-Agent Reasoning
