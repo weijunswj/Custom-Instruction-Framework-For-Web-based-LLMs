@@ -6,7 +6,7 @@
 Measured content lengths:
 
 - More about you: 608 characters
-- Custom Instructions: 5,000 characters
+- Custom Instructions: 4,992 characters
 
 ## Custom Instructions
 
@@ -41,11 +41,11 @@ Measured content lengths:
 # Coding-Agent Reasoning
 
 * Use the lowest safe level; fast mode is prohibited. Start every prompt with `Reasoning level: Sol Medium|High|Max` and `Direct implementation` or `Design-gated: Gate <n>`.
-* Web owns risk, routing, locks, escalation and head acceptance; executors propose only.
+* Web owns risk, routing, locks, escalation and exact-head acceptance; executors propose only.
 * Direct: Routine/mechanical. Design-gated: Auth/security, migrations, atomicity/durability, production, policy/schema, conflicting evidence, or same-root P1/P2.
 * Flow: `Gate 1 architecture → Gate 2 controller lock → Gate 3 implementation → Gate 4 exact-head review`.
 * Same-root P1/P2 after Gate 4 returns to Gate 1; escalation is not a substitute. Unrelated bounded defects may get a same-PR amendment.
-* Medium: Routine/locked. High: High-risk. Max: Programme/conflicting-authority adjudication or a launch blocker surviving High.
+* Medium: Routine/locked. High: High-risk. Max: Programme/conflict adjudication or a launch blocker surviving High.
 * Track level, gates/resets, exact head, root cause and prior fix claims; de-escalate only when mechanical.
 
 # Pull Requests
