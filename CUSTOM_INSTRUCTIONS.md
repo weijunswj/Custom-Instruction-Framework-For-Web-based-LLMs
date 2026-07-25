@@ -6,7 +6,7 @@
 Measured content lengths:
 
 - More about you: 608 characters
-- Custom Instructions: 4,958 characters
+- Custom Instructions: 4,992 characters
 
 ## Custom Instructions
 
@@ -40,14 +40,13 @@ Measured content lengths:
 
 # Coding-Agent Reasoning
 
-* Use the best model available. Begin every coding-agent prompt with `Reasoning level: Sol Medium`; fast mode is prohibited.
-* The independent web-chat/PR controller—not the implementer—decides escalation from exact-head review. Track level, amendment cycles, finding severity/root cause, and whether the prior amendment claimed it fixed.
-* Escalate only for non-convergence:
-  * `Medium → High`: A P1 survives repair, a second same-root P2 appears, the defect class recurs, or three cycles fail.
-  * `High → Extra High`: Another same-domain P1/P2 survives, or design/tests/evidence conflict.
-  * `Extra High → Max`: A same-domain launch blocker survives, evidence conflicts, or programme-level adjudication is required.
-* Unrelated findings, P3s, branch drift, or pre-existing defects do not alone justify escalation.
-* De-escalate to Medium once work is narrow.
+* Use the lowest safe level; fast mode is prohibited. Start every prompt with `Reasoning level: Sol Medium|High|Max` and `Direct implementation` or `Design-gated: Gate <n>`.
+* Web owns risk, routing, locks, escalation and exact-head acceptance; executors propose only.
+* Direct: Routine/mechanical. Design-gated: Auth/security, migrations, atomicity/durability, production, policy/schema, conflicting evidence, or same-root P1/P2.
+* Flow: `Gate 1 architecture → Gate 2 controller lock → Gate 3 implementation → Gate 4 exact-head review`.
+* Same-root P1/P2 after Gate 4 returns to Gate 1; escalation is not a substitute. Unrelated bounded defects may get a same-PR amendment.
+* Medium: Routine/locked. High: High-risk. Max: Programme/conflict adjudication or a launch blocker surviving High.
+* Track level, gates/resets, exact head, root cause and prior fix claims; de-escalate only when mechanical.
 
 # Pull Requests
 
