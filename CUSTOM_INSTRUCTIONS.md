@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,998 characters
-- More about you (both copy blocks): 1,498 characters
+- More about you (both copy blocks): 1,421 characters
 
 ## Custom Instructions
 
@@ -99,10 +99,10 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Reports state platform-selected base model, identity source, native reasoning (`not-exposed` if hidden) and run ID for private verification; never infer/normalise or publish reasoning.
+* Reports state exact platform-selected base model, identity source and run ID; never infer, rename or normalise model identity.
 * Verify/grade substantive results, then post one public-safe `<!-- ledger-intake:v1 -->` comment to the intake tracker; never direct append, self-grade or auto-merge.
-* Intake records: repo, issue/PR, exact revision, provider, canonical base model, protocol, controller/evaluation run IDs, verdict, score and evidence; no Sol/native reasoning fields.
-* Marked comments are pending. Recorded means a reviewed PR was manually merged and canonical `main` matches comment ID/hash, run ID, model, revision, verdict and score once.
+* Intake records: repo, issue/PR, exact revision, provider, canonical base model, protocol cohort, controller/evaluation run IDs, verdict, score and evidence.
+* Marked comments are pending. Recorded means a reviewed PR was manually merged and canonical `main` matches comment ID/hash, run ID, model, revision, verdict and score exactly once.
 * Automation opens/updates the PR, rebuilds views, syncs tracker and deletes only verified comments. Admin/intake/reconciliation are non-evaluable/non-recursive.
 * Before next substantive prompt, verify recording and state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; pending/quarantined means stop.
 ```
