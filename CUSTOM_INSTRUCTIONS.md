@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,998 characters
-- More about you (both copy blocks): 1,397 characters
+- More about you (both copy blocks): 1,498 characters
 
 ## Custom Instructions
 
@@ -99,10 +99,10 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Executor prompts/reports state exact platform-selected base model, identity source, native reasoning (`not-exposed` if hidden) and run ID; never infer/normalise.
-* Verify/grade, then post one public-safe `<!-- ledger-intake:v1 -->` comment to ledger intake tracker; never direct append or self-grade.
-* Intake records: repo, issue/PR, exact revision, provider, canonical base model, run IDs, verdict, score and evidence; exclude Sol/native reasoning. Identity conflict blocks intake/next prompt.
-* Marked comments are pending. Recorded means a reviewed intake PR merged, and canonical `main` matched comment ID/hash, model, run ID and revision once.
-* Automation rebuilds views, deletes verified comments and syncs tracker. Admin/intake/reconciliation are non-evaluable/non-recursive.
-* Before next prompt, verify recording and state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; pending/quarantined means stop.
+* Reports state platform-selected base model, identity source, native reasoning (`not-exposed` if hidden) and run ID for private verification; never infer/normalise or publish reasoning.
+* Verify/grade substantive results, then post one public-safe `<!-- ledger-intake:v1 -->` comment to the intake tracker; never direct append, self-grade or auto-merge.
+* Intake records: repo, issue/PR, exact revision, provider, canonical base model, protocol, controller/evaluation run IDs, verdict, score and evidence; no Sol/native reasoning fields.
+* Marked comments are pending. Recorded means a reviewed PR was manually merged and canonical `main` matches comment ID/hash, run ID, model, revision, verdict and score once.
+* Automation opens/updates the PR, rebuilds views, syncs tracker and deletes only verified comments. Admin/intake/reconciliation are non-evaluable/non-recursive.
+* Before next substantive prompt, verify recording and state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; pending/quarantined means stop.
 ```
