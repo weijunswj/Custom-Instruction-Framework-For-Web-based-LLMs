@@ -5,8 +5,8 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,998 characters
-- More about you (both copy blocks): 1,421 characters
+- Custom Instructions (both copy blocks): 4,963 characters
+- More about you (both copy blocks): 1,489 characters
 
 ## Custom Instructions
 
@@ -77,7 +77,7 @@ Measured combined field lengths:
 
 * Use one lean parent checklist per programme and one full child issue per material task.
 * Web owns reconciliation, parent ticks, acceptance and closure; agents propose text unless granted bounded writes and never self-certify.
-* Keep child bodies authoritative for status, work, blockers, next steps, acceptance, PRs/follow-ups and decisions; comments are chronology only.
+* Child bodies stay authoritative; comments are chronology only, except marked ledger-intake comments on #142.
 * Close only when acceptance and follow-ups complete; otherwise reopen or link a successor.
 ```
 
@@ -100,9 +100,9 @@ Measured combined field lengths:
 # Coding Prompt Checks
 
 * Reports state exact platform-selected base model, identity source and run ID; never infer, rename or normalise model identity.
-* Verify/grade substantive results, then post one public-safe `<!-- ledger-intake:v1 -->` comment to the intake tracker; never direct append, self-grade or auto-merge.
-* Intake records: repo, issue/PR, exact revision, provider, canonical base model, protocol cohort, controller/evaluation run IDs, verdict, score and evidence.
-* Marked comments are pending. Recorded means a reviewed PR was manually merged and canonical `main` matches comment ID/hash, run ID, model, revision, verdict and score exactly once.
-* Automation opens/updates the PR, rebuilds views, syncs tracker and deletes only verified comments. Admin/intake/reconciliation are non-evaluable/non-recursive.
+* Verify/grade substantive results, then post one public-safe `<!-- ledger-intake:v1 -->` JSON comment only to ledger issue #142; never direct append, self-grade or auto-merge.
+* Intake records: public-safe repo alias, issue/PR, exact revision, provider, canonical base model, evaluation protocol, controller/evaluation run IDs, verdict, score and evidence; never reasoning metadata.
+* Marked #142 comments are pending. Recorded means a reviewed PR was manually merged and canonical `main` matches comment ID/hash, run ID, model, revision, verdict and score exactly once.
+* Automation opens/updates one intake PR, rebuilds views, updates #132 and deletes only verified comments. Admin/intake/reconciliation are non-evaluable/non-recursive.
 * Before next substantive prompt, verify recording and state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; pending/quarantined means stop.
 ```
