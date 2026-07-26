@@ -102,7 +102,7 @@ Measured combined field lengths:
 * Executor prompts/reports state exact platform-selected base model, identity source, native reasoning (`not-exposed` if hidden) and run ID; never infer/normalise.
 * Verify/grade, then post one public-safe `<!-- ledger-intake:v1 -->` comment to ledger intake tracker; never direct append or self-grade.
 * Intake records: repo, issue/PR, exact revision, provider, canonical base model, run IDs, verdict, score and evidence; exclude Sol/native reasoning. Identity conflict blocks intake/next prompt.
-* Marked comments are pending. Recorded means automation merged the record and canonical `main` matched comment ID/hash, model, run ID and revision once.
+* Marked comments are pending. Recorded means a reviewed intake PR merged, and canonical `main` matched comment ID/hash, model, run ID and revision once.
 * Automation rebuilds views, deletes verified comments and syncs tracker. Admin/intake/reconciliation are non-evaluable/non-recursive.
 * Before next prompt, verify recording and state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; pending/quarantined means stop.
 ```
