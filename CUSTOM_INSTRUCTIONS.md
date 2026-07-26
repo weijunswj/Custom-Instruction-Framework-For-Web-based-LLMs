@@ -89,7 +89,7 @@ Measured content lengths:
 * Use `( example )`, capitalise after colons and use emojis naturally.
 ```
 
-### More About You Add-on — WJ's personal AI Coding Agent ruleset
+### More About You Add-on - *DO NOT ADD THIS, THIS IS FOR UPDATING [LEDGER REPO](https://github.com/weijunswj/ai-executor-evaluation-ledger)*
 
 ```text
 # Coding Prompt Checks
