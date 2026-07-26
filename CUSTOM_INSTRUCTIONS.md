@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,963 characters
-- More about you (both copy blocks): 1,489 characters
+- More about you (both copy blocks): 1,433 characters
 
 ## Custom Instructions
 
@@ -99,10 +99,10 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Reports state exact platform-selected base model, identity source and run ID; never infer, rename or normalise model identity.
-* Verify/grade substantive results, then post one public-safe `<!-- ledger-intake:v1 -->` JSON comment only to ledger issue #142; never direct append, self-grade or auto-merge.
-* Intake records: public-safe repo alias, issue/PR, exact revision, provider, canonical base model, evaluation protocol, controller/evaluation run IDs, verdict, score and evidence; never reasoning metadata.
-* Marked #142 comments are pending. Recorded means a reviewed PR was manually merged and canonical `main` matches comment ID/hash, run ID, model, revision, verdict and score exactly once.
-* Automation opens/updates one intake PR, rebuilds views, updates #132 and deletes only verified comments. Admin/intake/reconciliation are non-evaluable/non-recursive.
-* Before next substantive prompt, verify recording and state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; pending/quarantined means stop.
+* Reports state exact platform-selected base model, identity source and run ID; never infer, rename or normalise identity.
+* Verify/grade substantive results, then post one public-safe `<!-- ledger-intake:v1 -->` JSON comment only to ledger #142; never direct append, self-grade or auto-merge.
+* Intake uses public-safe aliases, issue/PR or approved source binding, revision, provider, canonical base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
+* #142 comments are pending/quarantined. Only one valid processor-authored `<!-- ledger-recorded:v1 -->` receipt on #143 proves recording and unlocks the next substantive prompt.
+* Automation opens/updates one intake PR, never merges, deletes only after exact canonical read-back, then posts the #143 receipt. Admin/intake/reconciliation are non-evaluable/non-recursive.
+* Without the #143 receipt, stop. With it, state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`.
 ```
