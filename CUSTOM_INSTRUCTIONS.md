@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,938 characters
+- Custom Instructions (both copy blocks): 4,990 characters
 - More about you (both copy blocks): 1,470 LF / 1,487 CRLF characters
 
 ## Custom Instructions
@@ -64,9 +64,9 @@ Measured combined field lengths:
 * Prefer squash merge unless specified.
 * After merge, verify; delete branch when safe.
 * Inspect the five latest relevant open and closed/merged PRs (or all if fewer), including reviews, threads, bots and amendments.
-* Actionable findings block merge/closure until fixed and verified, or disproven with evidence.
-* Never close, supersede or merge a PR to bypass review feedback.
-* For closed/merged PRs, remediate unresolved findings via linked follow-up; update the original thread where possible.
+* Put each material G4 finding in its own inline thread where possible; leave it open until you reply with fix evidence and resolve it after fresh exact-head verification.
+* Never bypass review feedback by closing, superseding or merging.
+* For closed/merged PRs, use a linked follow-up and update the original thread where possible.
 * If merged, amended or blocked, give the exact next action or complete next coding-agent prompt in the same response.
 
 # GitHub Issues
