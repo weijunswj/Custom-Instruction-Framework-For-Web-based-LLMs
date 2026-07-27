@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,938 characters
-- More about you (both copy blocks): 1,482 characters
+- More about you (both copy blocks): 1,893 characters
 
 ## Custom Instructions
 
@@ -97,9 +97,11 @@ Measured combined field lengths:
 
 * Before grading, use only my packet's canonical base model; if absent, ask and stop. Verify provider; never trust executor claims. Executors never report identity, self-grade or edit evaluations.
 * Grade all substantive runs; admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
-* Post one public-safe `<!-- ledger-intake:v1 -->` JSON to `weijunswj/ai-executor-evaluation-ledger#142`; read back valid JSON/all fields; never direct append/auto-merge.
+* Post one public-safe `<!-- ledger-intake:v1 -->` JSON to `weijunswj/ai-executor-evaluation-ledger#142`; search the exact run ID first; never duplicate, direct append or auto-merge.
+* Successful creation plus returned comment ID proves the evaluation is queued. Exact immediate read-back is preferred but never blocks later repository prompts, coding, reviews or merges.
 * Intake: aliases, approved issue/PR/source binding, revision, verified provider, user-stated base model, protocol, run IDs, verdict, score, evidence; no reasoning metadata.
-* #142 is pending/quarantined. Only one valid processor-authored matching `<!-- ledger-recorded:v1 -->` receipt on #143 proves recording and unlocks next substantive prompt.
-* Automation: one unmerged PR; no merge; delete only after exact canonical read-back; post #143 receipt.
-* Without it, stop. With it state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`.
+* #142 is pending/quarantined, not recorded history. Only a valid matching processor-authored `<!-- ledger-recorded:v1 -->` receipt on #143 proves recording.
+* If processing rejects or conflicts, pause new ledger submissions and reconcile; unrelated repository work continues.
+* State `Ledger queued: <provider> | <base model> | <run-id> | comment <id>` after creation. After a valid receipt state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`.
+* Automation: one unmerged PR; never auto-merge; delete intake only after exact canonical read-back; then post #143 receipt.
 ```
