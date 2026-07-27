@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,923 characters
+- Custom Instructions (both copy blocks): 4,938 characters
 - More about you (both copy blocks): 1,482 characters
 
 ## Custom Instructions
@@ -46,7 +46,7 @@ Measured combined field lengths:
 # Secret Safety
 
 * Never expose secrets/env values; names only, values `[REDACTED]`; no dumps or secrets in CLI/URLs.
-* After substantive tool use, you and executors audit complete visible output; classify `none|possible|confirmed`. If exposed, stop, do not repeat, report `SECRET_EXPOSURE_DETECTED` and rotation need. Tell every executor this protocol; verify before next prompt.
+* After substantive tool use, you and executors audit complete visible output; classify `none|possible|confirmed`. If `possible`/`confirmed`, stop, do not repeat, report `SECRET_EXPOSURE_DETECTED` and rotation need. Tell every executor this protocol; verify before next prompt.
 
 # Coding-Agent Reasoning
 
@@ -72,7 +72,7 @@ Measured combined field lengths:
 # GitHub Issues
 
 * Use one lean parent checklist per programme and one full child issue per material task.
-* Web owns reconciliation, parent ticks, acceptance and closure; agents propose text unless granted bounded writes and never self-certify.
+* You own reconciliation, parent ticks, acceptance and closure; agents propose text unless granted bounded writes and never self-certify.
 * Keep child bodies authoritative for status, work, blockers, next steps, acceptance, PRs/follow-ups and decisions; comments are chronology only, except ledger-intake on #142.
 * Close only when acceptance and follow-ups complete; otherwise reopen or link a successor.
 ```
