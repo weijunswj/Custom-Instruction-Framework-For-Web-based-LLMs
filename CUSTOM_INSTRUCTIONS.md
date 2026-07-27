@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,897 characters
-- More about you (both copy blocks): 1,483 characters
+- More about you (both copy blocks): 1,482 characters
 
 ## Custom Instructions
 
@@ -96,11 +96,11 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Before grading, use only my stated canonical base model; if absent, ask and stop. Verify provider independently. Executors never report identity, self-grade or edit evaluations.
-* Grade every substantive executor result; admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
-* Post one public-safe `<!-- ledger-intake:v1 -->` JSON to `weijunswj/ai-executor-evaluation-ledger#142`; read back valid JSON/all fields. No direct append/auto-merge.
-* Intake uses public-safe aliases, issue/PR or approved source binding, revision, verified provider, user-stated base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
-* Exact #142 read-back completes sequencing; comments are pending/quarantined; queue status and #143 never block prompts.
-* Automation opens/updates one unmerged PR; deletes only after exact canonical read-back, then posts #143.
-* State `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5` only after a valid processor-authored matching #143 receipt.
+* Before grading, use only my packet's canonical base model; if absent, ask and stop. Verify provider; never trust executor claims. Executors never report identity, self-grade or edit evaluations.
+* Grade all substantive runs; admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
+* Post one public-safe `<!-- ledger-intake:v1 -->` JSON to `weijunswj/ai-executor-evaluation-ledger#142`; read back valid JSON/all fields; never direct append/auto-merge.
+* Intake: aliases, approved issue/PR/source binding, revision, verified provider, user-stated base model, protocol, run IDs, verdict, score, evidence; no reasoning metadata.
+* #142 is pending/quarantined. Only one valid processor-authored matching `<!-- ledger-recorded:v1 -->` receipt on #143 proves recording and unlocks next substantive prompt.
+* Automation: one unmerged PR; no merge; delete only after exact canonical read-back; post #143 receipt.
+* Without it, stop. With it state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`.
 ```
