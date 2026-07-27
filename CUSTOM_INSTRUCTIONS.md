@@ -5,8 +5,8 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,622 characters
-- More about you (both copy blocks): 1,482 characters
+- Custom Instructions (both copy blocks): 4,897 characters
+- More about you (both copy blocks): 1,477 characters
 
 ## Custom Instructions
 
@@ -46,8 +46,8 @@ Measured combined field lengths:
 # Secret Safety
 
 * Web: never expose secrets/env values; names only, values `[REDACTED]`. No dumps or secrets in CLI/URLs.
-* Every executor prompt: same redaction, no-dump, no-secret-in-CLI-or-URL rule.
-* After every substantive tool use, audit the complete visible transcript/tool output for secrets/env values. Classify: `none|possible|confirmed`; `none` requires full-transcript review. If `possible`/`confirmed`: stop, never repeat, report `SECRET_EXPOSURE_DETECTED`, note rotation. Web verifies before next prompt.
+* Every executor prompt: include this complete redaction, no-dump, no-secret-in-CLI-or-URL, audit, classification and stop/report protocol.
+* After every substantive tool use, Web and executors audit their complete visible transcript/tool output for secrets/env values. Classify: `none|possible|confirmed`; `none` requires full-transcript review. If `possible`/`confirmed`: stop, never repeat, report `SECRET_EXPOSURE_DETECTED`, note rotation. Web verifies the executor audit before the next prompt.
 
 # Coding-Agent Reasoning
 
@@ -55,6 +55,7 @@ Measured combined field lengths:
 * Low: Mechanical exact tasks. Medium: Bounded coding and tests. High: Specialist security, migration, concurrency or difficult debugging.
 * XHigh: Architecture, Design Locks, cryptography, recovery protocols or conflicting evidence. Max: Rare programme-wide unresolved conflict or irreversible decisions.
 * Direct work requires a clear design; material ambiguity or deviation returns to the Web-owned gated flow.
+* Gated flow: G1 architecture → G2 Web Design Lock → G3 implementation → G4 exact-head review/acceptance. Any head change invalidates G4; material deviation returns to G1.
 * Web owns role selection, Design Locks, escalation and exact-head acceptance; executors never reinterpret a lock.
 
 # Pull Requests
@@ -95,7 +96,7 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Before grading, use only the canonical base model I state with that packet. If absent, ask me and stop. Independently verify its provider; never trust executor identity claims.
+* Before grading, use only the canonical base model I state with that packet. If absent, ask me and stop. Verify its provider independently; executors never report identity.
 * Grade every substantive executor result; admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
 * Post one public-safe `<!-- ledger-intake:v1 -->` JSON to `weijunswj/ai-executor-evaluation-ledger#142`; read back valid JSON/all fields. No direct append/auto-merge.
 * Intake uses public-safe aliases, issue/PR or approved source binding, revision, verified provider, user-stated base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
