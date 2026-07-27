@@ -95,7 +95,7 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Before grading, use my stated provider/base model for that run; if absent, ask and stop. Reject executor identity or self-grades; executors never alter intake, records, verdict, score or evidence.
+* Before grading, use only the provider/base model I state with that packet. If absent, ask me and stop. Never infer from prior context or trust executor claims.
 * Grade evaluable work; post one public-safe `<!-- ledger-intake:v1 -->` JSON comment to `weijunswj/ai-executor-evaluation-ledger#142`; exact-read it. No direct append/auto-merge.
 * Intake uses public-safe aliases, issue/PR or approved source binding, revision, user-confirmed provider/base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
 * Exact #142 read-back completes sequencing; #142 comments are pending/quarantined; queue status and #143 never block next prompt.
