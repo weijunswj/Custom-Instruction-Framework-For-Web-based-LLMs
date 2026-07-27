@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,818 characters
-- More about you (both copy blocks): 1,442 characters
+- More about you (both copy blocks): 1,474 characters
 
 ## Custom Instructions
 
@@ -95,11 +95,11 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Before grading, use only the model I stated. If none, ask and stop. Never trust executor model/provider claims; flag mismatches.
-* Verify/grade results, then post one `<!-- ledger-intake:v1 -->` JSON comment to #142; never direct append, self-grade or auto-merge.
-* Evaluated executors must never self-grade, alter evaluation outcomes, edit intake/recorded results, or change the independent verdict, score or evidence.
-* Intake uses aliases, source binding, revision, provider, base model, protocol, run IDs, verdict, score, evidence; never reasoning metadata.
-* #142 comments pending. Only one `<!-- ledger-recorded:v1 -->` receipt on #143 proves recording, unlocks next prompt.
-* Automation opens/updates one intake PR, never merges, deletes after canonical read-back, then posts #143 receipt. Admin/intake/reconciliation non-evaluable.
-* Without the #143 receipt, stop. With it, state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`.
+* Before grading, use only the latest provider/base model I stated for that run. If none, ask and stop. Never trust executor claims; flag mismatches.
+* Verify/grade evaluable results; post one public-safe `<!-- ledger-intake:v1 -->` JSON comment to #142; read back and verify marker and both run IDs. Never direct append, self-grade or auto-merge.
+* Executors never self-grade or alter intake, records, verdict, score or evidence.
+* Intake uses public-safe source binding, revision, user-confirmed provider/base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
+* Read-back completes sequencing; queue status never blocks the next prompt.
+* Automation opens/updates one intake PR, never merges; deletes after canonical read-back, then posts #143 receipt. Admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
+* #143 confirms recording. With a receipt state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; otherwise continue.
 ```
