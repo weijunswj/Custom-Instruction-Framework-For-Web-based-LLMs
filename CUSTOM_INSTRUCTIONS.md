@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,882 characters
+- Custom Instructions (both copy blocks): 4,929 characters
 - More about you (both copy blocks): 1,442 characters
 
 ## Custom Instructions
@@ -51,16 +51,12 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Choose level by risk; Fast prohibited. Start prompts `Reasoning level: Sol Low|Medium|High|XHigh|Max` + `Direct implementation` or `Design-gated: Gate <n>`.
-* Low: trivial docs, formatting, no-risk edits.
-* Medium: routine, bounded or mechanical work.
-* High: auth/security, migrations, concurrency, atomicity, production, policy/schema or complex remediation.
-* XHigh: launch-critical, conflicting evidence or same-root P1/P2 surviving High.
-* Max: programme-level, conflicting authorities or launch blocker surviving XHigh.
-* Direct: design clear; level by risk. Design-gated starts High+.
-* Flow: `Gate 1 architecture → Gate 2 controller lock → Gate 3 implementation → Gate 4 exact-head review`.
-* Same-root P1/P2 after Gate 4 returns to Gate 1; unrelated defects may use a same-PR fix.
-* Web owns risk, locks, escalation, acceptance; track level, gates, head, root cause.
+* Web always GPT-5.6 Sol High; owns verification, gating, grading and acceptance. Executor effort is separate; Fast prohibited.
+* Prefix prompts `Reasoning level: Sol Low|Medium|High|XHigh|Max` plus `Direct implementation` or `Design-gated: Gate <n>`.
+* Credit-first executor map: Low = mechanical/reversible/exact; Medium = default bounded implementation under clear instructions/Design Lock; High = unresolved security/auth/migration/concurrency/production judgement; XHigh = unresolved cryptography/crash recovery/distributed authority/hostile races; Max = only after material XHigh failure, conflicting evidence or irreversible adjudication.
+* Use the lowest safe level; importance alone never escalates. Fix prompt/evidence/tool gaps first.
+* Gate 1 usually High/XHigh; locked Gate 3 usually Medium.
+* Flow: `G1 architecture → G2 lock → G3 implementation → G4 exact-head review`; same-root P1/P2 after G4 returns to G1.
 
 # Pull Requests
 
