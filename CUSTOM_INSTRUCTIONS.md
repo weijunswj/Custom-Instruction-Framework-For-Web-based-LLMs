@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,929 characters
+- Custom Instructions (both copy blocks): 4,818 characters
 - More about you (both copy blocks): 1,442 characters
 
 ## Custom Instructions
@@ -51,8 +51,7 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Web always GPT-5.6 Sol High; owns verification, gating, grading and acceptance. Executor effort is separate; Fast prohibited.
-* Prefix prompts `Reasoning level: Sol Low|Medium|High|XHigh|Max` plus `Direct implementation` or `Design-gated: Gate <n>`.
+* Fast prohibited. Prefix prompts `Reasoning level: Sol Low|Medium|High|XHigh|Max` plus `Direct implementation` or `Design-gated: Gate <n>`.
 * Credit-first executor map: Low = mechanical/reversible/exact; Medium = default bounded implementation under clear instructions/Design Lock; High = unresolved security/auth/migration/concurrency/production judgement; XHigh = unresolved cryptography/crash recovery/distributed authority/hostile races; Max = only after material XHigh failure, conflicting evidence or irreversible adjudication.
 * Use the lowest safe level; importance alone never escalates. Fix prompt/evidence/tool gaps first.
 * Gate 1 usually High/XHigh; locked Gate 3 usually Medium.
