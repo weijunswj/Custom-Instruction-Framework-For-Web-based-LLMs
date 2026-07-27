@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,938 characters
-- More about you (both copy blocks): 1,497 characters
+- More about you (both copy blocks): 1,470 LF / 1,487 CRLF characters
 
 ## Custom Instructions
 
@@ -96,11 +96,11 @@ Measured combined field lengths:
 # Coding Prompt Checks
 
 * Grade substantive runs; admin/architecture/intake/receipt/reconciliation are non-evaluable/non-recursive.
-* Use only my packet's provider/base; if absent, ask and stop. Verify provider; never trust executor claims. Executors never self-grade/edit evaluations.
-* Search the run ID, then post one public-safe `<!-- ledger-intake:v1 -->` JSON to #142; no duplicates, direct append or auto-merge.
-* Include alias/source binding, revision, provider/base, protocol, run IDs, verdict, score and evidence; no reasoning metadata.
-* Comment creation + ID means queued; read-back preferred and never blocks repo work. #142 stays pending/quarantined.
-* One matching processor `<!-- ledger-recorded:v1 -->` receipt on #143 proves recorded. Rejection/conflict pauses new ledger submissions only.
+* Use only my packet's provider/base; if absent, ask/stop. Verify provider; distrust executor claims. Executors never self-grade/edit evaluations.
+* Search the run ID, then post one public-safe `<!-- ledger-intake:v1 -->` JSON to #142; never duplicate, direct-append or auto-merge.
+* Include alias/source binding, revision, provider/base, protocol, run IDs, verdict, score, evidence; no reasoning metadata.
+* Comment creation + ID means queued; read-back preferred; repo work continues. #142 stays pending/quarantined.
+* A matching processor `<!-- ledger-recorded:v1 -->` receipt on #143 proves recorded. Rejection/conflict pauses ledger submissions only.
 * Before receipt: `Ledger queued: <provider> | <base model> | <run-id> | comment <id>`; after: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`.
-* Automation: one unmerged PR; delete intake after canonical read-back, then post receipt.
+* Automation: one unmerged PR; delete after canonical read-back, then post receipt.
 ```
