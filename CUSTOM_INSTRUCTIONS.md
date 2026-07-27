@@ -5,8 +5,8 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,818 characters
-- More about you (both copy blocks): 1,474 characters
+- Custom Instructions (both copy blocks): 4,861 characters
+- More about you (both copy blocks): 1,477 characters
 
 ## Custom Instructions
 
@@ -52,10 +52,10 @@ Measured combined field lengths:
 # Coding-Agent Reasoning
 
 * Fast prohibited. Prefix prompts `Reasoning level: Sol Low|Medium|High|XHigh|Max` plus `Direct implementation` or `Design-gated: Gate <n>`.
-* Credit-first executor map: Low = mechanical/reversible/exact; Medium = default bounded implementation under clear instructions/Design Lock; High = unresolved security/auth/migration/concurrency/production judgement; XHigh = unresolved cryptography/crash recovery/distributed authority/hostile races; Max = only after material XHigh failure, conflicting evidence or irreversible adjudication.
+* Credit-first executor map: Low = mechanical/reversible/exact; Medium = default bounded implementation under clear instructions/Design Lock; High = unresolved security/auth/migration/concurrency/durability/production judgement; XHigh = unresolved cryptography/crash recovery/distributed authority/hostile races; Max = only after material XHigh failure, conflicting evidence or irreversible adjudication.
 * Use the lowest safe level; importance alone never escalates. Fix prompt/evidence/tool gaps first.
 * Gate 1 usually High/XHigh; locked Gate 3 usually Medium.
-* Flow: `G1 architecture → G2 lock → G3 implementation → G4 exact-head review`; same-root P1/P2 after G4 returns to G1.
+* Flow: `G1 architecture → G2 lock → G3 implementation → G4 exact-head review/acceptance`; any head change invalidates G4; same-root P1/P2 after G4 returns to G1.
 
 # Pull Requests
 
@@ -66,7 +66,7 @@ Measured combined field lengths:
 * Inspect five latest relevant PRs (open+closed/merged or all), reviews, threads, bots, amendments.
 * Actionable findings block merge/closure until fixed and verified, or disproven with evidence.
 * Never close/supersede/merge a PR to bypass review.
-* For closed/merged PRs, remediate findings via follow-up; update original thread.
+* For closed/merged PRs, remediate unresolved findings via linked follow-up; update original thread.
 * If merged/amended/blocked, state next action or next coding-agent prompt.
 
 # GitHub Issues
@@ -95,11 +95,10 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Before grading, use only the latest provider/base model I stated for that run. If none, ask and stop. Never trust executor claims; flag mismatches.
-* Verify/grade evaluable results; post one public-safe `<!-- ledger-intake:v1 -->` JSON comment to #142; read back and verify marker and both run IDs. Never direct append, self-grade or auto-merge.
-* Executors never self-grade or alter intake, records, verdict, score or evidence.
-* Intake uses public-safe source binding, revision, user-confirmed provider/base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
-* Read-back completes sequencing; queue status never blocks the next prompt.
-* Automation opens/updates one intake PR, never merges; deletes after canonical read-back, then posts #143 receipt. Admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
-* #143 confirms recording. With a receipt state: `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5`; otherwise continue.
+* Before grading, use my stated provider/base model for that run; if absent, ask and stop. Reject executor identity or self-grades; executors never alter intake, records, verdict, score or evidence.
+* Grade evaluable work; post one public-safe `<!-- ledger-intake:v1 -->` JSON comment to `weijunswj/ai-executor-evaluation-ledger#142`; exact-read it. No direct append/auto-merge.
+* Intake uses public-safe aliases, issue/PR or approved source binding, revision, user-confirmed provider/base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
+* Exact #142 read-back completes sequencing; #142 comments are pending/quarantined; queue status and #143 never block next prompt.
+* Automation opens/updates one unmerged PR; deletes only after exact canonical read-back, then posts #143. Admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
+* State `Ledger appended: <provider> | <base model> | <run-id> | <verdict> | <score>/5` only after a valid processor-authored #143 receipt for that run.
 ```
