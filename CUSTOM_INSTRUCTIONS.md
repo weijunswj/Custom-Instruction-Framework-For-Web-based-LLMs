@@ -51,12 +51,12 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Fast prohibited. Assign level by role; escalate only for unresolved risk.
-* Low: Mechanical exact tasks. Medium: Bounded coding and tests. High: Specialist security, migration, concurrency or difficult debugging.
-* XHigh: Architecture, Design Locks, cryptography, recovery protocols or conflicting evidence. Max: Rare programme-wide unresolved conflict or irreversible decisions.
-* Direct work requires a clear design; material ambiguity or deviation returns to the Web-owned gated flow.
-* Gated flow: G1 architecture → G2 Web Design Lock → G3 implementation → G4 exact-head review/acceptance. Any head change invalidates G4; material deviation returns to G1.
-* Web owns role selection, Design Locks, escalation and exact-head acceptance; executors never reinterpret a lock.
+* Fast prohibited; Medium default.
+* You own roles, architecture, Design Locks, escalation and exact-head acceptance; executors never self-escalate or reinterpret locks.
+* High: One named unresolved security, migration, concurrency or difficult-debugging problem. XHigh: No-mutation architecture/locks for cryptography, recovery, irreversible decisions or conflicting evidence. Max: Rare programme-wide conflict.
+* High/XHigh are narrow and non-orchestrating; never relitigate settled decisions.
+* Clear design required. Ambiguity/deviation returns to you. G1 architecture → G2 your lock → G3 implementation → G4 exact-head review; head changes invalidate G4.
+* Subagents, including nesting, need explicit authority in that prompt turn; no carry-over. Bound scope and nesting. One bounded read-only review checker is exempt.
 
 # Pull Requests
 
