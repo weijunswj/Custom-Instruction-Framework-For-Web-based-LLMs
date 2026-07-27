@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,897 characters
-- More about you (both copy blocks): 1,477 characters
+- More about you (both copy blocks): 1,483 characters
 
 ## Custom Instructions
 
@@ -96,7 +96,7 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 
-* Before grading, use only the canonical base model I state with that packet. If absent, ask me and stop. Verify its provider independently; executors never report identity.
+* Before grading, use only my stated canonical base model; if absent, ask and stop. Verify provider independently. Executors never report identity, self-grade or edit evaluations.
 * Grade every substantive executor result; admin/intake/receipt/reconciliation are non-evaluable/non-recursive.
 * Post one public-safe `<!-- ledger-intake:v1 -->` JSON to `weijunswj/ai-executor-evaluation-ledger#142`; read back valid JSON/all fields. No direct append/auto-merge.
 * Intake uses public-safe aliases, issue/PR or approved source binding, revision, verified provider, user-stated base model, protocol, run IDs, verdict, score and evidence; never reasoning metadata.
