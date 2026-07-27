@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,858 characters
+- Custom Instructions (both copy blocks): 4,923 characters
 - More about you (both copy blocks): 1,482 characters
 
 ## Custom Instructions
@@ -45,8 +45,8 @@ Measured combined field lengths:
 ```text
 # Secret Safety
 
-* Never expose secrets/env values; names only, values `[REDACTED]`; no dumps or secrets in CLI/URLs. Tell every executor the same.
-* Require sanitised audit + `none|possible|confirmed`; if exposed, stop, do not repeat, report `SECRET_EXPOSURE_DETECTED` and rotation need. Verify before next prompt.
+* Never expose secrets/env values; names only, values `[REDACTED]`; no dumps or secrets in CLI/URLs.
+* After substantive tool use, you and executors audit complete visible output; classify `none|possible|confirmed`. If exposed, stop, do not repeat, report `SECRET_EXPOSURE_DETECTED` and rotation need. Tell every executor this protocol; verify before next prompt.
 
 # Coding-Agent Reasoning
 
