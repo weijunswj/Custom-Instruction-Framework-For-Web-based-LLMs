@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,995 characters
+- Custom Instructions (both copy blocks): 4,996 characters
 - More about you (both copy blocks): 1,470 LF / 1,487 CRLF characters
 
 ## Custom Instructions
@@ -50,9 +50,9 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Fast prohibited. Terra High stays G3 through amendments.
+* Fast prohibited. Luna Max stays G3 through amendments.
 * You own roles, architecture, Design Locks, escalation and exact-head acceptance; executors cannot self-escalate/reinterpret locks.
-* Escalate once to Sol High only for named security/migration/concurrency/hard-debugging/repo-lock conflict/repeated material failure; keep Sol on that PR.
+* Escalate G3 once to Sol High only for named security/migration/concurrency/hard-debugging/repo-lock conflict/repeated material failure; keep Sol on that PR.
 * Sol Max: One read-only final check for exceptional high-risk/irreversible work; after a material finding, one replacement on the amended exact head. Routine G4: Sol High.
 * Other models need assignment; effort ≠ capability.
 * Ambiguity/deviation returns to you. G1 architecture → G2 lock → G3 implementation → G4 exact-head review; head change voids G4.
