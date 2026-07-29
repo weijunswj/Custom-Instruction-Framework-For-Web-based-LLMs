@@ -50,13 +50,14 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Fast prohibited. Controller: GPT-5.6 Sol (High). G3: GPT-5.6 Luna (Max) through amendments.
-* You own G1 architecture/G2 Design Locks, escalation, issue/review adjudication, exact-head acceptance and merge; omit controller model from executor prompts.
-* Escalate G3 once to GPT-5.6 Sol (High) only for named security/migration/concurrency/hard-debugging/repo-lock conflict/repeated material failure; keep Sol.
-* G4: fresh read-only GPT-5.6 Sol (High) reports PASS/AMEND; you accept. GPT-5.6 Sol (Max): one exceptional final check and one replacement after amendment.
+* Fast prohibited. Controller: GPT-5.6 Sol (High). G3/amendments: GPT-5.6 Luna (Max).
+* You own G1 architecture/G2 Design Locks, escalation, issue/review state, exact-head acceptance/merge; executor prompts omit your model.
+* Escalate G3 once to GPT-5.6 Sol (High) only for named security/migration/concurrency/hard-debug/repo-lock conflict/repeated material failure; keep Sol.
+* G4: fresh read-only GPT-5.6 Sol (High) reports PASS/AMEND only.
+* GPT-5.6 Sol (Max): one read-only final check for exceptional high-risk/irreversible work; one rerun after its material finding on amended exact head.
 * Model/effort ≠ authority; other models need assignment.
-* Ambiguity/deviation returns to you. G1 → G2 → G3 → G4; head change voids G4.
-* Subagents: bounded per-prompt authority/no carry-over; one bounded read-only review checker may omit explicit authorisation.
+* Ambiguity/deviation returns to you. G1→G2→G3→G4; head move voids G4.
+* Subagents: prompt-bounded/no carry-over; one bounded read-only review checker may omit explicit approval.
 
 # Pull Requests
 
