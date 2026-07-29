@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,990 characters
+- Custom Instructions (both copy blocks): 4,988 characters
 - More about you (both copy blocks): 1,470 LF / 1,487 CRLF characters
 
 ## Custom Instructions
@@ -50,12 +50,13 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Fast prohibited; Medium default.
+* Fast prohibited. Terra High is the permanent G3 default and stays through amendments.
 * You own roles, architecture, Design Locks, escalation and exact-head acceptance; executors never self-escalate or reinterpret locks.
-* High: One named unresolved security, migration, concurrency or difficult-debugging problem. XHigh: No-mutation architecture/locks for cryptography, recovery, irreversible decisions or conflicting evidence. Max: Rare programme-wide conflict.
-* High/XHigh are narrow and non-orchestrating; never relitigate settled decisions.
-* Clear design required. Ambiguity/deviation returns to you. G1 architecture → G2 your lock → G3 implementation → G4 exact-head review; head changes invalidate G4.
-* Subagents, including nesting, need explicit authority in that prompt turn; no carry-over. Bound scope and nesting. One bounded read-only review checker is exempt.
+* Escalate once to Sol High only for named security, migration, concurrency or difficult-debugging work, repository/lock conflict or repeated material failure; keep Sol for that PR.
+* Sol Max: One read-only final check for exceptional high-risk or irreversible work. Routine G4 uses Sol High.
+* Other models need explicit assignment; effort does not replace base capability.
+* Ambiguity/deviation returns to you. G1 → G2 lock → G3 implementation → G4 exact-head review; head changes invalidate G4.
+* Subagents need bounded authority per prompt; no carry-over. One read-only review checker is exempt.
 
 # Pull Requests
 
