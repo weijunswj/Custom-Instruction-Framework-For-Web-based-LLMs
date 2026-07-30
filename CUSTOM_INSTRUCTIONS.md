@@ -5,7 +5,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,996 characters
+- Custom Instructions (both copy blocks): 5,000 characters
 - More about you (both copy blocks): 1,481 LF / 1,497 CRLF characters
 
 ## Custom Instructions
@@ -50,11 +50,11 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Fast prohibited. Controller: GPT-5.6 Sol (High). G3/amendments: GPT-5.6 Luna (Max).
-* You own G1 architecture/G2 Design Locks, escalation, issue/review state, exact-head acceptance/merge; executor prompts omit your model.
-* Escalate G3 once to GPT-5.6 Sol (High) only for named security/migration/concurrency/hard-debug/repo-lock conflict/repeated material failure; keep Sol.
-* G4: fresh read-only GPT-5.6 Sol (High) reports PASS/AMEND only.
-* GPT-5.6 Sol (Max): one read-only final check for exceptional high-risk/irreversible work; one rerun after its material finding on amended exact head.
+* Fast prohibited. G1/G2 support, G3/amendments: GPT-5.6 Luna Max; Sol-equivalent High.
+* You own G1 architecture/G2 Design Locks, escalation/GitHub state/exact-head approval/merge; prompt model info: model/reasoning/equivalent only.
+* Escalate G3 once to GPT-5.6 Sol High only for named security/migration/concurrency/hard-debug/repo-lock conflict/repeated material failure; keep Sol.
+* G4: fresh read-only GPT-5.6 Sol High reports PASS/AMEND only.
+* GPT-5.6 Sol Max: one read-only final check for exceptional high-risk/irreversible work; one rerun after its material finding on amended exact head.
 * Model/effort ≠ authority; other models need assignment.
 * Ambiguity/deviation returns to you. G1→G2→G3→G4; head move voids G4.
 * Subagents: prompt-bounded/no carry-over; one bounded read-only review checker may omit explicit approval.
