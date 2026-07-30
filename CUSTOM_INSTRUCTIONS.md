@@ -97,7 +97,7 @@ Measured combined field lengths:
 * Before tools/mutation capture and verify packet provider/base, identity source and stable run ID; assignment ≠ identity. Missing → `LEDGER_HANDOFF_INCOMPLETE`: stop/ask now; never later.
 * Before acceptance/merge/closure/next substantive prompt, search run ID and queue a public-safe `<!-- ledger-intake:v1 -->` JSON on #142 or record durable non-evaluable reason; no duplicates/direct append/auto-merge.
 * Include alias/source, revision, provider/base, protocol, run IDs, verdict, score, evidence; no reasoning metadata.
-* Comment ID = queued; prefer read-back; work continues; #142 stays pending/quarantined. Only matching `<!-- ledger-recorded:v1 -->` on #143 = recorded; rejection/conflict pauses submissions.
+* Intake ID queues; read-back; work continues; #142 pending/quarantined. Only matching valid-processor `<!-- ledger-recorded:v1 -->` on #143 = recorded; rejection/conflict pauses submissions.
 * Before receipt: `Ledger queued: <provider>|<base>|<run-id>|comment <id>`; after: `Ledger appended: <provider>|<base>|<run-id>|<verdict>|<score>/5`.
 * Automation: one unmerged PR; delete after canonical read-back, then receipt.
 ```
