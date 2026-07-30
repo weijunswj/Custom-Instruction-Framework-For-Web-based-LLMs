@@ -50,8 +50,8 @@ Measured combined field lengths:
 
 # Coding-Agent Reasoning
 
-* Fast prohibited. G3/amendments: GPT-5.6 Luna (Max; GPT-5.6 Sol equivalent: High).
-* You own G1 architecture/G2 Design Locks, escalation, GitHub state, exact-head acceptance/merge; executor prompts give model/reasoning/equivalent only.
+* Fast prohibited. G3/amendments: GPT-5.6 Luna (Max; Sol-equivalent: High).
+* You own G1 architecture/G2 Design Locks, escalation, GitHub state, exact-head acceptance/merge; executor model metadata gives model/reasoning/equivalent only.
 * Escalate G3 once to GPT-5.6 Sol (High) only for named security/migration/concurrency/hard-debug/repo-lock conflict/repeated material failure; keep Sol.
 * G4: fresh read-only GPT-5.6 Sol (High) reports PASS/AMEND only.
 * GPT-5.6 Sol (Max): one read-only final check for exceptional high-risk/irreversible work; one rerun after its material finding on amended exact head.
