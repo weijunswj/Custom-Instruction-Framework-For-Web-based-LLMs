@@ -6,7 +6,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,996 characters
-- More about you (both copy blocks): 1,483 LF / 1,499 CRLF characters
+- More about you (both copy blocks): 1,481 LF / 1,497 CRLF characters
 
 ## Custom Instructions
 
@@ -94,10 +94,10 @@ Measured combined field lengths:
 # Coding Prompt Checks
 
 * Grade substantive runs; admin/architecture/intake/receipt/reconciliation are non-evaluable/non-recursive; executors never self-grade/edit.
-* Before tools/mutation capture and verify packet provider/base, identity source and stable run ID; assignment ≠ identity. Missing → `LEDGER_HANDOFF_INCOMPLETE`: stop/ask now; never later.
-* Before acceptance/merge/closure/next substantive prompt, search run ID and queue a public-safe `<!-- ledger-intake:v1 -->` JSON on #142 or record durable non-evaluable reason; no duplicates/direct append/auto-merge.
-* Include alias/source, revision, provider/base, protocol, run IDs, verdict, score, evidence; no reasoning metadata.
-* Intake ID queues; read-back; work continues; #142 pending/quarantined. Only matching valid-processor `<!-- ledger-recorded:v1 -->` on #143 = recorded; rejection/conflict pauses submissions.
-* Before receipt: `Ledger queued: <provider>|<base>|<run-id>|comment <id>`; after: `Ledger appended: <provider>|<base>|<run-id>|<verdict>|<score>/5`.
+* Execution: packet provider/base/reasoning are authoritative. Only explicit contradiction blocks; generic/partial/missing metadata never blocks work.
+* Evaluation: independently verify provider/base; incomplete metadata blocks evaluation only: mark non-evaluable, continue authorised repo work; never ledger reasoning.
+* Before accept/merge/close/next task: search run ID; queue one public-safe `<!-- ledger-intake:v1 -->` JSON on #142 or durable non-evaluable reason; no duplicate/direct append/auto-merge. Include alias/source, revision, provider/base, protocol, run IDs, verdict, score, evidence.
+* Intake ID = queued; read-back; #142 pending. Only matching valid-processor `<!-- ledger-recorded:v1 -->` on #143 = recorded; rejection/conflict pauses submissions.
+* Report queued/appended status with provider, base, run ID, comment/receipt, verdict and score.
 * Automation: one unmerged PR; delete after canonical read-back, then receipt.
 ```
