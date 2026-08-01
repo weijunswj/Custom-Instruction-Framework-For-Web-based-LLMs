@@ -6,8 +6,8 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,990 characters
-- More about you (both copy blocks): 1,464 LF / 1,476 CRLF characters
+- Custom Instructions (both copy blocks): 4,860 characters
+- More about you (both copy blocks): 1,485 LF / 1,497 CRLF characters
 
 ## Custom Instructions
 
@@ -63,7 +63,6 @@ Measured combined field lengths:
 * Each owned/authorised repo with work: one rolling `[ PARENT THREAD ]`; one comprehensive direct child per task; no nesting. Remediation/follow-ups siblings; link dependencies.
 * You alone mutate issues; agents read/report only. Bodies=current authority; comments=chronology except ledger #142. Local tracking supplements, never replaces GitHub.
 * Add work to active parent; create only if none. Tick/close after acceptance, PRs/follow-ups and review threads complete.
-* Ledger identity: use prompt provider/base, else standing assignment; no self-ID; harness metadata gaps never block work/intake.
 ```
 
 ## More About You — Overflow instructions
@@ -83,8 +82,8 @@ Measured combined field lengths:
 
 ```text
 # Coding Prompt Checks
-* Substantive only; admin/architecture/intake/receipt/reconciliation are non-eval/non-recursive. Executors never self-grade/edit.
-* Only trusted platform contradiction blocks execution/publication. Identity affects score; gaps mean non-eval only. Never ledger reasoning.
-* Before accept/merge/close/next: search run ID; queue without confirmation one public-safe `<!-- ledger-intake:v1 -->` JSON on #142 or durable non-eval reason, with source/alias, revision, provider/base, protocol, run IDs, verdict, score, evidence; no duplicate/direct append/auto-merge. #142=queued; only matching valid processor `<!-- ledger-recorded:v1 -->` on #143=appended; report without confirmation; rejection/conflict pauses. Never create/imitate/claim receipts. One unmerged PR; canonical readback, delete, then receipt.
-* After intake/receipt, next response starts exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`, then source, identity/contradiction, run ID, comment/receipt, verdict, score (`N/A` if non-eval).
+* Only substantive runs evaluate; admin/architecture/intake/receipt/reconciliation are non-eval/non-recursive. Executors never self-grade/edit.
+* Identity: prompt provider/base, else standing assignment; no self-ID. Metadata gaps never block work/intake; only trusted contradiction blocks execution/publication. Gaps affect evaluation only; never ledger reasoning.
+* Before accept/merge/close/next: search run ID; queue one public-safe `<!-- ledger-intake:v1 -->` JSON on #142 or durable non-eval reason with source/alias, revision, provider/base, protocol, run IDs, verdict, score and evidence; no duplicate/direct append/auto-merge. #142=queued; only matching valid `<!-- ledger-recorded:v1 -->` on #143=appended. Rejection/conflict pauses. Never fabricate receipts. One unmerged PR; canonical readback→delete→receipt.
+* After intake/receipt, next response begins exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`, then source, identity/contradiction, run ID, comment/receipt, verdict and score (`N/A` if non-eval).
 ```
