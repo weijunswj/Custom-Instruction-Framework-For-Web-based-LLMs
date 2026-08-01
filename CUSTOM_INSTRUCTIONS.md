@@ -6,7 +6,7 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,860 characters
+- Custom Instructions (both copy blocks): 4,859 characters
 - More about you (both copy blocks): 1,487 LF / 1,499 CRLF characters
 
 ## Custom Instructions
