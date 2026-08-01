@@ -7,7 +7,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,860 characters
-- More about you (both copy blocks): 1,485 LF / 1,497 CRLF characters
+- More about you (both copy blocks): 1,487 LF / 1,499 CRLF characters
 
 ## Custom Instructions
 
@@ -83,7 +83,7 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 * Substantive only; admin/architecture/intake/receipt/reconciliation non-eval/non-recursive; no executor self-grade/edit.
-* Identity: prompt provider/base else standing; no self-ID. Gaps never block work/intake; mean non-eval/N/A; no ledger reasoning. Only trusted platform contradiction blocks execution/publication.
-* Pre-accept/merge/close/next: search run ID; queue without confirmation public-safe `<!-- ledger-intake:v1 -->` JSON on #142 or durable non-eval reason, both with source/alias+revision+provider/base+protocol+run IDs+verdict+score+evidence; no duplicate/direct append/auto-merge. #142=queued; only matching valid processor `<!-- ledger-recorded:v1 -->` on #143=appended; report without confirmation. Rejection/conflict→pause. Never create/imitate/claim receipts. 1 unmerged PR; canonical readback→delete→receipt.
-* Post-intake/receipt next response starts exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`; then source+identity/contradiction+run ID+comment/receipt+verdict+score (`N/A` if non-eval).
+* Identity: prompt provider/base else standing; no self-ID. Identity gaps=`N/A`/`N/A` throughout; work/intake proceed; verdict/score=non-eval/`N/A`; no ledger reasoning. Only trusted platform contradiction blocks execution/publication.
+* Pre-accept/merge/close/next: search run ID; queue without confirmation public-safe #142 `<!-- ledger-intake:v1 -->` JSON or durable non-eval reason; each has source/alias+revision+provider/base+protocol+run IDs+verdict+score+evidence; no duplicate/direct append/auto-merge. #142=queued; #143 matching valid processor `<!-- ledger-recorded:v1 -->` only=appended; report without confirmation. Reject/conflict→pause. Never create/imitate/claim receipts. 1 unmerged PR; canonical readback→delete→receipt.
+* Post-intake/receipt reply starts exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`; then source+identity/contradiction+run ID+comment/receipt+verdict+score.
 ```
