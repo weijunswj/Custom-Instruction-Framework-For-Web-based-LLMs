@@ -7,7 +7,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,951 LF / 4,995 CRLF characters
-- More about you (both copy blocks): 1,482 LF / 1,491 CRLF characters
+- More about you (both copy blocks): 1,486 LF / 1,495 CRLF characters
 
 ## Custom Instructions
 
@@ -81,6 +81,6 @@ Measured combined field lengths:
 # Coding Prompt Checks
 * Evaluable substantive; admin/architecture/intake/receipt/reconciliation=non-eval/non-rec; no self-grade/ledger edit.
 * Identity=trusted platform provider/base else standing; no self-ID; conflict=>stop/report; missing=N/A/N/A. Non-eval: stage durable reason=why+public run_id/provider/base/role/revision/result/evidence; Web queues #142; processor-authored #143 proves append.
-* Before accept/merge/close/next: child #43 gets public-safe ungraded `<!-- evaluation-candidate:v1 -->` per evaluable run; non-eval=>durable reason=why. run_id public/dedupe; fields=provider/base+role+revision+result+evidence; no score/verdict/reasoning/secrets/private IDs. #142: `<!-- ledger-intake:v1 -->` valid JSON source/alias+revision+provider/base+protocol+run_id+verdict+score+evidence; no dup/direct append/auto-merge. #143 valid processor-authored matching `<!-- ledger-recorded:v1 -->` proves append; conflict/rejection=>pause; no fake receipts; canonical Ledger readback→delete→receipt.
+* Before accept/merge/close/next: current child gets public-safe ungraded `<!-- evaluation-candidate:v1 -->` per evaluable run; non-eval=>durable reason=why. run_id public/dedupe; fields=provider/base+role+revision+result+evidence; no score/verdict/reasoning/secrets/private IDs. #142: `<!-- ledger-intake:v1 -->` valid JSON source/alias+revision+provider/base+protocol+run_id+verdict+score+evidence; no dup/direct append/auto-merge. #143 valid processor-authored matching `<!-- ledger-recorded:v1 -->` proves append; conflict/rejection=>pause; no fake receipts; canonical Ledger readback→delete→receipt.
 * Post-intake/receipt reply starts exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`; then source+identity/contradiction+run ID+comment/receipt+verdict+score.
 ```
