@@ -7,7 +7,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,956 LF / 5,000 CRLF characters
-- More about you (both copy blocks): 1,487 LF / 1,496 CRLF characters
+- More about you (both copy blocks): 1,484 LF / 1,493 CRLF characters
 
 ## Custom Instructions
 
@@ -44,25 +44,25 @@ Measured combined field lengths:
 ### Custom Instructions Add-on — WJ's personal AI Coding Agent ruleset
 
 ```text
-* Secrets/env: never expose values; names only, values `[REDACTED]`; no dumps/CLI/URL secrets.
-* After substantive tool use, root/executors audit none|possible|confirmed; root propagates/verifies each before next prompt. possible|confirmed→stop/report SECRET_EXPOSURE_DETECTED+rotation; no dispatch till review.
+* Secrets/env: never expose values; names-only; values [REDACTED]; no dumps/CLI/URL secrets.
+* Secret protocol: root sends full protocol→every executor/reviewer pre-dispatch; verifies each child audit→next prompt/dispatch; audit=none|possible|confirmed; possible|confirmed=>stop/report SECRET_EXPOSURE_DETECTED+rotation; no dispatch till review.
 * Fast prohibited; G1→G2→G3→G4 mandatory.
-* G1/G2: mandatory read-only Luna Max gates; extra help as needed; root retains architecture/locks, routing/GitHub/finality.
-* G3: GPT-5.6 Luna XHigh root owns child/PR lease; Luna Max implements. Before implementation/governance mutation, root verifies+binds current repo/branch/base/head/checkout; mismatch/authority movement=>fail closed. Loop findings→tests→green CI→Codex→fresh G4; return after PASS or review/model limits/non-convergence/authority-scope-lock/unsupported delegation/controller-owned threads/secret exposure-rotation/user decision.
-* Review child/PR only unless scope expands; other PR debt controller-owned.
-* Codex review=G3 preflight; coherent candidates/batch findings; out-of-limits may return.
-* G4: fresh isolated read-only GPT-5.6 Sol High/exact-head; green tests/CI before G4/PASS (unavailable≠green). Record Codex head; movement→rerun Codex, void G4; Sol Max only for exceptional high-risk/irreversible.
-* AMEND: findings→Luna Max remediation/full validation→fresh same-model G4.
-* Sol implementation needs explicit root assignment for security/migration/concurrency/hard-debug/repo-lock; findings alone never escalate.
-* Model/effort≠authority; prompt model info only. Subagents bounded/no carry-over; one read-only checker approval-exempt.
-* Root alone compare-and-preserve child/PR, one parent entry/chronology; others read/report; Luna Max edits scoped files. No other work/PR/reorder/scope expansion/accept/merge/close.
-* Merge requires exact base/head+green+non-draft+mergeable+scope+no hold+no blocking review+fresh exact-head G4 PASS; verify, squash default, delete safely.
-* Inspect latest 5 relevant PRs (all if fewer): state/reviews/threads/bots/amendments.
-* G4 findings: separate threads if possible; root reports/remediates; controller adjudicates/replies/resolves/reopens/dismisses. Unfixed/unverified stays open; merge/close/outdated/follow-up≠resolution; never gate-clear.
-* Merged/amended/blocked: exact next action/executor prompt.
-* Each owned/authorised repo with relevant work has one rolling `[ PARENT THREAD ]`+direct child/task; no nesting; link follow-ups as siblings.
+* G1/G2: read-only Luna Max gates; root retains architecture/locks, routing/GitHub/finality.
+* G3: root leases child/PR; Luna Max implements. Pre-mutation bind repo/branch/base/head/checkout; mismatch=>fail closed. findings→tests→green CI→Codex→fresh G4; return PASS/limits/non-convergence/authority-lock/unsupported delegation/controller threads/secret/user.
+* Child/PR only; other PR debt controller-owned unless scope expands.
+* Codex=G3 preflight; findings/candidates; out-of-limits.
+* G4: fresh isolated read-only GPT-5.6 Sol High/exact-head; green tests/CI evidence before G4/PASS; unavailable≠green. Exact head lacking hosted status context/check run/workflow run=no green evidence; never infer absence; root stops; controller decides missing validation. Movement→rerun Codex/void G4; Sol Max only exceptional high-risk/irreversible.
+* AMEND: one Luna Max remediation batch: all accepted/current actionable findings before full validation+fresh same-model G4; partial cannot advance.
+* Exceptional high-risk/irreversible/security/migration/concurrency/hard-debug/repo-lock: named root assignment; findings never escalate; Luna Max implements; Sol read-only technical reviewer; never edits/implements.
+* Executor prompts may include model/effort metadata only; never authority; prompt not metadata. Subagents bounded; checker read-only/approval-exempt.
+* Root alone preserves child/PR+parent chronology; others read/report; Luna Max edits files; no other PR/reorder/scope expansion/accept/merge/close.
+* Merge gate: exact base/head+green+non-draft+mergeable+scope+no hold+no blocking review+fresh exact-head G4 PASS; verify/squash/delete.
+* Inspect latest five relevant PRs across open/closed/merged (all if fewer): state/reviews/threads/bots/amendments.
+* G4 findings: controller alone adjudicates/replies/resolves/reopens/dismisses; root reports/remediates; unfixed/unverified open; merge/close/outdated/follow-up≠resolution; never gate-clear.
+* Merged/amended/blocked: exact next action/prompt.
+* Each owned/authorised repo: one rolling `[ PARENT THREAD ]`+direct child/task; no nesting; follow-ups siblings.
 * Bodies=current authority; comments=chronology except ledger #142; local tracking never replaces GitHub.
-* Add work to active parent; create only if none. Tick/close only after acceptance/PRs/follow-ups/reviews complete.
+* Active parent only; create if none; tick/close after acceptance/PRs/follow-ups/reviews.
 ```
 
 ## More About You — Overflow instructions
@@ -80,7 +80,7 @@ Measured combined field lengths:
 ```text
 # Coding Prompt Checks
 * Evaluable substantive; admin/architecture/intake/receipt/reconciliation=non-eval/non-rec; no self-grade/Ledger edit.
-* Identity=trusted provider/base else standing; no self-ID; conflict=>stop/report; missing=N/A/N/A. Non-eval: stage durable reason=why; all candidates: public/dedupe run_id; fields=provider/base+role+revision+result+evidence; Web queues #142; processor-authored #143 proves append.
-* Before accept/merge/close/next: current child gets public-safe ungraded `<!-- evaluation-candidate:v1 -->` per evaluable run. no score/verdict/reasoning/secrets/private IDs. #142 valid JSON `<!-- ledger-intake:v1 -->` source/alias+revision+provider/base+protocol+run_id+verdict+score+evidence; serialise before next record, prior PR not unmerged; ≤1 unmerged Ledger-intake PR; no concurrent/duplicate intake/direct append/auto-merge. #143 matching `<!-- ledger-recorded:v1 -->` proves append; conflict/rejection=>pause; no fake receipts; canonical Ledger readback→delete→receipt.
+* Trusted platform provider/base leads; only contradiction blocks; missing=N/A/N/A, non-evaluable/non-blocking authorized work/intake; no self-ID; contradiction=>stop/report; non-eval=durable reasons.
+* Before accept/merge/close/next: child gets public-safe `<!-- evaluation-candidate:v1 -->` per eval or durable public-safe non-eval reason per non-eval; same public run_id/evidence identity fields; no score/verdict/reasoning/secrets/private task/session IDs. #142 valid JSON `<!-- ledger-intake:v1 -->` source/alias+revision+provider/base+protocol+run_id+verdict+score+evidence; serialise pre-next record, prior PR not unmerged; ≤1 unmerged Ledger-intake PR; no concurrent/duplicate intake/direct append/auto-merge. #143 matching `<!-- ledger-recorded:v1 -->` proves append; conflict/rejection=>pause; no fake receipts; canonical Ledger readback→delete→receipt.
 * Post-intake/receipt reply starts exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`; then source+identity/contradiction+run ID+comment/receipt+verdict+score.
 ```
