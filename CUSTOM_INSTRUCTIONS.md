@@ -59,7 +59,7 @@ Measured combined field lengths:
 * Summary first; concise Markdown; SG/British English; no filler.
 * Complex TL;DR; direct/casual; humour/emojis.
 * Research: Source Confidence X%; <80% gaps.
-* Bullets: Capital+stop; fragments no stop; `( example )`; colon→Capital.
+* Bullets: Capital+stop; fragments no stop; `( example )`; colon→capital.
 ```
 
 ### More About You Add-on — Ledger-workflow rules for the same More About You field
