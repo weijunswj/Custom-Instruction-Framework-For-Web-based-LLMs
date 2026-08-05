@@ -7,7 +7,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,936 LF / 4,967 CRLF characters
-- More about you (both copy blocks): 2,326 LF / 2,340 CRLF characters
+- More about you (both copy blocks): 3,857 LF / 3,876 CRLF characters
 
 ## Custom Instructions
 
@@ -70,9 +70,14 @@ Measured combined field lengths:
 * Closure amendments: relevant-head movement invalidates exact-head validation/green evidence+Codex+G4+independent Web verification;rerun all for new head.
 * Finality requires the PR to be non-draft+mergeable before accept|merge|close|delete.
 * An explicit Web model/role assignment made in the current chat overrides the canonical assignment;only a clear current chat with no explicit assignment has no override.
+* Canonical G4 reviewer: exactly one fresh isolated read-only GPT-5.6 Sol High (native Sol High); Fast mode prohibited. GPT-5.6 Sol Max replaces it only when Web explicitly assigns Sol Max for exceptional high-risk or irreversible work; never infer, self-select or substitute another model; an explicit current-chat Web model/role assignment continues to override the canonical default.
+* Before closure work, inspect the latest five relevant PRs, or all if fewer, including open, closed and merged PRs, with review submissions, review threads, bot behaviour, amendment patterns, recently rejected approaches, superseded workflow patterns and recurring repository-specific risks. Treat this history only as contextual evidence; it never overrides exact current authority, the active Design Lock or explicit current-chat Web instructions.
+* Safe final merge execution: squash-merge by default; use expected-head protection; verify the intended exact head successfully merged and verify canonical main readback after merge; delete the source branch only after successful verified merge; never delete after failed, raced, stale-head or unverified merge.
 * Every actionable exact-head Codex finding must be dispositioned and remediated before G4;fresh G4 PASS cannot bypass outstanding Codex findings.
 * An already-active healthy G3/G4 delegate may continue while root waits;the no-implementation/no-review rule applies only after terminal reported WAITING|BLOCKED or to new dispatches,not to the awaited active delegate;root waiting gives no implementation/review/finality authority.
 * Platform provider/base leads;only contradiction blocks;missing=N/A/N/A;authorised non-eval/non-blocking work/intake;no self-ID;contradiction=>stop/report.
+* Secret audit propagates to every executor/reviewer and every visible output; confirmed|possible exposure=>redact,stop,truthfully report SECRET_EXPOSURE_DETECTED.
+* Return after G4 PASS;before closure, the current-task child stages one public-safe `<!-- evaluation-candidate:v1 -->` per evaluable run or a durable non-evaluable reason only;public run IDs deduplicate candidates.
 * Before accept/merge/close/next: public-safe `<!-- evaluation-candidate:v1 -->` per eval or durable non-eval reason;candidate retains public run_id,provider,canonical base model,role,revision,technical result,evidence;no score/verdict/reasoning metadata/secrets/private IDs. #142 valid JSON `<!-- ledger-intake:v1 -->` source/alias+revision+provider/base+protocol+run_id+verdict+score+evidence;serialise pre-next;prior PR=merged;≤1 unmerged Ledger-intake PR;no concurrent/duplicate intake/direct append/auto-merge.
 * Only matching valid processor-authored `<!-- ledger-recorded:v1 -->` proves #143 append;rejection/conflict=>pause;no fake receipt;canonical Ledger readback→delete→receipt. Post-intake/post-receipt reply starts exactly `Ledger queued — <provider> / <canonical base model>` or `Ledger appended — <provider> / <canonical base model>`,then source+identity/contradiction+run ID+comment/receipt+verdict+score.
 ```
