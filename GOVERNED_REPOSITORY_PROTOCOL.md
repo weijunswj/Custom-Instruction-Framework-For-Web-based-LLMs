@@ -36,9 +36,7 @@ Web alone owns architecture, Design Lock changes, model assignment, review dispo
 
 ## Model assignment
 
-The provider and model assigned by Web lead. Never infer, self-select, substitute, upgrade, downgrade, or route to another model because of memory, availability, cost, capability, or convenience. Never substitute models. An explicit current-chat Web assignment supersedes the canonical default within its scope. A contradiction between provider, model, role, or phase is blocking; missing information is not permission to guess.
-
-For CI-047, G3 is exactly one fresh GPT-5.6 Luna Max executor with Sol-equivalent High, native Sol No, Fast mode prohibited, and delegation, helpers, subagents, spawning, and model substitution prohibited. G4 is exactly one fresh isolated read-only GPT-5.6 Sol High after owner UAT and exact-head Codex.
+The current authoritative handoff supplies the provider, model, role, and phase assignment. G3 performs only the assigned implementation; G4 performs only the assigned fresh isolated read-only review. Never infer, self-select, substitute, upgrade, downgrade, or route to another model because of memory, availability, cost, capability, or convenience. Never substitute models. An explicit current-chat Web assignment supersedes the canonical default within its scope. A contradiction between provider, model, role, or phase is blocking; missing information is not permission to guess.
 
 ## Git authority and admission
 
@@ -52,7 +50,7 @@ Admission requires:
 - Verify the checkout is fresh and clean, the branch is created directly from the exact base, and the implementation scope is limited to authorised paths.
 - Record the exact branch, commit, tree, file blobs, and diff scope after mutation. A normal commit must be the only implementation commit unless the handoff says otherwise.
 
-For CI-047 the canonical repository is weijunswj/Custom-Instruction-Framework-For-Web-based-LLMs, main and the assigned base/head are d1e926f74d51f432de32bc8932501922765eae20, the base tree is b74a5a9809c9048575171336c0a4a62c90e10970, and the canonical CUSTOM_INSTRUCTIONS.md blob is 23d589c88e51bc3e09a76f269e4a89157e385e7b. The implementation branch is luna/ci-047-capacity-kernel-modularisation. The authorised paths are CUSTOM_INSTRUCTIONS.md, GOVERNED_REPOSITORY_PROTOCOL.md, focused files under scripts/, and focused files under tests/.
+The current authoritative handoff supplies the canonical repository, branch, base, head, tree, blobs, and authorised scope. This reusable protocol never embeds task-specific repository identity or concrete Git objects. The authorised paths and clean-checkout conditions are those in the current handoff.
 
 Never use a no-change probe branch as an implementation branch. Delete a probe only after its exact identity, zero ahead/behind count, and no-diff status have been verified.
 
@@ -96,9 +94,9 @@ Public-safe fields are run_id, provider, canonical base model, role, revision, t
 
 ## Ledger intake and receipts
 
-Ledger intake is serialised and guarded. The valid marker is ledger-intake:v1 with JSON fields source or alias, revision, provider, canonical base model, protocol, run_id, verdict, score, and evidence. The single-unmerged-intake constraint allows at most one unmerged Ledger-intake PR. Queue it only after the prior source PR is merged, before the next closure or dispatch. Prevent duplicates, concurrent intake, direct Ledger appends, and auto-merge.
+Ledger intake is serialised and guarded. After the required G4 result and before accept, merge, close, or next dispatch, Web stages one public-safe evaluation candidate per evaluable run or a durable non-evaluable reason. Web then queues the valid ledger-intake:v1 before accept, merge, close, or next dispatch. The valid marker has JSON fields source or alias, revision, provider, canonical base model, protocol, run_id, verdict, score, and evidence. Any earlier Ledger-intake PR must already be merged. The single-unmerged-intake constraint means at most one Ledger-intake PR may remain unmerged. The current source PR does not have to merge before its intake is queued. This is a prior Ledger-intake PR constraint, not a prior source PR constraint. Prevent duplicates, concurrent intake, direct Ledger appends, and auto-merge.
 
-The processor-authored receipt is the required proof. Only a matching processor-authored ledger-recorded:v1 receipt proves that the processor appended the record. A rejected or conflicting receipt pauses the path. A fake append claim is prohibited; never claim an append without the processor receipt. Perform canonical Ledger readback -> delete -> receipt according to the authoritative processor flow; local tracking is not proof.
+Queued is not appended. The processor-authored receipt is the required proof. Only a matching processor-authored ledger-recorded:v1 receipt proves that the processor appended the record. A rejected or conflicting receipt pauses the path. A fake append claim is prohibited; never claim an append without the processor receipt. Perform canonical Ledger readback -> delete -> receipt according to the authoritative processor flow; local tracking is not proof.
 
 Use the exact response prefix Ledger queued — <provider> / <canonical base model> only after the queued state exists. Use Ledger appended — <provider> / <canonical base model> only after the matching processor-authored receipt exists. These prefixes are allowed only after the corresponding state exists. After the prefix, identify the source, identity and contradiction check, run ID, comment or receipt, verdict, and score. Never emit either prefix early.
 

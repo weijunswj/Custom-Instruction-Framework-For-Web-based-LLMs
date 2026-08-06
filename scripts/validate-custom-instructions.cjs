@@ -13,6 +13,31 @@ const FOCUSED_FILES = Object.freeze([
   PROTOCOL_FILE,
   'scripts/validate-custom-instructions.cjs',
   'tests/capacity-validation.test.cjs',
+  'tests/fixtures/former-more-about-you-payload.txt',
+]);
+const LEGACY_FIXTURE_FILE = 'tests/fixtures/former-more-about-you-payload.txt';
+
+const TASK_SPECIFIC_AUTHORITY_PATTERNS = Object.freeze([
+  ['CI-047 identifier', /\bCI-047\b/i],
+  ['repository slug', /weijunswj\/Custom-Instruction-Framework-For-Web-based-LLMs/],
+  ['implementation branch', /luna\/ci-047-capacity-kernel-modularisation/],
+  ['concrete lowercase 40-hex Git object', /\b[a-f0-9]{40}\b/],
+]);
+
+const REQUIRED_LEDGER_ORDERING = Object.freeze([
+  ['G4 result and evaluation gate', /After the required G4 result and before accept, merge, close, or next dispatch, Web stages one public-safe evaluation candidate per evaluable run or a durable non-evaluable reason\./i],
+  ['intake before terminal governance actions', /Web then queues the valid ledger-intake:v1 before accept, merge, close, or next dispatch\./i],
+  ['prior Ledger-intake PR constraint', /Any earlier Ledger-intake PR must already be merged\./i],
+  ['single unmerged Ledger-intake PR constraint', /At most one Ledger-intake PR may remain unmerged\./i],
+  ['current source PR is not a prerequisite', /The current source PR does not have to merge before its intake is queued\./i],
+  ['source versus Ledger-intake distinction', /This is a prior Ledger-intake PR constraint, not a prior source PR constraint\./i],
+  ['queued is not appended', /Queued is not appended\./i],
+  ['processor receipt proves append', /processor-authored ledger-recorded:v1 receipt proves that the processor appended the record/i],
+]);
+
+const FORBIDDEN_LEDGER_ORDERING = Object.freeze([
+  ['obsolete source-PR merge gate', /Queue it only after the prior source PR is merged/i],
+  ['current source PR merge prerequisite', /current source PR (?:must|has to) merge before (?:its )?intake/i],
 ]);
 
 const PAYLOAD_LIMITS = Object.freeze({
@@ -245,6 +270,32 @@ function checkKernelInvariants(payloads, errors) {
   }
 }
 
+function findTaskSpecificAuthorityViolations(customText, protocolText) {
+  const violations = [];
+  for (const [label, text] of [[CUSTOM_FILE, customText], [PROTOCOL_FILE, protocolText]]) {
+    for (const [patternLabel, pattern] of TASK_SPECIFIC_AUTHORITY_PATTERNS) {
+      if (pattern.test(text)) violations.push(label + ': ' + patternLabel);
+    }
+  }
+  return violations;
+}
+
+function checkReusableAuthority(customText, protocolText, errors) {
+  for (const violation of findTaskSpecificAuthorityViolations(customText, protocolText)) {
+    errors.push('reusable document contains forbidden task-specific authority: ' + violation);
+  }
+}
+
+function checkLedgerOrdering(protocolText, errors) {
+  const protocol = normalizeLf(protocolText);
+  for (const [label, pattern] of FORBIDDEN_LEDGER_ORDERING) {
+    if (pattern.test(protocol)) errors.push('forbidden Ledger ordering: ' + label);
+  }
+  for (const [label, pattern] of REQUIRED_LEDGER_ORDERING) {
+    if (!pattern.test(protocol)) errors.push('missing Ledger ordering rule: ' + label);
+  }
+}
+
 function checkProtocol(protocolText, errors) {
   const protocol = normalizeLf(protocolText);
   for (const [label, needles] of PROTOCOL_CATEGORIES) {
@@ -256,6 +307,7 @@ function checkProtocol(protocolText, errors) {
   for (const label of MAPPING_LABELS) {
     if (!protocol.includes(`| ${label} |`)) errors.push(`semantic mapping row is missing: ${label}`);
   }
+  checkLedgerOrdering(protocol, errors);
 }
 
 function checkTextHygiene(text, label, errors) {
@@ -270,6 +322,7 @@ function validateText(customText, protocolText) {
   const errors = [];
   checkTextHygiene(customText, CUSTOM_FILE, errors);
   checkTextHygiene(protocolText, PROTOCOL_FILE, errors);
+  checkReusableAuthority(customText, protocolText, errors);
   const parsed = parsePayloads(customText);
   errors.push(...parsed.errors);
   checkPayloadLimits(parsed.payloads, errors);
@@ -350,14 +403,21 @@ if (require.main === module) {
 module.exports = {
   CUSTOM_FILE,
   FOCUSED_FILES,
+  FORBIDDEN_LEDGER_ORDERING,
+  LEGACY_FIXTURE_FILE,
   PROTOCOL_FILE,
   KERNEL_INVARIANTS,
   MAPPING_LABELS,
   PAYLOAD_LIMITS,
   PROTOCOL_CATEGORIES,
+  REQUIRED_LEDGER_ORDERING,
+  TASK_SPECIFIC_AUTHORITY_PATTERNS,
   checkPayloadLimits,
+  checkLedgerOrdering,
+  checkReusableAuthority,
   decodeUtf8,
   extractPayloads,
+  findTaskSpecificAuthorityViolations,
   formatMeasurement,
   measurePayload,
   normalizeLf,
