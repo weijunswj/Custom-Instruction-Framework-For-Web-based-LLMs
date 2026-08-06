@@ -29,6 +29,7 @@ const currentTest = fs.readFileSync(testPath, 'utf8');
 
 const BASE_COMMIT = 'd1e926f74d51f432de32bc8932501922765eae20';
 const AMENDMENT_PARENT = 'd94f91101883b817705a3adbdf116d844db59c79';
+const SECOND_AMENDMENT_PARENT = 'c87587429f92ec946287d4ef7eaa40c302f4a5b7';
 const FORMER_SOURCE_BLOB = '23d589c88e51bc3e09a76f269e4a89157e385e7b';
 const FORMER_PAYLOAD_SHA256 = '115d4d7a28d54fe42ee33b9386be1c5e846a0200f3393705526e234789bbe4ac';
 const FORMER_PAYLOAD_METRICS = Object.freeze({
@@ -38,6 +39,31 @@ const FORMER_PAYLOAD_METRICS = Object.freeze({
   utf8Bytes: 4977,
   sha256: FORMER_PAYLOAD_SHA256,
 });
+
+const SOURCE_CONTRACT_MUTATIONS = Object.freeze([
+  ['current-information lookup', 'Look up current information when facts may have changed.', 'Use current information.'],
+  ['facts-versus-assumptions distinction', 'Verify sources and distinguish facts, assumptions, inferences, opinions, and recommendations;', 'Verify sources.'],
+  ['explicit uncertainty', 'state uncertainty and unresolved conflicts.', 'state uncertainty.'],
+  ['no invented precision', 'Never invent precision.', 'Use precise language.'],
+  ['inline citations', 'Cite sources inline beside the claims they support.', 'Cite sources.'],
+  ['source-tier preference', 'Prefer official or primary sources, followed by expert and reputable secondary sources.', 'Prefer reliable sources.'],
+  ['opened-source-only citation', 'Never cite a source that was not opened and checked.', 'Cite sources without opening them.'],
+  ['user-link inspection', 'When the user supplies a link, open and inspect it before answering.', 'Use supplied links as given.'],
+  ['snippet-only avoidance', 'Do not rely only on snippets, titles, cached descriptions, summaries, search-result text, or memory for a supplied link.', 'Use any available summary for a supplied link.'],
+  ['practical cross-checking', 'Cross-check material claims with at least two independent reliable sources where practical.', 'Cross-check claims when possible.'],
+  ['authoritative primary artefact', 'A directly inspected authoritative primary artefact may be sufficient evidence for its own contents, while important external implications still require separate verification.', 'A source may be enough.'],
+  ['access-failure disclosure', 'State exactly when source, page or tool access failed and what therefore could not be verified.', 'State uncertainty.'],
+  ['explicit material inferences', 'Clearly identify material inferences as inferences and state their reasoning, assumptions and supporting evidence.', 'Identify inferences.'],
+]);
+
+const PER_RUN_STAGING_MUTATIONS = Object.freeze([
+  ['completed substantive-run disposition', 'Every terminal completed substantive run is dispositioned individually.', 'Completed runs are dispositioned collectively.'],
+  ['evaluable-run candidate staging', 'For every evaluable G3, G4, or other substantive run, Web stages one public-safe evaluation-candidate:v1 before accept, merge, close, or dispatching the next run or task.', 'Web stages candidates later.'],
+  ['non-evaluable reason', 'For a non-evaluable run, Web records a durable non-evaluable reason before the same boundary.', 'Non-evaluable runs are ignored.'],
+  ['G3 AMEND staging before dispatch', 'A completed G3 AMEND must be staged before dispatching its next G3 amendment.', 'A completed G3 AMEND may dispatch its next amendment.'],
+  ['G4 candidate timing and non-prerequisite', 'A G4 candidate is staged after its result, but G4 is not a prerequisite for staging earlier G3 runs.', 'G4 candidate timing is unspecified.'],
+  ['Ledger queue before boundary', 'After the corresponding evaluation candidate or durable non-evaluable reason exists, Web serialises and queues the valid ledger-intake:v1 before accept, merge, close, or dispatching the next run or task.', 'Web queues intake later.'],
+]);
 
 function readAtRevision(revision, relativePath) {
   return execFileSync('git', ['show', revision + ':' + relativePath], { encoding: 'utf8' });
@@ -80,6 +106,20 @@ test('RED-first amendment regression rejects the pre-fix candidate', () => {
   assert.match(parentTest, /'x'\.repeat\(4961\)/);
 });
 
+test('RED-first source-contract regression rejects amendment parent', () => {
+  const parentCustom = readAtRevision(SECOND_AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
+  const parentProtocol = readAtRevision(SECOND_AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
+  const report = validateText(parentCustom, parentProtocol);
+  assert.ok(report.errors.some((error) => /source-verification contract/.test(error)), report.errors.join('\n'));
+});
+
+test('RED-first per-run staging regression rejects amendment parent', () => {
+  const parentCustom = readAtRevision(SECOND_AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
+  const parentProtocol = readAtRevision(SECOND_AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
+  const report = validateText(parentCustom, parentProtocol);
+  assert.ok(report.errors.some((error) => /per-run evaluation\/Ledger staging/.test(error)), report.errors.join('\n'));
+});
+
 test('derives and freezes the exact former two-block payload identity', () => {
   const sourceBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
   assert.equal(sourceBlob, FORMER_SOURCE_BLOB);
@@ -105,6 +145,21 @@ test('extracts exactly two payloads and validates the canonical documents', () =
   assert.deepEqual(report.measurements['More about you'], measurePayload(report.payloads['More about you']));
   assert.ok(report.measurements['Custom Instructions'].unicodeChars <= PAYLOAD_LIMITS['Custom Instructions'].unicodeChars);
   assert.ok(report.measurements['More about you'].unicodeChars <= PAYLOAD_LIMITS['More about you'].unicodeChars);
+});
+
+test('enforces every source-verification behaviour and rejects negative mutations', () => {
+  const report = validateText(canonicalCustom, canonicalProtocol);
+  assert.equal(report.ok, true, report.errors.join('\n'));
+
+  for (const [label, needle, replacement] of SOURCE_CONTRACT_MUTATIONS) {
+    assert.ok(canonicalCustom.includes(needle), 'source-contract test needle missing: ' + label);
+    const mutated = canonicalCustom.replace(needle, replacement);
+    const mutatedReport = validateText(mutated, canonicalProtocol);
+    assert.ok(
+      mutatedReport.errors.some((error) => error.includes('source-verification contract: ' + label)),
+      label + ': ' + mutatedReport.errors.join('\n'),
+    );
+  }
 });
 
 test('rejects task-specific authority and concrete Git objects in reusable documents', () => {
@@ -138,12 +193,6 @@ test('enforces Ledger ordering and rejects each prior regression', () => {
   assert.ok(sourceGateErrors.some((error) => /obsolete source-PR merge gate/.test(error)));
   assert.ok(sourceGateErrors.some((error) => /current source PR is not a prerequisite/.test(error)));
 
-  const missingBeforeGate = canonicalProtocol.replaceAll('before accept, merge, close, or next dispatch', 'before dispatch');
-  const missingGateErrors = [];
-  checkLedgerOrdering(missingBeforeGate, missingGateErrors);
-  assert.ok(missingGateErrors.some((error) => /G4 result and evaluation gate/.test(error)));
-  assert.ok(missingGateErrors.some((error) => /intake before terminal governance actions/.test(error)));
-
   const confusedPriorPr = canonicalProtocol.replace(
     'Any earlier Ledger-intake PR must already be merged.',
     'Any earlier source PR must already be merged.',
@@ -151,6 +200,30 @@ test('enforces Ledger ordering and rejects each prior regression', () => {
   const confusedErrors = [];
   checkLedgerOrdering(confusedPriorPr, confusedErrors);
   assert.ok(confusedErrors.some((error) => /prior Ledger-intake PR constraint/.test(error)));
+});
+
+test('enforces per-run evaluation and Ledger staging before dispatch and finality', () => {
+  const report = validateText(canonicalCustom, canonicalProtocol);
+  assert.equal(report.ok, true, report.errors.join('\n'));
+  assert.match(canonicalProtocol, /Final acceptance still requires a fresh exact-head G4 PASS\./);
+  assert.match(canonicalProtocol, /G4 is not a prerequisite for staging earlier G3 runs\./);
+
+  for (const [label, needle, replacement] of PER_RUN_STAGING_MUTATIONS) {
+    assert.ok(canonicalProtocol.includes(needle), 'per-run staging test needle missing: ' + label);
+    const mutated = canonicalProtocol.replace(needle, replacement);
+    const mutatedReport = validateText(canonicalCustom, mutated);
+    assert.ok(
+      mutatedReport.errors.some((error) => error.includes('per-run evaluation/Ledger staging: ' + label)),
+      label + ': ' + mutatedReport.errors.join('\n'),
+    );
+  }
+
+  const g4Only = canonicalProtocol.replace(
+    'For every evaluable G3, G4, or other substantive run, Web stages one public-safe evaluation-candidate:v1 before accept, merge, close, or dispatching the next run or task.',
+    'After G4 PASS, Web stages one public-safe evaluation-candidate:v1.',
+  );
+  const g4OnlyReport = validateText(canonicalCustom, g4Only);
+  assert.ok(g4OnlyReport.errors.some((error) => /forbidden G4-only staging prerequisite/.test(error)));
 });
 
 test('rejects extra or ambiguous payload blocks', () => {

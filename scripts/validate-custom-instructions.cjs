@@ -25,8 +25,6 @@ const TASK_SPECIFIC_AUTHORITY_PATTERNS = Object.freeze([
 ]);
 
 const REQUIRED_LEDGER_ORDERING = Object.freeze([
-  ['G4 result and evaluation gate', /After the required G4 result and before accept, merge, close, or next dispatch, Web stages one public-safe evaluation candidate per evaluable run or a durable non-evaluable reason\./i],
-  ['intake before terminal governance actions', /Web then queues the valid ledger-intake:v1 before accept, merge, close, or next dispatch\./i],
   ['prior Ledger-intake PR constraint', /Any earlier Ledger-intake PR must already be merged\./i],
   ['single unmerged Ledger-intake PR constraint', /At most one Ledger-intake PR may remain unmerged\./i],
   ['current source PR is not a prerequisite', /The current source PR does not have to merge before its intake is queued\./i],
@@ -38,6 +36,37 @@ const REQUIRED_LEDGER_ORDERING = Object.freeze([
 const FORBIDDEN_LEDGER_ORDERING = Object.freeze([
   ['obsolete source-PR merge gate', /Queue it only after the prior source PR is merged/i],
   ['current source PR merge prerequisite', /current source PR (?:must|has to) merge before (?:its )?intake/i],
+]);
+
+const SOURCE_CONTRACT_INVARIANTS = Object.freeze([
+  ['current-information lookup', /Look up current information when facts may have changed\./i],
+  ['facts-versus-assumptions distinction', /Verify sources and distinguish facts, assumptions, inferences, opinions, and recommendations;/i],
+  ['explicit uncertainty', /state uncertainty and unresolved conflicts\./i],
+  ['no invented precision', /Never invent precision\./i],
+  ['inline citations', /Cite sources inline beside the claims they support\./i],
+  ['source-tier preference', /Prefer official or primary sources, followed by expert and reputable secondary sources\./i],
+  ['opened-source-only citation', /Never cite a source that was not opened and checked\./i],
+  ['user-link inspection', /When the user supplies a link, open and inspect it before answering\./i],
+  ['snippet-only avoidance', /Do not rely only on snippets, titles, cached descriptions, summaries, search-result text, or memory for a supplied link\./i],
+  ['practical cross-checking', /Cross-check material claims with at least two independent reliable sources where practical\./i],
+  ['authoritative primary artefact', /A directly inspected authoritative primary artefact may be sufficient evidence for its own contents, while important external implications still require separate verification\./i],
+  ['access-failure disclosure', /State exactly when source, page or tool access failed and what therefore could not be verified\./i],
+  ['explicit material inferences', /Clearly identify material inferences as inferences and state their reasoning, assumptions and supporting evidence\./i],
+]);
+
+const PER_RUN_STAGING_RULES = Object.freeze([
+  ['completed substantive-run disposition', /Every terminal completed substantive run is dispositioned individually\./i],
+  ['evaluable-run candidate staging', /For every evaluable G3, G4, or other substantive run, Web stages one public-safe evaluation-candidate:v1 before accept, merge, close, or dispatching the next run or task\./i],
+  ['non-evaluable reason', /For a non-evaluable run, Web records a durable non-evaluable reason before the same boundary\./i],
+  ['G3 AMEND staging before dispatch', /A completed G3 AMEND must be staged before dispatching its next G3 amendment\./i],
+  ['G4 candidate timing and non-prerequisite', /A G4 candidate is staged after its result, but G4 is not a prerequisite for staging earlier G3 runs\./i],
+  ['Ledger queue before boundary', /After the corresponding evaluation candidate or durable non-evaluable reason exists, Web serialises and queues the valid ledger-intake:v1 before accept, merge, close, or dispatching the next run or task\./i],
+]);
+
+const FORBIDDEN_STAGING_PREREQUISITES = Object.freeze([
+  ['G4-only staging prerequisite (After G4 PASS)', /After G4 PASS/i],
+  ['G4-only staging prerequisite (After the required G4 result)', /After the required G4 result/i],
+  ['G4-only staging prerequisite', /(?:only|solely) after G4(?: PASS| result)/i],
 ]);
 
 const PAYLOAD_LIMITS = Object.freeze({
@@ -270,6 +299,12 @@ function checkKernelInvariants(payloads, errors) {
   }
 }
 
+function checkSourceContract(customPayload, errors) {
+  for (const [label, pattern] of SOURCE_CONTRACT_INVARIANTS) {
+    if (!pattern.test(customPayload)) errors.push('missing source-verification contract: ' + label);
+  }
+}
+
 function findTaskSpecificAuthorityViolations(customText, protocolText) {
   const violations = [];
   for (const [label, text] of [[CUSTOM_FILE, customText], [PROTOCOL_FILE, protocolText]]) {
@@ -296,6 +331,23 @@ function checkLedgerOrdering(protocolText, errors) {
   }
 }
 
+function checkPerRunStaging(protocolText, errors) {
+  const protocol = normalizeLf(protocolText);
+  const start = protocol.indexOf('## Evaluation candidates');
+  const end = start >= 0 ? protocol.indexOf('## Review threads and findings', start) : -1;
+  const staging = start >= 0 ? protocol.slice(start, end >= 0 ? end : protocol.length) : '';
+  if (start < 0) errors.push('missing per-run evaluation/Ledger staging: Evaluation candidates section');
+  for (const [label, pattern] of FORBIDDEN_STAGING_PREREQUISITES) {
+    if (pattern.test(staging)) errors.push('forbidden per-run evaluation/Ledger staging: forbidden ' + label);
+  }
+  for (const [label, pattern] of PER_RUN_STAGING_RULES) {
+    if (!pattern.test(staging)) errors.push('missing per-run evaluation/Ledger staging: ' + label);
+  }
+  if (!protocol.includes('Final acceptance still requires a fresh exact-head G4 PASS.')) {
+    errors.push('missing per-run evaluation/Ledger staging: finality still requires fresh exact-head G4 PASS');
+  }
+}
+
 function checkProtocol(protocolText, errors) {
   const protocol = normalizeLf(protocolText);
   for (const [label, needles] of PROTOCOL_CATEGORIES) {
@@ -308,6 +360,7 @@ function checkProtocol(protocolText, errors) {
     if (!protocol.includes(`| ${label} |`)) errors.push(`semantic mapping row is missing: ${label}`);
   }
   checkLedgerOrdering(protocol, errors);
+  checkPerRunStaging(protocol, errors);
 }
 
 function checkTextHygiene(text, label, errors) {
@@ -329,6 +382,7 @@ function validateText(customText, protocolText) {
   if (Object.keys(parsed.payloads).length === 2) {
     checkDocumentedMeasurements(customText, parsed.payloads, errors);
     checkKernelInvariants(parsed.payloads, errors);
+    checkSourceContract(parsed.payloads['Custom Instructions'], errors);
   }
   checkProtocol(protocolText, errors);
   return {
@@ -409,12 +463,16 @@ module.exports = {
   KERNEL_INVARIANTS,
   MAPPING_LABELS,
   PAYLOAD_LIMITS,
+  PER_RUN_STAGING_RULES,
   PROTOCOL_CATEGORIES,
   REQUIRED_LEDGER_ORDERING,
+  SOURCE_CONTRACT_INVARIANTS,
   TASK_SPECIFIC_AUTHORITY_PATTERNS,
   checkPayloadLimits,
   checkLedgerOrdering,
+  checkPerRunStaging,
   checkReusableAuthority,
+  checkSourceContract,
   decodeUtf8,
   extractPayloads,
   findTaskSpecificAuthorityViolations,
