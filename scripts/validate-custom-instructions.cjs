@@ -26,18 +26,18 @@ const TOP_IMMUTABLE = Object.freeze({
   sha256: 'd7a33366ebbcf85bbe7875c209185e3416371b6afbc28c9f5e1582ff8821aded',
 });
 const TOP_ADDON = Object.freeze({
-  unicodeChars: 2289,
-  lfChars: 2289,
-  crlfChars: 2295,
-  utf8Bytes: 2293,
-  sha256: '268e3e21abd9fa484dbe7794b877b62e9b5ddb49b8219f3cd95c037d4bbe3ea5',
+  unicodeChars: 2637,
+  lfChars: 2637,
+  crlfChars: 2644,
+  utf8Bytes: 2641,
+  sha256: '4d94d3213fa95971983f8896cd7b40ce9f9f8bc4bad18599910a8d5b84fa37fb',
 });
 const TOP_COMPLETE = Object.freeze({
-  unicodeChars: 4544,
-  lfChars: 4544,
-  crlfChars: 4576,
-  utf8Bytes: 4548,
-  sha256: '297e364a14d184045056263bbd64e9fdb9d29afb14f9ae3a7b8d2c13ed1a8c05',
+  unicodeChars: 4892,
+  lfChars: 4892,
+  crlfChars: 4925,
+  utf8Bytes: 4896,
+  sha256: '2a13e50d8828860211871773aa621fd0bc641a018722ea3ffe4614374967fae0',
 });
 const RESPONSE_STYLE = Object.freeze({
   unicodeChars: 248,
@@ -135,10 +135,61 @@ const FORBIDDEN_STAGING_PREREQUISITES = Object.freeze([
   ['G4-only staging prerequisite', /(?:only|solely) after G4(?: PASS| result)/i],
 ]);
 
+const LIVE_SECRET_CONTRACT_RULES = Object.freeze([
+  ['secret names only', 'Secrets:names only'],
+  ['redacted values', 'values `[REDACTED]`'],
+  ['no output exposure', 'never expose in output'],
+  ['no CLI exposure', 'output/CLI'],
+  ['no URL exposure', 'CLI/URL'],
+  ['no history exposure', 'URL/history'],
+  ['executor/reviewer propagation', 'send to all executors/reviewers'],
+  ['publication audit', 'audit before publish'],
+  ['confirmed classification', 'Class:confirmed=>'],
+  ['confirmed redaction', 'confirmed=>redact'],
+  ['confirmed affected-path stop', 'stop path'],
+  ['confirmed exposure marker', '`SECRET_EXPOSURE_DETECTED`'],
+  ['rotation or containment', 'rotation|containment='],
+  ['allowed disposition statuses', 'required|not_required|unknown|not_applicable'],
+  ['possible classification', 'possible=>'],
+  ['possible redaction', 'possible=>redact'],
+  ['possible affected-path pause', 'pause path'],
+  ['no invented rotation', 'no invented rotation'],
+  ['no global invalidation', 'no invented rotation/global invalidation'],
+  ['none classification', 'none=>'],
+  ['none continuation', 'none=>continue'],
+]);
+
+const TOPOLOGY_PROTOCOL_RULES = Object.freeze([
+  ['outer governance gates', 'G1–G4 are outer governance gates, not a fixed agent chain'],
+  ['Web-owned G1/G2 assignment', 'G1/G2 are Web-owned architecture, authority, Design Lock, admission and assignment'],
+  ['topology-selected G3', 'G3 performs authorised implementation, validation and convergence under the topology selected by the current handoff'],
+  ['current-handoff topology choices', 'The current handoff may select default root-only execution, explicitly authorised helpers, or exclusive manager/worker ownership'],
+  ['installation and capacity grant nothing', 'Installation, available capacity, and prior grants select nothing'],
+  ['fresh read-only G4', 'G4 is fresh isolated read-only exact-head review under the current handoff after applicable prerequisites'],
+  ['current-handoff identity inputs', 'Provider, model, reasoning, role, topology, and exact review-conversation capabilities come from the current handoff'],
+  ['mandatory review inventory', 'Review inventory is mandatory every cycle'],
+  ['exact review capability', 'Review conversation mutation requires the applicable exact user/Web or separately authorised review capability'],
+  ['reviewer separation', 'Reviewers never implement or dispose their own findings'],
+  ['Web finality and disposition', 'Web retains finality and review disposition'],
+]);
+
+const FORBIDDEN_TOPOLOGY_PROTOCOL = Object.freeze([
+  ['fixed G3 executor', /G3 is one fresh isolated implementation executor/i],
+  ['fixed G3 topology', /G3 (?:is|must be) (?:the )?(?:single|one|sole) (?:fresh )?(?:isolated )?(?:implementation )?(?:executor|worker)/i],
+  ['fixed G4 route', /G4 is one fresh isolated read-only reviewer/i],
+  ['universal G4 reply capability', /G4[\s\S]{0,180}repl(?:y|ies) to unresolved threads/i],
+  ['universal reviewer mutation', /every reviewer (?:may|can|must) (?:reply|resolve|reopen|dismiss)/i],
+  ['fixed provider or model route', /\b(?:OpenAI|GPT-5\.6|Luna|Sol-equivalent|Native Sol)\b/i],
+  ['installation-selected topology', /installation[\s\S]{0,80}(?:selects|chooses|grants)\s+(?:the|a|one)?\s*(?:topology|route|worker)/i],
+  ['capacity-selected topology', /(?:available )?capacity[\s\S]{0,80}(?:selects|chooses|grants)\s+(?:the|a|one)?\s*(?:topology|route|worker)/i],
+  ['availability-selected topology', /available workers[\s\S]{0,80}(?:select|choose|grant)\s+(?:the|a|one)?\s*(?:topology|route|worker)/i],
+  ['prior-grant-selected topology', /prior grants[\s\S]{0,80}(?:select|choose|grant)\s+(?:the|a|one)?\s*(?:topology|route|worker)/i],
+]);
+
 const PROTOCOL_CATEGORIES = Object.freeze([
   ['secret classification and propagation', ['## Secret protocol', 'SECRET_EXPOSURE_DETECTED', 'every executor and reviewer']],
-  ['G1/G2/G3/G4 role boundaries', ['## Roles and phase sequence', 'G1', 'G2', 'G3', 'G4']],
-  ['model-assignment precedence', ['## Model assignment', 'never infer', 'never substitute']],
+  ['G1/G2/G3/G4 outer-gate boundaries', ['## Roles and phase sequence', 'outer governance gates', 'current handoff', 'G3', 'G4']],
+  ['model/topology-assignment precedence', ['## Model assignment', 'current handoff', 'never infer', 'never substitute']],
   ['Git authority and admission packets', ['## Git authority and admission', 'admission packet', 'round-trip']],
   ['relevant versus unrelated governance movement', ['## Governance movement', 'relevant movement', 'unrelated movement']],
   ['waiting and continuation', ['## Waiting and continuation', 'active delegate', 'terminal']],
@@ -146,14 +197,14 @@ const PROTOCOL_CATEGORIES = Object.freeze([
   ['guarded reconciliation', ['## Reconciliation and closure', 'one parent entry', 'chronology']],
   ['expected-head merge and readback', ['expected-head squash merge', 'canonical-main readback']],
   ['evaluation and Ledger ordering', ['## Evaluation candidates', '## Ledger intake and receipts', 'serialise']],
-  ['review findings and truthful actions', ['## Review threads and findings', 'unresolved-thread reply', 'evidence']],
+  ['review inventory and truthful actions', ['## Review threads and findings', 'Review inventory is mandatory', 'evidence']],
   ['dependencies and hosted absence', ['## Dependencies', 'hosted-check absence', 'not green']],
 ]);
 
 const MAPPING_LABELS = Object.freeze([
   'Accuracy, current lookup, source verification and uncertainty',
   'Secret classification, redaction and propagation',
-  'G1/G2/G3/G4 roles, fast mode and model assignment',
+  'G1/G2/G3/G4 outer gates, current-handoff topology and model assignment',
   'Web authority, Design Lock and current-chat precedence',
   'Git admission, exact objects, scope and head invalidation',
   'Waiting, continuation and no fabricated persistence',
@@ -161,7 +212,7 @@ const MAPPING_LABELS = Object.freeze([
   'Governance reconciliation and latest PR context',
   'Merge, canonical-main readback and branch deletion',
   'Evaluation candidate and Ledger intake',
-  'Review findings, replies, dismissal and controller-only actions',
+  'Review inventory, findings, exact capabilities and controller-only actions',
   'Dependencies and hosted-check absence',
 ]);
 
@@ -302,7 +353,7 @@ function compareMetrics(actual, expected, label, errors) {
 
 function checkPayloadIdentities(parsed, errors) {
   if (parsed.sourceBlocks.length !== 2 || parsed.addOns.length !== 2) {
-    errors.push('A5 field identity requires exactly two immutable blocks and two mutable add-ons');
+    errors.push('A6 field identity requires exactly two immutable blocks and two mutable add-ons');
     return;
   }
   compareMetrics(measurePayload(parsed.sourceBlocks[0]), TOP_IMMUTABLE, 'immutable top block', errors);
@@ -377,6 +428,9 @@ function checkCopyInstructions(customText, errors) {
     'Copy the complete top field exactly as assembled below:',
     'immutable Decision/Verification source block followed by exactly one LF',
     'exact Coding Governance Add-on',
+    'The Decision/Verification source block below is immutable.',
+    'The Coding Governance Add-on is mutable by owner/Web Design Lock but exact within the currently accepted revision.',
+    'The logical top field is the immutable block followed by exactly one LF and the current exact add-on.',
     'Copy the complete More About You field exactly as assembled below:',
     'immutable Response Style source block followed by exactly one LF',
     'exact Governance & Closure add-on',
@@ -385,6 +439,10 @@ function checkCopyInstructions(customText, errors) {
   ];
   for (const needle of required) {
     if (!customText.includes(needle)) errors.push('missing copy/UAT/runtime instruction: ' + needle);
+  }
+  if (/These are the two original immutable Custom Instructions source blocks\./i.test(customText)
+    || /Coding Governance Add-on[^\n.]{0,100}\bimmutable\b/i.test(customText)) {
+    errors.push('copy-guidance: mutable add-on described as immutable');
   }
 }
 
@@ -463,6 +521,23 @@ function checkLiveSemantics(payloads, errors) {
   ];
   for (const [label, pattern] of required) {
     if (!pattern.test(live)) errors.push('missing permanent live-field invariant: ' + label);
+  }
+}
+
+function checkLiveSecretContract(topAddon, errors) {
+  const liveTopAddon = normalizeLf(topAddon || '');
+  for (const [label, needle] of LIVE_SECRET_CONTRACT_RULES) {
+    if (!liveTopAddon.includes(needle)) errors.push('live-secret-contract: ' + label);
+  }
+}
+
+function checkTopologyNeutralProtocol(protocolText, errors) {
+  const protocol = normalizeLf(protocolText);
+  for (const [label, needle] of TOPOLOGY_PROTOCOL_RULES) {
+    if (!protocol.includes(needle)) errors.push('topology-neutral protocol: ' + label);
+  }
+  for (const [label, pattern] of FORBIDDEN_TOPOLOGY_PROTOCOL) {
+    if (pattern.test(protocol)) errors.push('topology-neutral protocol: forbidden ' + label);
   }
 }
 
@@ -555,8 +630,10 @@ function validateText(customText, protocolText) {
     checkPayloadLimits(parsed, errors);
     checkSourceContract(parsed.payloads['Custom Instructions'], errors);
     checkLiveSemantics(parsed.payloads, errors);
+    checkLiveSecretContract(parsed.addOns[0], errors);
   }
   checkProtocol(protocolText, errors);
+  checkTopologyNeutralProtocol(protocolText, errors);
   return {
     ok: errors.length === 0,
     errors,
@@ -827,6 +904,9 @@ module.exports = {
   FORBIDDEN_LEDGER_ORDERING,
   PER_RUN_STAGING_RULES,
   FORBIDDEN_STAGING_PREREQUISITES,
+  LIVE_SECRET_CONTRACT_RULES,
+  TOPOLOGY_PROTOCOL_RULES,
+  FORBIDDEN_TOPOLOGY_PROTOCOL,
   PROTOCOL_CATEGORIES,
   MAPPING_LABELS,
   normalizeLf,
@@ -839,6 +919,8 @@ module.exports = {
   checkDocumentedMeasurements,
   checkPayloadLimits,
   checkCopyInstructions,
+  checkLiveSecretContract,
+  checkTopologyNeutralProtocol,
   checkExternalRuntimeDependency,
   findTaskSpecificAuthorityViolations,
   checkReusableAuthority,

@@ -10,8 +10,8 @@ Complete-field measurements (payload text only; headings, markers and fences exc
 | Payload | Unicode/LF | CRLF | UTF-8 bytes | SHA-256 |
 |---|---:|---:|---:|---:|---|
 | Immutable Decision/Verification source | 2254 | 2279 | 2254 | d7a33366ebbcf85bbe7875c209185e3416371b6afbc28c9f5e1582ff8821aded |
-| Coding Governance Add-on | 2289 | 2295 | 2293 | 268e3e21abd9fa484dbe7794b877b62e9b5ddb49b8219f3cd95c037d4bbe3ea5 |
-| Complete Custom Instructions field | 4544 | 4576 | 4548 | 297e364a14d184045056263bbd64e9fdb9d29afb14f9ae3a7b8d2c13ed1a8c05 |
+| Coding Governance Add-on | 2637 | 2644 | 2641 | 4d94d3213fa95971983f8896cd7b40ce9f9f8bc4bad18599910a8d5b84fa37fb |
+| Complete Custom Instructions field | 4892 | 4925 | 4896 | 2a13e50d8828860211871773aa621fd0bc641a018722ea3ffe4614374967fae0 |
 | Immutable Response Style source | 248 | 252 | 250 | 698d93b97c2819d1bdba4782651f65144fb1d0d42c2fb0bb7f930261e8858459 |
 | Governance & Closure add-on | 1136 | 1140 | 1138 | c9a7785dcd73d8b85790c2d9580320782485c2c9674641b51ab3472bdcf44d48 |
 | Complete More About You field | 1385 | 1394 | 1389 | 83490c33a4212076256503f957fbd699f94bf21cfab9ceaf392f489420223799 |
@@ -21,7 +21,7 @@ Complete More About You limit: 1,404 CRLF characters; observed product control: 
 
 ## Custom Instructions
 
-These are the two original immutable Custom Instructions source blocks. Preserve their text, order, punctuation, whitespace, and line order exactly. The logical field is their literal contents joined by one LF.
+The Decision/Verification source block below is immutable. Preserve its text, order, punctuation, whitespace, and line order exactly. The Coding Governance Add-on is mutable by owner/Web Design Lock but exact within the currently accepted revision. The logical top field is the immutable block followed by exactly one LF and the current exact add-on.
 
 ### Immutable source block 1 (original Decision Rules and Verification block)
 <!-- immutable-source-block:1 -->
@@ -60,6 +60,7 @@ These are the two original immutable Custom Instructions source blocks. Preserve
 ```text
 # Coding Governance Add-on
 * Supersession: for governed coding work, this add-on replaces only conflicting model, topology, gate and review-workflow wording in the immutable block; its decision, verification, source and safety rules remain.
+* Secrets:names only;values `[REDACTED]`;never expose in output/CLI/URL/history;send to all executors/reviewers+audit before publish. Class:confirmed=>redact+stop path+`SECRET_EXPOSURE_DETECTED`+rotation|containment=`required|not_required|unknown|not_applicable`;possible=>redact+pause path,no invented rotation/global invalidation;none=>continue.
 * User/current Web handoff is sole generic authority for exact-repo consent, provider/model/reasoning, roles, topology, scope and consequential mutations. No fixed model or host route. Installation, capacity, prior grants or available workers grant nothing. Never infer/substitute/partially launch. Default root-only; helpers, nesting or exclusive manager/worker ownership require a complete current-run grant. No overlapping mutation/takeover/replacement without terminal failure/loss and fresh authority.
 * G1–G4 are outer governance gates, not a fixed agent chain: G1/G2 lock architecture/authority; G3 implements, validates and converges under the authorised topology; G4 is fresh isolated read-only exact-head review; independent Web verification owns acceptance/finality. Fast prohibited. Executors never self-grade/finalise; reviewers never implement/dispose their own findings.
 * Before substantive work admit live exact repo/branch/base/head/tree/blobs/scope, clean workspace, current child/PR/parent and Design Lock. Live metadata beats stale body text. Missing/conflicting authority or relevant movement=>fail closed; head movement invalidates validation, Codex, G4 and Web verification. Timeout/missing terminal summary=>inconclusive, never pass. Missing status/check/run/workflow=>absent, not green.

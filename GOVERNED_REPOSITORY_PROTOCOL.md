@@ -22,21 +22,21 @@ Do not treat a masked display as permission to reveal the underlying value. A co
 
 ## Roles and phase sequence
 
-The required sequence is G1 -> G2 -> G3 -> G4. Fast mode is prohibited.
+G1–G4 are outer governance gates, not a fixed agent chain. Fast mode is prohibited.
 
-G1 is Web-owned authority and assignment: establish the repository, parent and child relationship, Design Lock, provider, canonical base, role, model, scope, admission conditions, and finality boundaries.
+G1/G2 are Web-owned architecture, authority, Design Lock, admission and assignment. G1 establishes the repository, parent and child relationship, provider, canonical base, role, model, topology, scope, admission conditions, and finality boundaries.
 
-G2 is Web-owned admission and lock verification: reread the complete current child and parent bodies, verify the live authority packet and exact Git objects, reconcile relevant movement, and dispatch only the assigned role.
+G2 verifies the complete current child and parent bodies, live authority packet, exact Git objects, and relevant movement before dispatching only the current-handoff assignment.
 
-G3 is one fresh isolated implementation executor. It changes only the authorised implementation scope, writes tests first, runs validation, reports evidence, and has no architecture, Design Lock, review, finality, scoring, Ledger, merge, closure, or branch-deletion authority. G3 never self-grades or self-finalises.
+G3 performs authorised implementation, validation and convergence under the topology selected by the current handoff. The current handoff may select default root-only execution, explicitly authorised helpers, or exclusive manager/worker ownership. Installation, available capacity, and prior grants select nothing. G3 changes only the authorised implementation scope, writes tests first, runs validation, reports evidence, and has no architecture, Design Lock, review, finality, scoring, Ledger, merge, closure, or branch-deletion authority. G3 never self-grades or self-finalises.
 
-G4 is one fresh isolated read-only reviewer after the required UAT and exact-head Codex evidence. G4 inspects the exact head, replies to unresolved threads, records durable findings, and returns PASS or AMEND. G4 never implements, resolves, or dismisses its own findings. Material findings remain blocking until implemented, validated, and freshly reviewed.
+G4 is fresh isolated read-only exact-head review under the current handoff after applicable prerequisites. It inspects the exact head and records durable findings; it never implements or disposes its own findings. Material findings remain blocking until implemented, validated, and freshly reviewed.
 
-Web alone owns architecture, Design Lock changes, model assignment, review disposition, finality, accept, ready, merge, close, delete, and review-thread actions. A worker result is evidence, not finality.
+Provider, model, reasoning, role, topology, and exact review-conversation capabilities come from the current handoff. Review inventory remains mandatory, but inventory does not grant mutation authority. Web retains finality and review disposition, as well as architecture, Design Lock changes, accept, ready, merge, close, delete, and review-thread authority. Executor and reviewer results are evidence, not finality.
 
 ## Model assignment
 
-The current authoritative handoff supplies the provider, model, role, and phase assignment. G3 performs only the assigned implementation; G4 performs only the assigned fresh isolated read-only review. Never infer, self-select, substitute, upgrade, downgrade, or route to another model because of memory, availability, cost, capability, or convenience. Never substitute models. An explicit current-chat Web assignment supersedes the canonical default within its scope. A contradiction between provider, model, role, or phase is blocking; missing information is not permission to guess.
+Provider, model, reasoning, role, topology, and exact review-conversation capabilities come from the current handoff. There is no fixed provider or model route. G3 performs only authorised implementation, validation, and convergence under the selected topology; G4 performs only the assigned fresh isolated read-only exact-head review. Never infer, self-select, substitute, upgrade, downgrade, or route to another model because of installation, capacity, availability, memory, cost, capability, prior grants, or convenience. Never substitute models. An explicit current-chat Web assignment supersedes a default only within its stated scope. A contradiction between provider, model, reasoning, role, topology, capability, or phase is blocking; missing information is not permission to guess.
 
 ## Git authority and admission
 
@@ -102,11 +102,13 @@ Use the exact response prefix Ledger queued — <provider> / <canonical base mod
 
 ## Review threads and findings
 
-The unresolved-thread reply is required for every unresolved thread relevant to the exact head. A new distinct material diff finding gets one durable inline review finding when it is anchorable. Include the full exact head, run ID, evidence, correction, and PASS or AMEND impact. Leave the finding unresolved until the owner remediates it and a fresh review validates it.
+Review inventory is mandatory every cycle and before another prompt, G4, ready, merge, closure, or next task. Enumerate relevant unresolved inline threads, review comments, and blocking submitted reviews across relevant open, closed, and merged PRs. Outdated, closed, or merged does not mean cleared. Carry every actionable finding into the next run and leave valid unfixed or unverified material findings open and blocking.
+
+The current handoff supplies exact review-conversation capabilities. Review conversation mutation requires the applicable exact user/Web or separately authorised review capability; inventory never grants authority to reply, resolve, reopen, or dismiss. Reviewers never implement or dispose their own findings. A new distinct material diff finding gets one durable inline review finding when it is anchorable. Include the full exact head, run ID, evidence, correction, and PASS or AMEND impact. Leave the finding unresolved until the owner remediates it and a fresh review validates it.
 
 When there is no stable inline anchor, create one durable PR review or comment containing the marker g4-anchorless:v1, the full head, run ID, evidence, correction, and impact. An anchorless finding is not a terminal-only report and does not disappear into a private ledger.
 
-Controller-only thread resolution and dismissal is allowed after truthful evidence. Valid dismissal grounds are incorrect premise, stale head, superseded authority, duplicate, or inapplicable. Record the thread ID, exact head, reason, and evidence. Never dismiss to clear a gate, remove feedback, bypass an unresolved material finding, or manufacture a clean state. Reviewers never resolve or dismiss their own findings.
+Controller-only thread resolution and dismissal is allowed after truthful evidence only when the applicable exact capability authorises it. Valid dismissal grounds are incorrect premise, stale head, superseded authority, duplicate, or inapplicable. Record the thread ID, exact head, reason, and evidence. Never dismiss to clear a gate, remove feedback, bypass an unresolved material finding, or manufacture a clean state.
 
 ## Dependencies
 
@@ -120,7 +122,7 @@ The two live fields retain the stable global decision, safety, source-verificati
 
 | Accuracy, current lookup, source verification and uncertainty | Operating principles; immutable Decision/Verification source; live-field source-verification rules |
 | Secret classification, redaction and propagation | Secret protocol; Coding Governance Add-on |
-| G1/G2/G3/G4 roles, fast mode and model assignment | Roles and phase sequence; Model assignment |
+| G1/G2/G3/G4 outer gates, current-handoff topology and model assignment | Roles and phase sequence; Model assignment |
 | Web authority, Design Lock and current-chat precedence | Operating principles; Roles and phase sequence |
 | Git admission, exact objects, scope and head invalidation | Git authority and admission; Governance movement |
 | Waiting, continuation and no fabricated persistence | Waiting and continuation |
@@ -128,7 +130,7 @@ The two live fields retain the stable global decision, safety, source-verificati
 | Governance reconciliation and latest PR context | Reconciliation and closure |
 | Merge, canonical-main readback and branch deletion | Merge and canonical-main readback |
 | Evaluation candidate and Ledger intake | Evaluation candidates; Ledger intake and receipts; Governance & Closure add-on |
-| Review findings, replies, dismissal and controller-only actions | Review threads and findings |
+| Review inventory, findings, exact capabilities and controller-only actions | Review threads and findings |
 | Dependencies and hosted-check absence | Dependencies |
 
 This document is optional maintenance and handoff-authoring context, not a runtime dependency. The live fields contain the permanent rules needed for ordinary operation. A current handoff may use this semantic map when it supplies task-specific detail, but missing access to this document must not disable the live fields; missing or contradictory authority in the current handoff still fails closed for the governed action.

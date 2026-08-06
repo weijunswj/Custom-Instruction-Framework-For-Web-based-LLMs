@@ -36,6 +36,11 @@ const {
   canProgressFromReconciliation,
   stageRunBoundary,
   ledgerAppendProof,
+  LIVE_SECRET_CONTRACT_RULES,
+  TOPOLOGY_PROTOCOL_RULES,
+  FORBIDDEN_TOPOLOGY_PROTOCOL,
+  checkLiveSecretContract,
+  checkTopologyNeutralProtocol,
 } = validator;
 
 const root = path.resolve(__dirname, '..');
@@ -44,7 +49,7 @@ const protocolPath = path.join(root, 'GOVERNED_REPOSITORY_PROTOCOL.md');
 const canonicalCustom = normalizeLf(fs.readFileSync(customPath, 'utf8'));
 const canonicalProtocol = normalizeLf(fs.readFileSync(protocolPath, 'utf8'));
 const BASE_COMMIT = 'd1e926f74d51f432de32bc8932501922765eae20';
-const AMENDMENT_PARENT = 'b30dcc1521912324b824962c1c51b3a748e40cd9';
+const AMENDMENT_PARENT = 'edc87958dc73e8642d53bc7b3a0282455046c832';
 const FORMER_SOURCE_BLOB = '23d589c88e51bc3e09a76f269e4a89157e385e7b';
 const FORMER_FIXTURE_BLOB = '6fe5b92411f16d1f744f319ea1170060b456d4d3';
 const FENCE = String.fromCharCode(96).repeat(3);
@@ -106,24 +111,31 @@ function fixturePayload() {
   return content.slice(0, -1);
 }
 
-test('RED-first A5 proof rejects the exact amendment parent', () => {
+test('RED-first A6 proof rejects the exact amendment parent', () => {
   const parentCustom = readAtRevision(AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
   const parentProtocol = readAtRevision(AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
-  const base = canonicalBaseBlocks();
-  const parentTop = blocksUnder(parentCustom, '## Custom Instructions', '## More about you');
-  const parentMore = blocksUnder(parentCustom, '## More about you')[0];
-  assert.notEqual(measurePayload(parentTop[1]).sha256, TOP_ADDON.sha256);
-  assert.equal(parentMore.includes(base.more), false);
-  assert.notEqual(measurePayload(parentMore).sha256, CLOSURE_ADDON.sha256);
-  assert.equal(parentCustom.includes('mandatory readable detailed module'), true);
-  assert.equal(parentCustom.includes('GOVERNED_REPOSITORY_PROTOCOL.md remains the mandatory'), true);
-  const parentLive = parentCustom + NL + parentProtocol;
-  assert.equal(parentLive.includes('Every Web cycle and before another prompt/G4/ready/merge/closure/next task'), false);
-  assert.equal(parentLive.includes('Live metadata beats stale body text'), false);
-  assert.equal(parentLive.includes('Outdated/closed/merged'), false);
+  const parentTop = blocksUnder(parentCustom, '## Custom Instructions', '## More About You');
+  const parentAddon = parentTop[1];
+  assert.notEqual(measurePayload(parentAddon).sha256, TOP_ADDON.sha256);
+  assert.equal(parentAddon.includes('Secrets:names only'), false);
+  assert.match(parentProtocol, /## Secret protocol[\s\S]*confirmed[\s\S]*possible[\s\S]*none/);
+  assert.equal(parentProtocol.includes('G3 is one fresh isolated implementation executor.'), true);
+  assert.equal(parentProtocol.includes('G4 is one fresh isolated read-only reviewer'), true);
+  assert.equal(parentProtocol.includes('replies to unresolved threads'), true);
+  assert.equal(parentCustom.includes('These are the two original immutable Custom Instructions source blocks.'), true);
+  assert.notEqual(measurePayload(parentAddon).crlf, 2644);
+  const secretErrors = [];
+  checkLiveSecretContract(parentAddon, secretErrors);
+  assert.equal(secretErrors.length > 0, true);
+  const topologyErrors = [];
+  checkTopologyNeutralProtocol(parentProtocol, topologyErrors);
+  assert.ok(topologyErrors.some((error) => error.includes('fixed G3 executor')));
+  assert.ok(topologyErrors.some((error) => error.includes('fixed G4 route')));
+  assert.ok(topologyErrors.some((error) => error.includes('universal G4 reply capability')));
+  assert.ok(validationErrors(parentCustom).some((error) => error.includes('copy-guidance') || error.includes('live-secret-contract')));
 });
 
-test('canonical base source blocks and exact A5 assemblies have locked identity', () => {
+test('canonical base source blocks and exact A6 assemblies have locked identity', () => {
   const baseBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
   assert.equal(baseBlob, FORMER_SOURCE_BLOB);
   const base = canonicalBaseBlocks();
@@ -182,6 +194,62 @@ test('both mutable add-ons reject one-character, line, order and fixed-route mut
     ),
   ];
   for (const mutated of closureMutations) assertIdentityFailure(replaceExact(canonicalCustom, closureAddon, mutated), 'closure add-on mutation');
+});
+
+test('live top secret contract is parsed from the payload and every rule has a specific negative mutation', () => {
+  const parsed = parsePayloads(canonicalCustom);
+  const baselineErrors = [];
+  checkLiveSecretContract(parsed.addOns[0], baselineErrors);
+  assert.deepEqual(baselineErrors, []);
+  for (const [label, needle] of LIVE_SECRET_CONTRACT_RULES) {
+    const mutatedAddon = replaceExact(parsed.addOns[0], needle, '');
+    const mutatedCustom = replaceExact(canonicalCustom, parsed.addOns[0], mutatedAddon);
+    const errors = validationErrors(mutatedCustom);
+    assert.ok(errors.includes('live-secret-contract: ' + label), label + ': ' + errors.join(NL));
+  }
+});
+
+test('protocol topology is current-handoff selected and fixed-chain/capability mutations fail specifically', () => {
+  const baselineErrors = [];
+  checkTopologyNeutralProtocol(canonicalProtocol, baselineErrors);
+  assert.deepEqual(baselineErrors, []);
+  for (const [label, needle] of TOPOLOGY_PROTOCOL_RULES) {
+    const mutated = canonicalProtocol.split(needle).join('');
+    const errors = [];
+    checkTopologyNeutralProtocol(mutated, errors);
+    assert.ok(errors.includes('topology-neutral protocol: ' + label), label + ': ' + errors.join(NL));
+  }
+  const forbiddenMutations = [
+    ['fixed G3 executor', 'G3 is one fresh isolated implementation executor.'],
+    ['fixed G3 topology', 'G3 is the single implementation worker.'],
+    ['fixed G4 route', 'G4 is one fresh isolated read-only reviewer after prerequisites.'],
+    ['universal G4 reply capability', 'G4 is one fresh isolated read-only reviewer and replies to unresolved threads.'],
+    ['universal reviewer mutation', 'Every reviewer may reply, resolve, reopen, or dismiss review conversations.'],
+    ['fixed provider or model route', 'OpenAI GPT-5.6 is a fixed route.'],
+    ['installation-selected topology', 'Installation selects the topology.'],
+    ['capacity-selected topology', 'Available capacity chooses the route.'],
+    ['availability-selected topology', 'Available workers select the worker.'],
+    ['prior-grant-selected topology', 'Prior grants choose the topology.'],
+  ];
+  assert.equal(forbiddenMutations.length, FORBIDDEN_TOPOLOGY_PROTOCOL.length);
+  for (const [label, injection] of forbiddenMutations) {
+    const errors = [];
+    checkTopologyNeutralProtocol(canonicalProtocol + NL + injection, errors);
+    assert.ok(errors.includes('topology-neutral protocol: forbidden ' + label), label + ': ' + errors.join(NL));
+  }
+});
+
+test('copy guidance identifies only the immutable source and exact mutable top add-on', () => {
+  assert.equal(canonicalCustom.includes('The Decision/Verification source block below is immutable.'), true);
+  assert.equal(canonicalCustom.includes('The Coding Governance Add-on is mutable by owner/Web Design Lock but exact within the currently accepted revision.'), true);
+  assert.equal(canonicalCustom.includes('The logical top field is the immutable block followed by exactly one LF and the current exact add-on.'), true);
+  const mutated = replaceExact(
+    canonicalCustom,
+    'The Decision/Verification source block below is immutable.',
+    'These are the two original immutable Custom Instructions source blocks.',
+  );
+  const errors = validationErrors(mutated);
+  assert.ok(errors.includes('copy-guidance: mutable add-on described as immutable'), errors.join(NL));
 });
 
 test('task-specific issue, repository, Git-object and mandatory-document injections fail', () => {
