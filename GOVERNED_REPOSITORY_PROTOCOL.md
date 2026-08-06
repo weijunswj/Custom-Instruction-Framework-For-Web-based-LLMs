@@ -1,6 +1,6 @@
 # Governed Repository Protocol
 
-This is the readable canonical operational module for governed repository work. It is loaded with the current authoritative handoff whenever a task can change a governed repository. The already-installed top Custom Instructions field is immutable and its two source blocks remain byte-preserved. The replacement More about you field carries a compact pointer to this module. This module remains mandatory task context and is not a UI copy block.
+This is readable maintenance documentation, a semantic map, and a handoff-authoring reference for governed repository work. It is not mandatory runtime context and ordinary ChatGPT operation must not depend on loading it. The two live fields are self-contained; this document may explain, map, and help author current handoffs without becoming a runtime prerequisite or UI copy block.
 
 ## Operating principles
 
@@ -78,7 +78,7 @@ Late result, head movement, relevant governance movement, or a changed payload i
 
 Governance writes are guarded. Before a write, reread the complete target, bind the intended revision, compare with the current body, preserve unrelated entries and chronology, and reject relevant concurrent movement. Reconcile the child, its PR, one parent entry, and the chronology comment as one ordered operation. There is one parent thread and one direct child/task; do not create nested follow-up siblings.
 
-Before closure work, inspect the latest five relevant PRs, or all if fewer. Include open, closed, and merged PRs; review submissions and threads; bot behaviour; amendment patterns; recently rejected approaches; superseded workflow patterns; and repository-specific risks. History is context only and never overrides current authority.
+Before closure work, inspect the relevant accessible PR history, including open, closed, and merged PRs; review submissions and threads; bot behaviour; amendment patterns; recently rejected approaches; superseded workflow patterns; and repository-specific risks. History is context only and never overrides current authority.
 
 Finality requires exact authority and scope, green verified checks, a fresh exact-head G4 PASS, required Codex evidence, a non-draft mergeable PR, no blocking review or hold, and independent Web verification. Executors and reviewers do not grant finality.
 
@@ -116,10 +116,10 @@ Dependency evidence must distinguish implemented from verified. A hosted-check a
 
 ## Semantic mapping
 
-The immutable top Custom Instructions field retains the stable global decision and security rules, while More about you carries the compact mandatory-protocol pointer; this table maps every materially removed detailed rule to its canonical module location. No rule is removed silently.
+The two live fields retain the stable global decision, safety, source-verification, coding-governance and closure rules needed for ordinary operation; this table maps detailed maintenance and handoff-authoring material to its canonical module location. No rule is removed silently.
 
-| Accuracy, current lookup, source verification and uncertainty | Operating principles; immutable Custom Instructions source blocks; More about you protocol pointer |
-| Secret classification, redaction and propagation | Secret protocol; Custom Instructions security paragraph |
+| Accuracy, current lookup, source verification and uncertainty | Operating principles; immutable Decision/Verification source; live-field source-verification rules |
+| Secret classification, redaction and propagation | Secret protocol; Coding Governance Add-on |
 | G1/G2/G3/G4 roles, fast mode and model assignment | Roles and phase sequence; Model assignment |
 | Web authority, Design Lock and current-chat precedence | Operating principles; Roles and phase sequence |
 | Git admission, exact objects, scope and head invalidation | Git authority and admission; Governance movement |
@@ -127,8 +127,8 @@ The immutable top Custom Instructions field retains the stable global decision a
 | Readiness, Codex watermark and missing checks | Readiness and Codex watermark; Dependencies |
 | Governance reconciliation and latest PR context | Reconciliation and closure |
 | Merge, canonical-main readback and branch deletion | Merge and canonical-main readback |
-| Evaluation candidate and Ledger intake | Evaluation candidates; Ledger intake and receipts |
+| Evaluation candidate and Ledger intake | Evaluation candidates; Ledger intake and receipts; Governance & Closure add-on |
 | Review findings, replies, dismissal and controller-only actions | Review threads and findings |
 | Dependencies and hosted-check absence | Dependencies |
 
-The detailed protocol is mandatory task context, not optional background. If the current authoritative handoff does not name or provide the applicable protocol, fail closed for the governed action.
+This document is optional maintenance and handoff-authoring context, not a runtime dependency. The live fields contain the permanent rules needed for ordinary operation. A current handoff may use this semantic map when it supplies task-specific detail, but missing access to this document must not disable the live fields; missing or contradictory authority in the current handoff still fails closed for the governed action.

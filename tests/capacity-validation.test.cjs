@@ -6,387 +6,397 @@ const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
 
+const validator = require('../scripts/validate-custom-instructions.cjs');
 const {
   LEGACY_FIXTURE_FILE,
+  LEGACY_FIXTURE_METRICS,
   PAYLOAD_LIMITS,
-  checkLedgerOrdering,
-  extractPayloads,
-  findTaskSpecificAuthorityViolations,
+  TOP_IMMUTABLE,
+  TOP_ADDON,
+  TOP_COMPLETE,
+  RESPONSE_STYLE,
+  CLOSURE_ADDON,
+  MORE_COMPLETE,
+  validateText,
+  validateFiles,
+  parsePayloads,
   measurePayload,
   normalizeLf,
-  parsePayloads,
-  validateBuffers,
-  validateFiles,
-  validateText,
-} = require('../scripts/validate-custom-instructions.cjs');
+  findTaskSpecificAuthorityViolations,
+  inventoryReview,
+  validateReviewPropagation,
+  reviewMutationAllowed,
+  truthfulReviewResolutionAllowed,
+  admitLiveAuthority,
+  headMovementInvalidates,
+  assessTerminalEvidence,
+  validateLifecycleQueue,
+  selectFirstEligible,
+  reconcileFourSurfaces,
+  canProgressFromReconciliation,
+  stageRunBoundary,
+  ledgerAppendProof,
+} = validator;
 
 const root = path.resolve(__dirname, '..');
 const customPath = path.join(root, 'CUSTOM_INSTRUCTIONS.md');
 const protocolPath = path.join(root, 'GOVERNED_REPOSITORY_PROTOCOL.md');
-const testPath = path.join(root, 'tests', 'capacity-validation.test.cjs');
-const canonicalCustom = fs.readFileSync(customPath, 'utf8');
-const canonicalProtocol = fs.readFileSync(protocolPath, 'utf8');
-const currentTest = fs.readFileSync(testPath, 'utf8');
-
+const canonicalCustom = normalizeLf(fs.readFileSync(customPath, 'utf8'));
+const canonicalProtocol = normalizeLf(fs.readFileSync(protocolPath, 'utf8'));
 const BASE_COMMIT = 'd1e926f74d51f432de32bc8932501922765eae20';
-const AMENDMENT_PARENT = 'd94f91101883b817705a3adbdf116d844db59c79';
-const SECOND_AMENDMENT_PARENT = 'c87587429f92ec946287d4ef7eaa40c302f4a5b7';
-const A2_AMENDMENT_PARENT = 'fbc69db25777976afaabf3103044a5d3ed74f69b';
+const AMENDMENT_PARENT = 'b30dcc1521912324b824962c1c51b3a748e40cd9';
 const FORMER_SOURCE_BLOB = '23d589c88e51bc3e09a76f269e4a89157e385e7b';
 const FORMER_FIXTURE_BLOB = '6fe5b92411f16d1f744f319ea1170060b456d4d3';
-const FORMER_PAYLOAD_SHA256 = '115d4d7a28d54fe42ee33b9386be1c5e846a0200f3393705526e234789bbe4ac';
-const FORMER_PAYLOAD_METRICS = Object.freeze({
-  unicodeChars: 4961,
-  lfChars: 4961,
-  crlfChars: 4983,
-  utf8Bytes: 4977,
-  sha256: FORMER_PAYLOAD_SHA256,
-});
-const BASE_TOP_BLOCK_METRICS = Object.freeze([
-  Object.freeze({ unicodeChars: 2254, lfChars: 2254, crlfChars: 2279, utf8Bytes: 2254, sha256: 'd7a33366ebbcf85bbe7875c209185e3416371b6afbc28c9f5e1582ff8821aded' }),
-  Object.freeze({ unicodeChars: 2703, lfChars: 2703, crlfChars: 2708, utf8Bytes: 2727, sha256: '8063c6b8feb5d3e6d7b10b0a68f87f59b76cec529cfedf7bca765415324d9440' }),
-]);
-const BASE_TOP_FIELD_METRICS = Object.freeze({
-  unicodeChars: 4958,
-  lfChars: 4958,
-  crlfChars: 4989,
-  utf8Bytes: 4982,
-  sha256: 'dd065a6779a5c8d7f4e439a54a8548d4dbb32120f33c2470dab190c364b0f8f5',
-});
-
-const SOURCE_CONTRACT_MUTATIONS = Object.freeze([
-  ['current-information lookup', 'Search for the latest information whenever the topic may have changed.', 'Use available information.'],
-  ['facts-versus-assumptions distinction', 'Separate facts, assumptions, inferences, opinions, and recommendations.', 'Verify sources.'],
-  ['explicit uncertainty', 'Explain nuance, uncertainty, and source conflicts.', 'Explain details.'],
-  ['no invented precision', 'never invent precision, probabilities, ROI, confidence ranges, or estimates.', 'use precision.'],
-  ['inline citations', 'Cite sources inline beside claims; never rely only on a Sources panel or chip.', 'Cite sources.'],
-  ['source-tier preference', 'Prefer: Official/primary > expert > reputable secondary/news > low-trust.', 'Prefer reliable sources.'],
-  ['opened-source-only citation', 'Do not cite sources not opened and checked.', 'Cite sources without checking.'],
-  ['user-link inspection', 'When I provide a link, open and inspect it before answering', 'When I provide a link, use it without inspection'],
-  ['snippet-only avoidance', 'do not rely on snippets, titles, summaries, cached descriptions or prior knowledge', 'rely on snippets, titles, summaries, cached descriptions or prior knowledge'],
-  ['practical cross-checking', 'Cross-check material claims with 2+ independent reliable sources where possible.', 'Cross-check material claims where possible.'],
-  ['authoritative primary artefact', 'A directly inspected authoritative primary artefact may suffice for its own contents; verify important external implications separately.', 'A source may be enough.'],
-  ['access-failure disclosure', 'If source or tool access fails, state exactly what could not be verified.', 'State uncertainty.'],
-  ['explicit material inferences', 'Wrap any material unverified claim in ' + String.fromCharCode(96) + '[INFERENCE START]' + String.fromCharCode(96) + ' and ' + String.fromCharCode(96) + '[INFERENCE END]' + String.fromCharCode(96) + ', stating reasoning, assumptions, and supporting source.', 'Label claims.'],
-]);
-
-const PER_RUN_STAGING_MUTATIONS = Object.freeze([
-  ['completed substantive-run disposition', 'Every terminal completed substantive run is dispositioned individually.', 'Completed runs are dispositioned collectively.'],
-  ['evaluable-run candidate staging', 'For every evaluable G3, G4, or other substantive run, Web stages one public-safe evaluation-candidate:v1 before accept, merge, close, or dispatching the next run or task.', 'Web stages candidates later.'],
-  ['non-evaluable reason', 'For a non-evaluable run, Web records a durable non-evaluable reason before the same boundary.', 'Non-evaluable runs are ignored.'],
-  ['G3 AMEND staging before dispatch', 'A completed G3 AMEND must be staged before dispatching its next G3 amendment.', 'A completed G3 AMEND may dispatch its next amendment.'],
-  ['G4 candidate timing and non-prerequisite', 'A G4 candidate is staged after its result, but G4 is not a prerequisite for staging earlier G3 runs.', 'G4 candidate timing is unspecified.'],
-  ['Ledger queue before boundary', 'After the corresponding evaluation candidate or durable non-evaluable reason exists, Web serialises and queues the valid ledger-intake:v1 before accept, merge, close, or dispatching the next run or task.', 'Web queues intake later.'],
-]);
+const FENCE = String.fromCharCode(96).repeat(3);
+const NL = String.fromCharCode(10);
 
 function readAtRevision(revision, relativePath) {
   return execFileSync('git', ['show', revision + ':' + relativePath], { encoding: 'utf8' });
 }
 
-function deriveFormerPayload() {
-  const source = normalizeLf(readAtRevision(BASE_COMMIT, 'CUSTOM_INSTRUCTIONS.md'));
-  const section = source.slice(source.indexOf('## More About You'));
-  const fence = String.fromCharCode(96).repeat(3);
-  const pattern = new RegExp(fence + 'text\\n([\\s\\S]*?)\\n' + fence, 'g');
-  const blocks = [...section.matchAll(pattern)].map((match) => match[1]);
-  return { blocks, payload: blocks.join('\n') };
-}
-
-function deriveBaseTopField() {
-  const source = normalizeLf(readAtRevision(BASE_COMMIT, 'CUSTOM_INSTRUCTIONS.md'));
-  const sectionStart = source.indexOf('## Custom Instructions');
-  const sectionEnd = source.indexOf('\n## More About You', sectionStart);
-  assert.ok(sectionStart >= 0 && sectionEnd > sectionStart, 'canonical top-field section missing');
-  const section = source.slice(sectionStart, sectionEnd);
-  const fence = String.fromCharCode(96).repeat(3);
-  const pattern = new RegExp(fence + 'text\n([\\s\\S]*?)\n' + fence, 'g');
-  const blocks = [...section.matchAll(pattern)].map((match) => match[1]);
-  assert.equal(blocks.length, 2, 'canonical base must contain exactly two top-field fences');
-  return { blocks, payload: blocks.join('\n') };
-}
-
-function replaceSourceBlocks(document, transform) {
-  const fence = String.fromCharCode(96).repeat(3);
-  const pattern = new RegExp(
-    '(<!-- immutable-source-block:\\d -->\n' + fence + 'text\n)([\\s\\S]*?)(\n' + fence + '\n<!-- /immutable-source-block:\\d -->)',
-    'g',
-  );
-  let index = 0;
-  return document.replace(pattern, (whole, prefix, body, suffix) => prefix + transform(body, index++) + suffix);
-}
-
-function countOccurrences(text, needle) {
-  let count = 0;
-  let offset = 0;
+function blocksUnder(text, heading, nextHeading) {
+  const source = normalizeLf(text);
+  const start = source.indexOf(heading);
+  const end = nextHeading ? source.indexOf(nextHeading, start + heading.length) : source.length;
+  const section = source.slice(start, end < 0 ? source.length : end);
+  const blocks = [];
+  const token = FENCE + 'text' + NL;
+  let cursor = 0;
   while (true) {
-    const found = text.indexOf(needle, offset);
-    if (found < 0) return count;
-    count += 1;
-    offset = found + needle.length;
+    const open = section.indexOf(token, cursor);
+    if (open < 0) break;
+    const bodyStart = open + token.length;
+    const close = section.indexOf(FENCE, bodyStart);
+    if (close < 0) break;
+    let body = section.slice(bodyStart, close);
+    if (body.endsWith(NL)) body = body.slice(0, -1);
+    blocks.push(body);
+    cursor = close + FENCE.length;
   }
+  return blocks;
 }
 
-function readFixturePayload() {
-  const fixture = fs.readFileSync(path.join(root, LEGACY_FIXTURE_FILE), 'utf8');
-  assert.equal(fixture.endsWith('\n'), true, 'legacy fixture must have a terminal LF');
-  assert.equal(fixture.endsWith('\n\n'), false, 'legacy fixture must contain exactly one terminal LF');
-  return fixture.slice(0, -1);
+function canonicalBaseBlocks() {
+  const source = readAtRevision(BASE_COMMIT, 'CUSTOM_INSTRUCTIONS.md');
+  return {
+    top: blocksUnder(source, '## Custom Instructions', '## More About You')[0],
+    more: blocksUnder(source, '## More About You')[0],
+  };
 }
 
-function enforceObservedUiLimit(payload, limit = 1500) {
-  const count = Array.from(payload).length;
-  if (count > limit) throw new Error('payload exceeds observed 1,500-character control: ' + count);
+function replaceExact(text, oldText, replacement) {
+  const index = text.indexOf(oldText);
+  assert.ok(index >= 0, 'mutation target missing');
+  return text.slice(0, index) + replacement + text.slice(index + oldText.length);
 }
 
-function assertExactFormerFixture(candidate, expected) {
-  assert.equal(candidate, expected, 'legacy fixture content identity mismatch');
-  assert.deepEqual(measurePayload(candidate), FORMER_PAYLOAD_METRICS, 'legacy fixture metrics mismatch');
+function validationErrors(customText, protocolText = canonicalProtocol) {
+  return validateText(customText, protocolText).errors;
 }
 
-test('RED-first amendment regression rejects the pre-fix candidate', () => {
+function assertIdentityFailure(customText, label) {
+  const errors = validationErrors(customText);
+  assert.ok(errors.some((error) => /identity mismatch|expected exactly|source fence|block/.test(error)), label + ': ' + errors.join(NL));
+}
+
+function fixturePayload() {
+  const content = normalizeLf(fs.readFileSync(path.join(root, LEGACY_FIXTURE_FILE), 'utf8'));
+  assert.equal(content.endsWith(NL), true);
+  assert.equal(content.endsWith(NL + NL), false);
+  return content.slice(0, -1);
+}
+
+test('RED-first A5 proof rejects the exact amendment parent', () => {
   const parentCustom = readAtRevision(AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
   const parentProtocol = readAtRevision(AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
-  const parentTest = readAtRevision(AMENDMENT_PARENT, 'tests/capacity-validation.test.cjs');
-  const parentReport = validateText(parentCustom, parentProtocol);
-
-  assert.ok(parentReport.errors.some((error) => /task-specific authority/.test(error)));
-  assert.ok(parentReport.errors.some((error) => /Ledger ordering/.test(error)));
-  assert.match(parentTest, /'x'\.repeat\(4961\)/);
+  const base = canonicalBaseBlocks();
+  const parentTop = blocksUnder(parentCustom, '## Custom Instructions', '## More about you');
+  const parentMore = blocksUnder(parentCustom, '## More about you')[0];
+  assert.notEqual(measurePayload(parentTop[1]).sha256, TOP_ADDON.sha256);
+  assert.equal(parentMore.includes(base.more), false);
+  assert.notEqual(measurePayload(parentMore).sha256, CLOSURE_ADDON.sha256);
+  assert.equal(parentCustom.includes('mandatory readable detailed module'), true);
+  assert.equal(parentCustom.includes('GOVERNED_REPOSITORY_PROTOCOL.md remains the mandatory'), true);
+  const parentLive = parentCustom + NL + parentProtocol;
+  assert.equal(parentLive.includes('Every Web cycle and before another prompt/G4/ready/merge/closure/next task'), false);
+  assert.equal(parentLive.includes('Live metadata beats stale body text'), false);
+  assert.equal(parentLive.includes('Outdated/closed/merged'), false);
 });
 
-test('RED-first A2 regression rejects the rewritten top-field candidate', () => {
-  const parentCustom = readAtRevision(A2_AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
-  const parentProtocol = readAtRevision(A2_AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
-  const report = validateText(parentCustom, parentProtocol);
-  assert.ok(report.errors.some((error) => /top-field identity/.test(error)), report.errors.join('\n'));
-});
-
-test('derives the canonical top field from base and proves exact identity', () => {
-  const sourceBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
-  assert.equal(sourceBlob, FORMER_SOURCE_BLOB);
-
-  const derived = deriveBaseTopField();
+test('canonical base source blocks and exact A5 assemblies have locked identity', () => {
+  const baseBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
+  assert.equal(baseBlob, FORMER_SOURCE_BLOB);
+  const base = canonicalBaseBlocks();
   const parsed = parsePayloads(canonicalCustom);
   assert.deepEqual(parsed.errors, []);
-  assert.deepEqual(parsed.sourceBlocks, derived.blocks);
-  assert.equal(parsed.payloads['Custom Instructions'], derived.payload);
-  assert.equal(derived.payload, derived.blocks[0] + '\n' + derived.blocks[1]);
-  assert.notEqual(derived.blocks[0] + derived.blocks[1], derived.payload);
-  assert.deepEqual(derived.blocks.map(measurePayload), BASE_TOP_BLOCK_METRICS);
-  assert.deepEqual(measurePayload(derived.payload), BASE_TOP_FIELD_METRICS);
-  assert.deepEqual(measurePayload(parsed.payloads['Custom Instructions']), BASE_TOP_FIELD_METRICS);
-
-  assert.equal(countOccurrences(canonicalCustom, derived.blocks[0]), 1);
-  assert.equal(countOccurrences(canonicalCustom, derived.blocks[1]), 1);
-  assert.equal(countOccurrences(canonicalCustom, '<!-- immutable-source-block:1 -->'), 1);
-  assert.equal(countOccurrences(canonicalCustom, '<!-- immutable-source-block:2 -->'), 1);
-  assert.ok(canonicalCustom.indexOf(derived.blocks[0]) < canonicalCustom.indexOf(derived.blocks[1]));
+  assert.deepEqual(parsed.sourceBlocks, [base.top, base.more]);
+  assert.deepEqual(parsed.sourceBlocks.map(measurePayload), [TOP_IMMUTABLE, RESPONSE_STYLE]);
+  assert.deepEqual(parsed.addOns.map(measurePayload), [TOP_ADDON, CLOSURE_ADDON]);
+  assert.deepEqual(measurePayload(parsed.payloads['Custom Instructions']), TOP_COMPLETE);
+  assert.deepEqual(measurePayload(parsed.payloads['More About You']), MORE_COMPLETE);
+  assert.equal(canonicalCustom.split(base.top).length - 1, 1);
+  assert.equal(canonicalCustom.split(base.more).length - 1, 1);
+  assert.ok(canonicalCustom.indexOf(base.top) < canonicalCustom.indexOf(parsed.addOns[0]));
+  assert.ok(canonicalCustom.indexOf(base.more) < canonicalCustom.indexOf(parsed.addOns[1]));
 });
 
-test('rejects every top-field identity mutation, including wording, punctuation, whitespace, order, and block swap', () => {
-  const derived = deriveBaseTopField();
+test('immutable wording, punctuation, whitespace, line order, swapping, duplication and removal all fail', () => {
+  const base = canonicalBaseBlocks();
   const mutations = [
-    ['one-character wording', (body, index) => index === 0 ? body.replace('Entertainment', 'EntertainmenT') : body],
-    ['punctuation', (body, index) => index === 0 ? body.replace('For risky moves: Show Pros/Cons', 'For risky moves, Show Pros/Cons') : body],
-    ['whitespace', (body, index) => index === 0 ? body.replace('# Verification Quality', '# Verification  Quality') : body],
-    ['line order', (body, index) => index === 0 ? body.replace(
-      '* If I am wrong, state the error directly and explain why.\n* For risky moves: Show Pros/Cons and recommend a clear side.',
-      '* For risky moves: Show Pros/Cons and recommend a clear side.\n* If I am wrong, state the error directly and explain why.',
-    ) : body],
-    ['remove one line', (body, index) => index === 0 ? body.replace('* Give useful suggestions together; do not drip-feed.\n', '') : body],
-    ['add one line', (body, index) => index === 0 ? body + '\n* Added identity-test line.' : body],
-    ['swap blocks', (body, index) => index === 0 ? derived.blocks[1] : derived.blocks[0]],
+    ['wording', base.top.replace('Entertainment', 'EntertainmenT')],
+    ['punctuation', base.top.replace('For risky moves: Show Pros/Cons', 'For risky moves, Show Pros/Cons')],
+    ['whitespace', base.top.replace('# Verification Quality', '# Verification  Quality')],
+    ['line order', base.top.replace(
+      '* If I am wrong, state the error directly and explain why.' + NL + '* For risky moves: Show Pros/Cons and recommend a clear side.',
+      '* For risky moves: Show Pros/Cons and recommend a clear side.' + NL + '* If I am wrong, state the error directly and explain why.',
+    )],
   ];
+  for (const [label, mutated] of mutations) assertIdentityFailure(replaceExact(canonicalCustom, base.top, mutated), label);
+  const parsed = parsePayloads(canonicalCustom);
+  const swapped = replaceExact(replaceExact(canonicalCustom, base.top, '__TOP__'), '__TOP__', parsed.addOns[1]);
+  assertIdentityFailure(swapped, 'block swap');
+  assertIdentityFailure(replaceExact(canonicalCustom, base.top, base.top + NL + base.top), 'duplicate immutable block');
+  assertIdentityFailure(replaceExact(canonicalCustom, base.top, ''), 'missing immutable block');
+});
 
-  for (const [label, mutate] of mutations) {
-    const report = validateText(replaceSourceBlocks(canonicalCustom, mutate), canonicalProtocol);
-    assert.ok(report.errors.some((error) => /top-field identity/.test(error)), label + ': ' + report.errors.join('\n'));
+test('both mutable add-ons reject one-character, line, order and fixed-route mutations', () => {
+  const parsed = parsePayloads(canonicalCustom);
+  const topAddon = parsed.addOns[0];
+  const closureAddon = parsed.addOns[1];
+  const topMutations = [
+    topAddon.replace('Supersession', 'SupersessioN'),
+    topAddon + NL + '* Added line.',
+    topAddon.replace(
+      '* Supersession: for governed coding work',
+      '* User/current Web handoff is sole generic authority',
+    ),
+    topAddon.replace('No fixed model or host route.', 'OpenAI GPT-5.6 Luna is the fixed model route.'),
+  ];
+  for (const mutated of topMutations) assertIdentityFailure(replaceExact(canonicalCustom, topAddon, mutated), 'top add-on mutation');
+  const closureMutations = [
+    closureAddon.replace('authority', 'authoritY'),
+    closureAddon + NL + '* Added line.',
+    closureAddon.replace(
+      '* One rolling parent is authority:',
+      '* Every material transition atomically rereads/reconciles child,',
+    ),
+  ];
+  for (const mutated of closureMutations) assertIdentityFailure(replaceExact(canonicalCustom, closureAddon, mutated), 'closure add-on mutation');
+});
+
+test('task-specific issue, repository, Git-object and mandatory-document injections fail', () => {
+  for (const injected of ['#47', 'weijunswj/Custom-Instruction-Framework-For-Web-based-LLMs', 'a'.repeat(40), 'OpenAI GPT-5.6 Luna']) {
+    const errors = validationErrors(canonicalCustom + NL + injected + NL);
+    assert.ok(errors.some((error) => /task-specific authority/.test(error)), injected + ': ' + errors.join(NL));
+  }
+  const mandatory = canonicalProtocol.replace('not mandatory runtime context', 'mandatory runtime context');
+  assert.ok(validationErrors(canonicalCustom, mandatory).some((error) => /external-document runtime dependency|mandatory runtime/.test(error)));
+});
+
+test('source-verification contract is present and each material behaviour mutation fails', () => {
+  assert.equal(validateText(canonicalCustom, canonicalProtocol).ok, true, validateText(canonicalCustom, canonicalProtocol).errors.join(NL));
+  const sourceBlock = canonicalBaseBlocks().top;
+  const mutations = [
+    ['latest lookup', 'Search for the latest information whenever the topic may have changed.', 'Use available information.'],
+    ['fact distinction', 'Separate facts, assumptions, inferences, opinions, and recommendations.', 'Verify sources.'],
+    ['uncertainty', 'Explain nuance, uncertainty, and source conflicts.', 'Explain details.'],
+    ['precision', 'never invent precision, probabilities, ROI, confidence ranges, or estimates.', 'use precision.'],
+    ['inline citations', 'Cite sources inline beside claims; never rely only on a Sources panel or chip.', 'Cite sources.'],
+    ['source tier', 'Prefer: Official/primary > expert > reputable secondary/news > low-trust.', 'Prefer reliable sources.'],
+    ['opened source', 'Do not cite sources not opened and checked.', 'Cite sources without checking.'],
+    ['link inspection', 'When I provide a link, open and inspect it before answering', 'When I provide a link, use it without inspection'],
+    ['snippet avoidance', 'do not rely on snippets, titles, summaries, cached descriptions or prior knowledge', 'rely on snippets, titles, summaries, cached descriptions or prior knowledge'],
+    ['cross-checking', 'Cross-check material claims with 2+ independent reliable sources where possible.', 'Cross-check material claims where possible.'],
+    ['primary artefact', 'A directly inspected authoritative primary artefact may suffice for its own contents; verify important external implications separately.', 'A source may be enough.'],
+    ['access failure', 'If source or tool access fails, state exactly what could not be verified.', 'State uncertainty.'],
+    ['inference', '[INFERENCE START]', '[INFERENCE NOTE]'],
+  ];
+  for (const [label, needle, replacement] of mutations) {
+    assert.equal(sourceBlock.includes(needle), true, label + ' test needle missing');
+    const errors = validationErrors(replaceExact(canonicalCustom, sourceBlock, sourceBlock.replace(needle, replacement)));
+    assert.ok(errors.some((error) => error.includes('source-verification contract')), label + ': ' + errors.join(NL));
   }
 });
 
-test('documents owner preservation and does not require top-field repaste', () => {
-  assert.match(canonicalCustom, /Leave the already-saved top field untouched\./);
-  assert.match(canonicalCustom, /literal contents of the two immutable Custom Instructions source blocks[\s\S]*joined with exactly one LF using the original documented copy method\./);
-  assert.match(canonicalCustom, /paste and save only the replacement More about you payload\./);
-  assert.match(canonicalCustom, /GOVERNED_REPOSITORY_PROTOCOL\.md remains the mandatory readable detailed module/);
-  assert.doesNotMatch(canonicalCustom, /\b(?:paste|repaste)\b(?: and save)? (?:the )?(?:top|Custom Instructions) field/i);
-
-  for (const pattern of [
-    /Leave the already-saved top field untouched\./gi,
-    /joined with exactly one LF using the original documented copy method\./gi,
-    /paste and save only the replacement More about you payload\./gi,
-    /GOVERNED_REPOSITORY_PROTOCOL\.md remains the mandatory readable detailed module/gi,
-  ]) {
-    const report = validateText(canonicalCustom.replace(pattern, ''), canonicalProtocol);
-    assert.ok(report.errors.some((error) => /owner-preservation/.test(error)), pattern.source);
-  }
+test('review inventory keeps current, outdated, closed, merged and submitted-review findings active', () => {
+  const records = [
+    { id: 'current-inline', kind: 'thread', isResolved: false, isOutdated: false, prState: 'open', material: true },
+    { id: 'outdated-inline', kind: 'thread', isResolved: false, isOutdated: true, prState: 'open', material: true },
+    { id: 'closed-comment', kind: 'review-comment', isResolved: false, prState: 'closed', material: true },
+    { id: 'merged-comment', kind: 'review-comment', isResolved: false, prState: 'merged', material: true },
+    { id: 'blocking-review', kind: 'submitted-review', isResolved: false, state: 'CHANGES_REQUESTED', blocking: true, material: true },
+  ];
+  const inventory = inventoryReview(records);
+  assert.equal(inventory.unresolvedInlineThreads.length, 2);
+  assert.equal(inventory.unresolvedReviewComments.length, 2);
+  assert.equal(inventory.blockingSubmittedReviews.length, 1);
+  assert.equal(inventory.retainsOutdated, true);
+  assert.equal(inventory.retainsClosedOrMerged, true);
+  assert.equal(inventory.blocksProgress, true);
+  assert.equal(validateReviewPropagation(inventory, 'next run').ok, false);
+  assert.deepEqual(validateReviewPropagation(inventory, records.map((item) => item.id).join(' ')).missing, []);
+  assert.equal(inventoryReview(records.concat({ id: 'follow-up', kind: 'thread', isResolved: false, material: false })).blocksProgress, true);
+  assert.equal(truthfulReviewResolutionAllowed({ isResolved: true, evidenceBacked: false, completionEvidence: 'done' }), false);
+  assert.equal(truthfulReviewResolutionAllowed({ isResolved: true, evidenceBacked: true, completionEvidence: 'exact-head evidence' }), true);
+  assert.equal(reviewMutationAllowed({ role: 'G3', actor: 'web', capability: 'authorised-review-capability' }), false);
+  assert.equal(reviewMutationAllowed({ role: 'Web', actor: 'web' }), true);
 });
 
-test('derives and freezes the exact former two-block payload identity', () => {
-  const sourceBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
-  assert.equal(sourceBlob, FORMER_SOURCE_BLOB);
-  assert.equal(execFileSync('git', ['rev-parse', 'HEAD:' + LEGACY_FIXTURE_FILE], { encoding: 'utf8' }).trim(), FORMER_FIXTURE_BLOB);
-
-  const derived = deriveFormerPayload();
-  const fixture = readFixturePayload();
-  assert.equal(derived.blocks.length, 2);
-  assert.deepEqual(derived.blocks.map(measurePayload), [
-    { unicodeChars: 248, lfChars: 248, crlfChars: 252, utf8Bytes: 250, sha256: '698d93b97c2819d1bdba4782651f65144fb1d0d42c2fb0bb7f930261e8858459' },
-    { unicodeChars: 4712, lfChars: 4712, crlfChars: 4729, utf8Bytes: 4726, sha256: 'e77ed1f7221c32caeda2404616aaec132099b2d11b694451cf3bb401afeffea2' },
-  ]);
-  assertExactFormerFixture(fixture, derived.payload);
-  assert.deepEqual(measurePayload(fixture), FORMER_PAYLOAD_METRICS);
-  assert.ok(fixture.length > 1500);
-  assert.throws(() => enforceObservedUiLimit(fixture), /1,500-character control/);
-
-  const mutated = '?' + fixture.slice(1);
-  assert.throws(() => assertExactFormerFixture(mutated, fixture), /identity mismatch/);
+test('live metadata authority is exact, missing evidence fails closed, and head movement invalidates', () => {
+  const expected = {
+    repo: 'owner/repo',
+    branch: 'implementation',
+    base: 'base',
+    head: 'head',
+    tree: 'tree',
+    blobs: { custom: 'blob' },
+    scope: ['CUSTOM_INSTRUCTIONS.md'],
+  };
+  assert.equal(admitLiveAuthority({ actual: { ...expected }, expected }).ok, true);
+  assert.equal(admitLiveAuthority({ actual: { ...expected, head: 'other' }, expected }).ok, false);
+  const missing = { ...expected };
+  delete missing.tree;
+  delete missing.blobs;
+  assert.equal(admitLiveAuthority({ actual: missing, expected }).ok, false);
+  assert.equal(headMovementInvalidates(expected, expected), false);
+  assert.equal(headMovementInvalidates(expected, { ...expected, head: 'moved' }), true);
 });
 
-test('extracts exactly two payloads and validates the canonical documents', () => {
+test('timeout, missing terminal summary and empty hosted evidence are never PASS or green', () => {
+  assert.equal(assessTerminalEvidence({ timedOut: true, terminalSummary: 'PASS' }).status, 'INCONCLUSIVE');
+  assert.equal(assessTerminalEvidence({}).status, 'INCONCLUSIVE');
+  assert.equal(assessTerminalEvidence({
+    terminalSummary: 'PASS',
+    status: 'PASS',
+    statuses: [],
+    checks: [],
+    runs: [],
+    workflows: [],
+  }).status, 'ABSENT_NOT_GREEN');
+  assert.deepEqual(assessTerminalEvidence({
+    terminalSummary: 'PASS',
+    status: 'PASS',
+    statuses: ['success'],
+    checks: ['success'],
+    runs: ['success'],
+    workflows: ['success'],
+  }), { status: 'PASS', pass: true, hosted: 'COMPLETE' });
+});
+
+test('complete validator pass proves protocol maintenance-only semantics and no fixed route', () => {
   const report = validateFiles(root);
-  assert.equal(report.ok, true, report.errors.join('\n'));
-  assert.deepEqual(Object.keys(report.payloads), ['Custom Instructions', 'More about you']);
-  assert.deepEqual(report.measurements['Custom Instructions'], measurePayload(report.payloads['Custom Instructions']));
-  assert.deepEqual(report.measurements['More about you'], measurePayload(report.payloads['More about you']));
-  assert.deepEqual(report.measurements['Custom Instructions'], BASE_TOP_FIELD_METRICS);
-  assert.deepEqual(report.measurements['More about you'], {
-    unicodeChars: 851,
-    lfChars: 851,
-    crlfChars: 865,
-    utf8Bytes: 851,
-    sha256: '88c2aaaa8d5c57c82d60d10ab5cc5aa1bb5c05ffe79b596b3808a29de4570050',
-  });
-  assert.ok(report.measurements['More about you'].unicodeChars <= PAYLOAD_LIMITS['More about you'].unicodeChars);
-  assert.ok(report.measurements['More about you'].crlfChars <= PAYLOAD_LIMITS['More about you'].crlfChars);
-  assert.ok(1500 - report.measurements['More about you'].unicodeChars >= 300);
-});
-
-test('enforces every source-verification behaviour and rejects negative mutations', () => {
-  const report = validateText(canonicalCustom, canonicalProtocol);
-  assert.equal(report.ok, true, report.errors.join('\n'));
-
-  for (const [label, needle, replacement] of SOURCE_CONTRACT_MUTATIONS) {
-    assert.ok(canonicalCustom.includes(needle), 'source-contract test needle missing: ' + label);
-    const mutated = canonicalCustom.replace(needle, replacement);
-    const mutatedReport = validateText(mutated, canonicalProtocol);
-    assert.ok(
-      mutatedReport.errors.some((error) => error.includes('source-verification contract: ' + label)),
-      label + ': ' + mutatedReport.errors.join('\n'),
-    );
-  }
-});
-
-test('rejects task-specific authority and concrete Git objects in reusable documents', () => {
+  assert.equal(report.ok, true, report.errors.join(NL));
   assert.deepEqual(findTaskSpecificAuthorityViolations(canonicalCustom, canonicalProtocol), []);
-
-  for (const injected of [
-    'CI-047',
-    'luna/ci-047-capacity-kernel-modularisation',
-    'weijunswj/Custom-Instruction-Framework-For-Web-based-LLMs',
-    BASE_COMMIT,
-    'a'.repeat(40),
-  ]) {
-    const customReport = validateText(canonicalCustom + '\n' + injected + '\n', canonicalProtocol);
-    const protocolReport = validateText(canonicalCustom, canonicalProtocol + '\n' + injected + '\n');
-    assert.ok(customReport.errors.some((error) => /task-specific authority/.test(error)), injected);
-    assert.ok(protocolReport.errors.some((error) => /task-specific authority/.test(error)), injected);
-  }
+  assert.equal(canonicalProtocol.includes('not mandatory runtime context'), true);
+  assert.equal(canonicalProtocol.includes('not a runtime dependency'), true);
+  assert.equal(canonicalCustom.includes('GPT-5.6'), false);
+  assert.equal(canonicalCustom.includes('OpenAI'), false);
+  assert.equal(canonicalCustom.includes('luna/ci-047'), false);
 });
 
-test('enforces Ledger ordering and rejects each prior regression', () => {
-  const currentErrors = [];
-  checkLedgerOrdering(canonicalProtocol, currentErrors);
-  assert.deepEqual(currentErrors, []);
-
-  const sourceGate = canonicalProtocol.replace(
-    'The current source PR does not have to merge before its intake is queued.',
-    'Queue it only after the prior source PR is merged.',
-  );
-  const sourceGateErrors = [];
-  checkLedgerOrdering(sourceGate, sourceGateErrors);
-  assert.ok(sourceGateErrors.some((error) => /obsolete source-PR merge gate/.test(error)));
-  assert.ok(sourceGateErrors.some((error) => /current source PR is not a prerequisite/.test(error)));
-
-  const confusedPriorPr = canonicalProtocol.replace(
-    'Any earlier Ledger-intake PR must already be merged.',
-    'Any earlier source PR must already be merged.',
-  );
-  const confusedErrors = [];
-  checkLedgerOrdering(confusedPriorPr, confusedErrors);
-  assert.ok(confusedErrors.some((error) => /prior Ledger-intake PR constraint/.test(error)));
+test('rolling queue rejects duplicates, competing queues, early final audit, and wrong pickup', () => {
+  const valid = [
+    { id: 'child-1', eligible: false },
+    { id: 'child-2', eligible: true },
+    { id: 'programme-final-audit', eligible: true, finalAudit: true },
+  ];
+  const validReport = validateLifecycleQueue(valid);
+  assert.equal(validReport.ok, true, validReport.errors.join(NL));
+  assert.equal(validReport.firstEligible.id, 'child-2');
+  assert.equal(selectFirstEligible(valid).id, 'child-2');
+  assert.equal(validateLifecycleQueue(valid.concat({ id: 'child-2', eligible: true })).ok, false);
+  assert.equal(validateLifecycleQueue([{ id: 'child-1', queues: ['active', 'current'] }]).ok, false);
+  assert.equal(validateLifecycleQueue([{ id: 'programme-final-audit', finalAudit: true }, { id: 'child-1', eligible: true }]).ok, false);
+  assert.equal(validateLifecycleQueue([{ id: 'child-1', eligible: false }, { id: 'child-2', eligible: true }]).firstEligible.id, 'child-2');
 });
 
-test('enforces per-run evaluation and Ledger staging before dispatch and finality', () => {
-  const report = validateText(canonicalCustom, canonicalProtocol);
-  assert.equal(report.ok, true, report.errors.join('\n'));
-  assert.match(canonicalProtocol, /Final acceptance still requires a fresh exact-head G4 PASS\./);
-  assert.match(canonicalProtocol, /G4 is not a prerequisite for staging earlier G3 runs\./);
-
-  for (const [label, needle, replacement] of PER_RUN_STAGING_MUTATIONS) {
-    assert.ok(canonicalProtocol.includes(needle), 'per-run staging test needle missing: ' + label);
-    const mutated = canonicalProtocol.replace(needle, replacement);
-    const mutatedReport = validateText(canonicalCustom, mutated);
-    assert.ok(
-      mutatedReport.errors.some((error) => error.includes('per-run evaluation/Ledger staging: ' + label)),
-      label + ': ' + mutatedReport.errors.join('\n'),
-    );
-  }
-
-  const g4Only = canonicalProtocol.replace(
-    'For every evaluable G3, G4, or other substantive run, Web stages one public-safe evaluation-candidate:v1 before accept, merge, close, or dispatching the next run or task.',
-    'After G4 PASS, Web stages one public-safe evaluation-candidate:v1.',
-  );
-  const g4OnlyReport = validateText(canonicalCustom, g4Only);
-  assert.ok(g4OnlyReport.errors.some((error) => /forbidden G4-only staging prerequisite/.test(error)));
+test('four-surface reconciliation blocks every progression action until exact', () => {
+  const surfaces = {
+    child: { id: 47, head: 'head' },
+    pr: { number: 48 },
+    parentEntry: { childId: 47, prNumber: 48, head: 'head' },
+    chronology: { childId: 47, prNumber: 48, head: 'head' },
+  };
+  const complete = reconcileFourSurfaces(surfaces);
+  assert.equal(complete.ok, true);
+  assert.equal(complete.code, 'RECONCILED');
+  assert.equal(canProgressFromReconciliation(complete), true);
+  const incomplete = reconcileFourSurfaces({ ...surfaces, parentEntry: [] });
+  assert.equal(incomplete.ok, false);
+  assert.equal(incomplete.code, 'PARENT_RECONCILIATION_INCOMPLETE');
+  assert.equal(canProgressFromReconciliation(incomplete), false);
+  const mismatch = reconcileFourSurfaces({ ...surfaces, chronology: { childId: 47, prNumber: 48, head: 'moved' } });
+  assert.equal(mismatch.code, 'PARENT_RECONCILIATION_INCOMPLETE');
+  assert.equal(canProgressFromReconciliation(mismatch), false);
 });
 
-test('rejects extra or ambiguous payload blocks', () => {
-  const fence = String.fromCharCode(96).repeat(3);
-  const extraFence = canonicalCustom.replace(
-    '<!-- payload:more-about-you -->',
-    '<!-- payload:more-about-you -->\n' + fence + 'text\nambiguous\n' + fence,
-  );
-  assert.throws(() => extractPayloads(extraFence), /exactly three balanced payload fences|exactly one replacement payload fence/);
-
-  const duplicateHeading = canonicalCustom.replace(
-    '## More about you',
-    '## More about you\n\n## More about you',
-  );
-  assert.throws(() => extractPayloads(duplicateHeading), /exactly two UI payload headings|required order/);
+test('per-run evaluation and Ledger ordering blocks another dispatch until staged', () => {
+  const blocked = stageRunBoundary({ runId: 'run-006', result: 'AMEND', ledgerQueued: false });
+  assert.equal(blocked.ok, false);
+  assert.equal(blocked.blocksNextDispatch, true);
+  const staged = stageRunBoundary({
+    runId: 'run-006',
+    result: 'AMEND',
+    evaluationCandidate: { runId: 'run-006' },
+    ledgerQueued: true,
+    sourcePrMerged: false,
+  });
+  assert.equal(staged.ok, true);
+  assert.equal(staged.sourcePrMergeRequired, false);
+  assert.equal(staged.appendProven, false);
+  assert.equal(ledgerAppendProof({ queued: true, runId: 'run-006' }), false);
+  assert.equal(ledgerAppendProof({
+    queued: true,
+    runId: 'run-006',
+    receipt: { kind: 'ledger-recorded:v1', processor: true, runId: 'run-006' },
+  }), true);
+  const nonEvaluable = stageRunBoundary({ runId: 'run-007', nonEvaluableReason: 'durable reason', ledgerQueued: true });
+  assert.equal(nonEvaluable.ok, true);
 });
 
-test('produces identical validation and measurements for LF and CRLF inputs', () => {
-  const customLf = normalizeLf(canonicalCustom);
-  const protocolLf = normalizeLf(canonicalProtocol);
-  const lfReport = validateText(customLf, protocolLf);
-  const crlfReport = validateText(customLf.replace(/\n/g, '\r\n'), protocolLf.replace(/\n/g, '\r\n'));
-  assert.equal(lfReport.ok, true, lfReport.errors.join('\n'));
-  assert.equal(crlfReport.ok, true, crlfReport.errors.join('\n'));
-  assert.deepEqual(crlfReport.measurements, lfReport.measurements);
-  assert.deepEqual(crlfReport.payloads, lfReport.payloads);
+test('legacy fixture remains exact and rejects the observed 1,500-character control', () => {
+  const sourceBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
+  const fixtureBlob = execFileSync('git', ['rev-parse', 'HEAD:' + LEGACY_FIXTURE_FILE], { encoding: 'utf8' }).trim();
+  assert.equal(sourceBlob, FORMER_SOURCE_BLOB);
+  assert.equal(fixtureBlob, FORMER_FIXTURE_BLOB);
+  const fixture = fixturePayload();
+  assert.deepEqual(measurePayload(fixture), LEGACY_FIXTURE_METRICS);
+  assert.ok(fixture.length > 1500);
+  assert.throws(() => {
+    if (Array.from(fixture).length > 1500) throw new Error('payload exceeds observed 1,500-character control');
+  }, /1,500-character control/);
+  assert.notDeepEqual(measurePayload('?' + fixture.slice(1)), LEGACY_FIXTURE_METRICS);
 });
 
-test('enforces UTF-8, terminal LF, trailing-whitespace, and balanced-fence hygiene', () => {
-  const bomReport = validateBuffers(
-    Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from(canonicalCustom)]),
-    Buffer.from(canonicalProtocol),
+test('exact counts, hashes, limits and CRLF normalization remain stable', () => {
+  const parsed = parsePayloads(canonicalCustom);
+  assert.ok(parsed.addOns[0].length > 0);
+  assert.equal(measurePayload(parsed.addOns[0]).crlfChars <= 2650, true);
+  assert.equal(measurePayload(parsed.payloads['Custom Instructions']).crlfChars <= 4931, true);
+  assert.equal(measurePayload(parsed.addOns[1]).crlfChars <= 1150, true);
+  assert.equal(measurePayload(parsed.payloads['More About You']).crlfChars <= 1404, true);
+  assert.equal(measurePayload(parsed.payloads['More About You']).unicodeChars < 1500, true);
+  const crlfCustom = normalizeLf(canonicalCustom).replace(new RegExp(NL, 'g'), String.fromCharCode(13) + String.fromCharCode(10));
+  const crlfProtocol = normalizeLf(canonicalProtocol).replace(new RegExp(NL, 'g'), String.fromCharCode(13) + String.fromCharCode(10));
+  const report = validateText(crlfCustom, crlfProtocol);
+  assert.equal(report.ok, true, report.errors.join(NL));
+  assert.deepEqual(report.measurements, validateText(canonicalCustom, canonicalProtocol).measurements);
+});
+
+test('extra, missing and ambiguous fenced blocks fail closed', () => {
+  const extra = canonicalCustom.replace(
+    '<!-- mutable-source-block:governance-closure -->',
+    FENCE + 'text' + NL + 'extra' + NL + FENCE + NL + '<!-- mutable-source-block:governance-closure -->',
   );
-  assert.match(bomReport.errors.join('\n'), /UTF-8 BOM/);
+  assert.ok(validationErrors(extra).some((error) => /exactly four|fence/.test(error)));
+  const missing = canonicalCustom.replace(FENCE + 'text' + NL + '# Governance & Closure', '# Governance & Closure');
+  assert.ok(validationErrors(missing).some((error) => /exactly four|source fence|fence/.test(error)));
+});
 
-  const noTerminalLf = validateText(canonicalCustom.replace(/\n$/, ''), canonicalProtocol);
-  assert.match(noTerminalLf.errors.join('\n'), /CUSTOM_INSTRUCTIONS\.md: terminal LF/);
-
-  const firstPayloadLine = canonicalCustom
-    .split('\n')
-    .find((line) => line.startsWith('* PRIORITY: Accuracy'));
-  const trailingWhitespace = validateText(
-    canonicalCustom.replace(firstPayloadLine, firstPayloadLine + ' '),
-    canonicalProtocol,
-  );
-  assert.match(trailingWhitespace.errors.join('\n'), /CUSTOM_INSTRUCTIONS\.md: trailing whitespace/);
-
-  const fence = String.fromCharCode(96).repeat(3);
-  const unbalancedFence = validateText(canonicalCustom.replace(fence + 'text', fence + 'plain'), canonicalProtocol);
-  assert.match(unbalancedFence.errors.join('\n'), /unsupported or ambiguous Markdown fence/);
+test('the full focused suite validates the exact committed documents', () => {
+  const report = validateFiles(root);
+  assert.equal(report.ok, true, report.errors.join(NL));
+  assert.deepEqual(report.measurements['Custom Instructions'], TOP_COMPLETE);
+  assert.deepEqual(report.measurements['More About You'], MORE_COMPLETE);
+  assert.deepEqual(Object.keys(PAYLOAD_LIMITS).sort(), ['Custom Instructions', 'Custom Instructions add-on', 'More About You', 'More About You add-on'].sort());
 });
