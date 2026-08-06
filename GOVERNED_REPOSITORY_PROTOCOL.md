@@ -1,6 +1,6 @@
 # Governed Repository Protocol
 
-This is the readable canonical operational module for governed repository work. It is loaded with the current authoritative handoff whenever a task can change a governed repository. The compact UI kernel points here so capacity is not confused with permission to omit procedure. This module is not a UI copy block.
+This is the readable canonical operational module for governed repository work. It is loaded with the current authoritative handoff whenever a task can change a governed repository. The already-installed top Custom Instructions field is immutable and its two source blocks remain byte-preserved. The replacement More about you field carries a compact pointer to this module. This module remains mandatory task context and is not a UI copy block.
 
 ## Operating principles
 
@@ -116,9 +116,9 @@ Dependency evidence must distinguish implemented from verified. A hosted-check a
 
 ## Semantic mapping
 
-The compact UI kernel retains the stable global decision and security rules; this table maps every materially removed detailed rule to its canonical module location. No rule is removed silently.
+The immutable top Custom Instructions field retains the stable global decision and security rules, while More about you carries the compact mandatory-protocol pointer; this table maps every materially removed detailed rule to its canonical module location. No rule is removed silently.
 
-| Accuracy, current lookup, source verification and uncertainty | Operating principles; Custom Instructions first paragraph |
+| Accuracy, current lookup, source verification and uncertainty | Operating principles; immutable Custom Instructions source blocks; More about you protocol pointer |
 | Secret classification, redaction and propagation | Secret protocol; Custom Instructions security paragraph |
 | G1/G2/G3/G4 roles, fast mode and model assignment | Roles and phase sequence; Model assignment |
 | Web authority, Design Lock and current-chat precedence | Operating principles; Roles and phase sequence |

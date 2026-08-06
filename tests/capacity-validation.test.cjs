@@ -14,6 +14,7 @@ const {
   findTaskSpecificAuthorityViolations,
   measurePayload,
   normalizeLf,
+  parsePayloads,
   validateBuffers,
   validateFiles,
   validateText,
@@ -30,7 +31,9 @@ const currentTest = fs.readFileSync(testPath, 'utf8');
 const BASE_COMMIT = 'd1e926f74d51f432de32bc8932501922765eae20';
 const AMENDMENT_PARENT = 'd94f91101883b817705a3adbdf116d844db59c79';
 const SECOND_AMENDMENT_PARENT = 'c87587429f92ec946287d4ef7eaa40c302f4a5b7';
+const A2_AMENDMENT_PARENT = 'fbc69db25777976afaabf3103044a5d3ed74f69b';
 const FORMER_SOURCE_BLOB = '23d589c88e51bc3e09a76f269e4a89157e385e7b';
+const FORMER_FIXTURE_BLOB = '6fe5b92411f16d1f744f319ea1170060b456d4d3';
 const FORMER_PAYLOAD_SHA256 = '115d4d7a28d54fe42ee33b9386be1c5e846a0200f3393705526e234789bbe4ac';
 const FORMER_PAYLOAD_METRICS = Object.freeze({
   unicodeChars: 4961,
@@ -39,21 +42,32 @@ const FORMER_PAYLOAD_METRICS = Object.freeze({
   utf8Bytes: 4977,
   sha256: FORMER_PAYLOAD_SHA256,
 });
+const BASE_TOP_BLOCK_METRICS = Object.freeze([
+  Object.freeze({ unicodeChars: 2254, lfChars: 2254, crlfChars: 2279, utf8Bytes: 2254, sha256: 'd7a33366ebbcf85bbe7875c209185e3416371b6afbc28c9f5e1582ff8821aded' }),
+  Object.freeze({ unicodeChars: 2703, lfChars: 2703, crlfChars: 2708, utf8Bytes: 2727, sha256: '8063c6b8feb5d3e6d7b10b0a68f87f59b76cec529cfedf7bca765415324d9440' }),
+]);
+const BASE_TOP_FIELD_METRICS = Object.freeze({
+  unicodeChars: 4958,
+  lfChars: 4958,
+  crlfChars: 4989,
+  utf8Bytes: 4982,
+  sha256: 'dd065a6779a5c8d7f4e439a54a8548d4dbb32120f33c2470dab190c364b0f8f5',
+});
 
 const SOURCE_CONTRACT_MUTATIONS = Object.freeze([
-  ['current-information lookup', 'Look up current information when facts may have changed.', 'Use current information.'],
-  ['facts-versus-assumptions distinction', 'Verify sources and distinguish facts, assumptions, inferences, opinions, and recommendations;', 'Verify sources.'],
-  ['explicit uncertainty', 'state uncertainty and unresolved conflicts.', 'state uncertainty.'],
-  ['no invented precision', 'Never invent precision.', 'Use precise language.'],
-  ['inline citations', 'Cite sources inline beside the claims they support.', 'Cite sources.'],
-  ['source-tier preference', 'Prefer official or primary sources, followed by expert and reputable secondary sources.', 'Prefer reliable sources.'],
-  ['opened-source-only citation', 'Never cite a source that was not opened and checked.', 'Cite sources without opening them.'],
-  ['user-link inspection', 'When the user supplies a link, open and inspect it before answering.', 'Use supplied links as given.'],
-  ['snippet-only avoidance', 'Do not rely only on snippets, titles, cached descriptions, summaries, search-result text, or memory for a supplied link.', 'Use any available summary for a supplied link.'],
-  ['practical cross-checking', 'Cross-check material claims with at least two independent reliable sources where practical.', 'Cross-check claims when possible.'],
-  ['authoritative primary artefact', 'A directly inspected authoritative primary artefact may be sufficient evidence for its own contents, while important external implications still require separate verification.', 'A source may be enough.'],
-  ['access-failure disclosure', 'State exactly when source, page or tool access failed and what therefore could not be verified.', 'State uncertainty.'],
-  ['explicit material inferences', 'Clearly identify material inferences as inferences and state their reasoning, assumptions and supporting evidence.', 'Identify inferences.'],
+  ['current-information lookup', 'Search for the latest information whenever the topic may have changed.', 'Use available information.'],
+  ['facts-versus-assumptions distinction', 'Separate facts, assumptions, inferences, opinions, and recommendations.', 'Verify sources.'],
+  ['explicit uncertainty', 'Explain nuance, uncertainty, and source conflicts.', 'Explain details.'],
+  ['no invented precision', 'never invent precision, probabilities, ROI, confidence ranges, or estimates.', 'use precision.'],
+  ['inline citations', 'Cite sources inline beside claims; never rely only on a Sources panel or chip.', 'Cite sources.'],
+  ['source-tier preference', 'Prefer: Official/primary > expert > reputable secondary/news > low-trust.', 'Prefer reliable sources.'],
+  ['opened-source-only citation', 'Do not cite sources not opened and checked.', 'Cite sources without checking.'],
+  ['user-link inspection', 'When I provide a link, open and inspect it before answering', 'When I provide a link, use it without inspection'],
+  ['snippet-only avoidance', 'do not rely on snippets, titles, summaries, cached descriptions or prior knowledge', 'rely on snippets, titles, summaries, cached descriptions or prior knowledge'],
+  ['practical cross-checking', 'Cross-check material claims with 2+ independent reliable sources where possible.', 'Cross-check material claims where possible.'],
+  ['authoritative primary artefact', 'A directly inspected authoritative primary artefact may suffice for its own contents; verify important external implications separately.', 'A source may be enough.'],
+  ['access-failure disclosure', 'If source or tool access fails, state exactly what could not be verified.', 'State uncertainty.'],
+  ['explicit material inferences', 'Wrap any material unverified claim in ' + String.fromCharCode(96) + '[INFERENCE START]' + String.fromCharCode(96) + ' and ' + String.fromCharCode(96) + '[INFERENCE END]' + String.fromCharCode(96) + ', stating reasoning, assumptions, and supporting source.', 'Label claims.'],
 ]);
 
 const PER_RUN_STAGING_MUTATIONS = Object.freeze([
@@ -76,6 +90,40 @@ function deriveFormerPayload() {
   const pattern = new RegExp(fence + 'text\\n([\\s\\S]*?)\\n' + fence, 'g');
   const blocks = [...section.matchAll(pattern)].map((match) => match[1]);
   return { blocks, payload: blocks.join('\n') };
+}
+
+function deriveBaseTopField() {
+  const source = normalizeLf(readAtRevision(BASE_COMMIT, 'CUSTOM_INSTRUCTIONS.md'));
+  const sectionStart = source.indexOf('## Custom Instructions');
+  const sectionEnd = source.indexOf('\n## More About You', sectionStart);
+  assert.ok(sectionStart >= 0 && sectionEnd > sectionStart, 'canonical top-field section missing');
+  const section = source.slice(sectionStart, sectionEnd);
+  const fence = String.fromCharCode(96).repeat(3);
+  const pattern = new RegExp(fence + 'text\n([\\s\\S]*?)\n' + fence, 'g');
+  const blocks = [...section.matchAll(pattern)].map((match) => match[1]);
+  assert.equal(blocks.length, 2, 'canonical base must contain exactly two top-field fences');
+  return { blocks, payload: blocks.join('\n') };
+}
+
+function replaceSourceBlocks(document, transform) {
+  const fence = String.fromCharCode(96).repeat(3);
+  const pattern = new RegExp(
+    '(<!-- immutable-source-block:\\d -->\n' + fence + 'text\n)([\\s\\S]*?)(\n' + fence + '\n<!-- /immutable-source-block:\\d -->)',
+    'g',
+  );
+  let index = 0;
+  return document.replace(pattern, (whole, prefix, body, suffix) => prefix + transform(body, index++) + suffix);
+}
+
+function countOccurrences(text, needle) {
+  let count = 0;
+  let offset = 0;
+  while (true) {
+    const found = text.indexOf(needle, offset);
+    if (found < 0) return count;
+    count += 1;
+    offset = found + needle.length;
+  }
 }
 
 function readFixturePayload() {
@@ -106,28 +154,86 @@ test('RED-first amendment regression rejects the pre-fix candidate', () => {
   assert.match(parentTest, /'x'\.repeat\(4961\)/);
 });
 
-test('RED-first source-contract regression rejects amendment parent', () => {
-  const parentCustom = readAtRevision(SECOND_AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
-  const parentProtocol = readAtRevision(SECOND_AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
+test('RED-first A2 regression rejects the rewritten top-field candidate', () => {
+  const parentCustom = readAtRevision(A2_AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
+  const parentProtocol = readAtRevision(A2_AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
   const report = validateText(parentCustom, parentProtocol);
-  assert.ok(report.errors.some((error) => /source-verification contract/.test(error)), report.errors.join('\n'));
+  assert.ok(report.errors.some((error) => /top-field identity/.test(error)), report.errors.join('\n'));
 });
 
-test('RED-first per-run staging regression rejects amendment parent', () => {
-  const parentCustom = readAtRevision(SECOND_AMENDMENT_PARENT, 'CUSTOM_INSTRUCTIONS.md');
-  const parentProtocol = readAtRevision(SECOND_AMENDMENT_PARENT, 'GOVERNED_REPOSITORY_PROTOCOL.md');
-  const report = validateText(parentCustom, parentProtocol);
-  assert.ok(report.errors.some((error) => /per-run evaluation\/Ledger staging/.test(error)), report.errors.join('\n'));
+test('derives the canonical top field from base and proves exact identity', () => {
+  const sourceBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
+  assert.equal(sourceBlob, FORMER_SOURCE_BLOB);
+
+  const derived = deriveBaseTopField();
+  const parsed = parsePayloads(canonicalCustom);
+  assert.deepEqual(parsed.errors, []);
+  assert.deepEqual(parsed.sourceBlocks, derived.blocks);
+  assert.equal(parsed.payloads['Custom Instructions'], derived.payload);
+  assert.equal(derived.payload, derived.blocks[0] + '\n' + derived.blocks[1]);
+  assert.notEqual(derived.blocks[0] + derived.blocks[1], derived.payload);
+  assert.deepEqual(derived.blocks.map(measurePayload), BASE_TOP_BLOCK_METRICS);
+  assert.deepEqual(measurePayload(derived.payload), BASE_TOP_FIELD_METRICS);
+  assert.deepEqual(measurePayload(parsed.payloads['Custom Instructions']), BASE_TOP_FIELD_METRICS);
+
+  assert.equal(countOccurrences(canonicalCustom, derived.blocks[0]), 1);
+  assert.equal(countOccurrences(canonicalCustom, derived.blocks[1]), 1);
+  assert.equal(countOccurrences(canonicalCustom, '<!-- immutable-source-block:1 -->'), 1);
+  assert.equal(countOccurrences(canonicalCustom, '<!-- immutable-source-block:2 -->'), 1);
+  assert.ok(canonicalCustom.indexOf(derived.blocks[0]) < canonicalCustom.indexOf(derived.blocks[1]));
+});
+
+test('rejects every top-field identity mutation, including wording, punctuation, whitespace, order, and block swap', () => {
+  const derived = deriveBaseTopField();
+  const mutations = [
+    ['one-character wording', (body, index) => index === 0 ? body.replace('Entertainment', 'EntertainmenT') : body],
+    ['punctuation', (body, index) => index === 0 ? body.replace('For risky moves: Show Pros/Cons', 'For risky moves, Show Pros/Cons') : body],
+    ['whitespace', (body, index) => index === 0 ? body.replace('# Verification Quality', '# Verification  Quality') : body],
+    ['line order', (body, index) => index === 0 ? body.replace(
+      '* If I am wrong, state the error directly and explain why.\n* For risky moves: Show Pros/Cons and recommend a clear side.',
+      '* For risky moves: Show Pros/Cons and recommend a clear side.\n* If I am wrong, state the error directly and explain why.',
+    ) : body],
+    ['remove one line', (body, index) => index === 0 ? body.replace('* Give useful suggestions together; do not drip-feed.\n', '') : body],
+    ['add one line', (body, index) => index === 0 ? body + '\n* Added identity-test line.' : body],
+    ['swap blocks', (body, index) => index === 0 ? derived.blocks[1] : derived.blocks[0]],
+  ];
+
+  for (const [label, mutate] of mutations) {
+    const report = validateText(replaceSourceBlocks(canonicalCustom, mutate), canonicalProtocol);
+    assert.ok(report.errors.some((error) => /top-field identity/.test(error)), label + ': ' + report.errors.join('\n'));
+  }
+});
+
+test('documents owner preservation and does not require top-field repaste', () => {
+  assert.match(canonicalCustom, /Leave the already-saved top field untouched\./);
+  assert.match(canonicalCustom, /literal contents of the two immutable Custom Instructions source blocks[\s\S]*joined with exactly one LF using the original documented copy method\./);
+  assert.match(canonicalCustom, /paste and save only the replacement More about you payload\./);
+  assert.match(canonicalCustom, /GOVERNED_REPOSITORY_PROTOCOL\.md remains the mandatory readable detailed module/);
+  assert.doesNotMatch(canonicalCustom, /\b(?:paste|repaste)\b(?: and save)? (?:the )?(?:top|Custom Instructions) field/i);
+
+  for (const pattern of [
+    /Leave the already-saved top field untouched\./gi,
+    /joined with exactly one LF using the original documented copy method\./gi,
+    /paste and save only the replacement More about you payload\./gi,
+    /GOVERNED_REPOSITORY_PROTOCOL\.md remains the mandatory readable detailed module/gi,
+  ]) {
+    const report = validateText(canonicalCustom.replace(pattern, ''), canonicalProtocol);
+    assert.ok(report.errors.some((error) => /owner-preservation/.test(error)), pattern.source);
+  }
 });
 
 test('derives and freezes the exact former two-block payload identity', () => {
   const sourceBlob = execFileSync('git', ['rev-parse', BASE_COMMIT + ':CUSTOM_INSTRUCTIONS.md'], { encoding: 'utf8' }).trim();
   assert.equal(sourceBlob, FORMER_SOURCE_BLOB);
+  assert.equal(execFileSync('git', ['rev-parse', 'HEAD:' + LEGACY_FIXTURE_FILE], { encoding: 'utf8' }).trim(), FORMER_FIXTURE_BLOB);
 
   const derived = deriveFormerPayload();
   const fixture = readFixturePayload();
   assert.equal(derived.blocks.length, 2);
-  assert.deepEqual(derived.blocks.map((block) => block.length), [248, 4712]);
+  assert.deepEqual(derived.blocks.map(measurePayload), [
+    { unicodeChars: 248, lfChars: 248, crlfChars: 252, utf8Bytes: 250, sha256: '698d93b97c2819d1bdba4782651f65144fb1d0d42c2fb0bb7f930261e8858459' },
+    { unicodeChars: 4712, lfChars: 4712, crlfChars: 4729, utf8Bytes: 4726, sha256: 'e77ed1f7221c32caeda2404616aaec132099b2d11b694451cf3bb401afeffea2' },
+  ]);
   assertExactFormerFixture(fixture, derived.payload);
   assert.deepEqual(measurePayload(fixture), FORMER_PAYLOAD_METRICS);
   assert.ok(fixture.length > 1500);
@@ -143,8 +249,17 @@ test('extracts exactly two payloads and validates the canonical documents', () =
   assert.deepEqual(Object.keys(report.payloads), ['Custom Instructions', 'More about you']);
   assert.deepEqual(report.measurements['Custom Instructions'], measurePayload(report.payloads['Custom Instructions']));
   assert.deepEqual(report.measurements['More about you'], measurePayload(report.payloads['More about you']));
-  assert.ok(report.measurements['Custom Instructions'].unicodeChars <= PAYLOAD_LIMITS['Custom Instructions'].unicodeChars);
+  assert.deepEqual(report.measurements['Custom Instructions'], BASE_TOP_FIELD_METRICS);
+  assert.deepEqual(report.measurements['More about you'], {
+    unicodeChars: 851,
+    lfChars: 851,
+    crlfChars: 865,
+    utf8Bytes: 851,
+    sha256: '88c2aaaa8d5c57c82d60d10ab5cc5aa1bb5c05ffe79b596b3808a29de4570050',
+  });
   assert.ok(report.measurements['More about you'].unicodeChars <= PAYLOAD_LIMITS['More about you'].unicodeChars);
+  assert.ok(report.measurements['More about you'].crlfChars <= PAYLOAD_LIMITS['More about you'].crlfChars);
+  assert.ok(1500 - report.measurements['More about you'].unicodeChars >= 300);
 });
 
 test('enforces every source-verification behaviour and rejects negative mutations', () => {
@@ -232,7 +347,7 @@ test('rejects extra or ambiguous payload blocks', () => {
     '<!-- payload:more-about-you -->',
     '<!-- payload:more-about-you -->\n' + fence + 'text\nambiguous\n' + fence,
   );
-  assert.throws(() => extractPayloads(extraFence), /exactly two balanced payload fences|exactly one payload fence/);
+  assert.throws(() => extractPayloads(extraFence), /exactly three balanced payload fences|exactly one replacement payload fence/);
 
   const duplicateHeading = canonicalCustom.replace(
     '## More about you',
@@ -264,7 +379,7 @@ test('enforces UTF-8, terminal LF, trailing-whitespace, and balanced-fence hygie
 
   const firstPayloadLine = canonicalCustom
     .split('\n')
-    .find((line) => line.startsWith('Accuracy and verification come before'));
+    .find((line) => line.startsWith('* PRIORITY: Accuracy'));
   const trailingWhitespace = validateText(
     canonicalCustom.replace(firstPayloadLine, firstPayloadLine + ' '),
     canonicalProtocol,

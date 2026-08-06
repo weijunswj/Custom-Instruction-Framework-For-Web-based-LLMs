@@ -39,19 +39,19 @@ const FORBIDDEN_LEDGER_ORDERING = Object.freeze([
 ]);
 
 const SOURCE_CONTRACT_INVARIANTS = Object.freeze([
-  ['current-information lookup', /Look up current information when facts may have changed\./i],
-  ['facts-versus-assumptions distinction', /Verify sources and distinguish facts, assumptions, inferences, opinions, and recommendations;/i],
-  ['explicit uncertainty', /state uncertainty and unresolved conflicts\./i],
-  ['no invented precision', /Never invent precision\./i],
-  ['inline citations', /Cite sources inline beside the claims they support\./i],
-  ['source-tier preference', /Prefer official or primary sources, followed by expert and reputable secondary sources\./i],
-  ['opened-source-only citation', /Never cite a source that was not opened and checked\./i],
-  ['user-link inspection', /When the user supplies a link, open and inspect it before answering\./i],
-  ['snippet-only avoidance', /Do not rely only on snippets, titles, cached descriptions, summaries, search-result text, or memory for a supplied link\./i],
-  ['practical cross-checking', /Cross-check material claims with at least two independent reliable sources where practical\./i],
-  ['authoritative primary artefact', /A directly inspected authoritative primary artefact may be sufficient evidence for its own contents, while important external implications still require separate verification\./i],
-  ['access-failure disclosure', /State exactly when source, page or tool access failed and what therefore could not be verified\./i],
-  ['explicit material inferences', /Clearly identify material inferences as inferences and state their reasoning, assumptions and supporting evidence\./i],
+  ['current-information lookup', /Look up current information when facts may have changed|Search for the latest information whenever the topic may have changed/i],
+  ['facts-versus-assumptions distinction', /Verify sources and distinguish facts, assumptions, inferences, opinions, and recommendations|Separate facts, assumptions, inferences, opinions, and recommendations/i],
+  ['explicit uncertainty', /state uncertainty and unresolved conflicts|Explain nuance, uncertainty, and source conflicts/i],
+  ['no invented precision', /Never invent precision|never invent precision/i],
+  ['inline citations', /Cite sources inline beside (?:claims|the claims)/i],
+  ['source-tier preference', /Prefer official or primary sources, followed by expert and reputable secondary sources|Prefer: Official\/primary > expert > reputable secondary/i],
+  ['opened-source-only citation', /Never cite a source that was not opened and checked|Do not cite sources not opened and checked/i],
+  ['user-link inspection', /When the user supplies a link, open and inspect it before answering|When I provide a link, open and inspect it before answering/i],
+  ['snippet-only avoidance', /Do not rely only on snippets, titles, cached descriptions, summaries, search-result text, or memory for a supplied link|do not rely on snippets, titles, summaries, cached descriptions or prior knowledge/i],
+  ['practical cross-checking', /Cross-check material claims with at least two independent reliable sources where practical|Cross-check material claims with 2\+ independent reliable sources where possible/i],
+  ['authoritative primary artefact', /A directly inspected authoritative primary artefact may be sufficient evidence for its own contents, while important external implications still require separate verification|A directly inspected authoritative primary artefact may suffice for its own contents; verify important external implications separately/i],
+  ['access-failure disclosure', /State exactly when source, page or tool access failed and what therefore could not be verified|If source or tool access fails, state exactly what could not be verified/i],
+  ['explicit material inferences', /Clearly identify material inferences as inferences and state their reasoning, assumptions and supporting evidence|Wrap any material unverified claim in (?:\x60)?\[INFERENCE START\](?:\x60)?[\s\S]*?reasoning, assumptions, and supporting source/i],
 ]);
 
 const PER_RUN_STAGING_RULES = Object.freeze([
@@ -69,34 +69,48 @@ const FORBIDDEN_STAGING_PREREQUISITES = Object.freeze([
   ['G4-only staging prerequisite', /(?:only|solely) after G4(?: PASS| result)/i],
 ]);
 
+const TOP_FIELD_IDENTITIES = Object.freeze({
+  separatorLf: 1,
+  sourceBlocks: Object.freeze([
+    Object.freeze({ unicodeChars: 2254, lfChars: 2254, crlfChars: 2279, utf8Bytes: 2254, sha256: 'd7a33366ebbcf85bbe7875c209185e3416371b6afbc28c9f5e1582ff8821aded' }),
+    Object.freeze({ unicodeChars: 2703, lfChars: 2703, crlfChars: 2708, utf8Bytes: 2727, sha256: '8063c6b8feb5d3e6d7b10b0a68f87f59b76cec529cfedf7bca765415324d9440' }),
+  ]),
+  combined: Object.freeze({ unicodeChars: 4958, lfChars: 4958, crlfChars: 4989, utf8Bytes: 4982, sha256: 'dd065a6779a5c8d7f4e439a54a8548d4dbb32120f33c2470dab190c364b0f8f5' }),
+});
+
+const OWNER_PRESERVATION_RULES = Object.freeze([
+  ['saved top field untouched', /Leave the already-saved top field untouched\./i],
+  ['documented one-LF assembly', /literal contents of the two immutable Custom Instructions source blocks[\s\S]*joined with exactly one LF using the original documented copy method\./i],
+  ['More about you only for UAT', /paste and save only the replacement More about you payload\./i],
+  ['mandatory detailed protocol', /GOVERNED_REPOSITORY_PROTOCOL\.md remains the mandatory readable detailed module/i],
+]);
+
 const PAYLOAD_LIMITS = Object.freeze({
-  'Custom Instructions': Object.freeze({ unicodeChars: 4500, crlfChars: 4650 }),
   'More about you': Object.freeze({ unicodeChars: 1200, crlfChars: 1300 }),
 });
 
 const KERNEL_INVARIANTS = Object.freeze([
-  ['accuracy and verification precedence', /Accuracy and verification come before/],
-  ['current-information lookup', /Look up current information when facts may have changed/],
-  ['source verification and uncertainty', /Verify sources and distinguish[\s\S]*?state uncertainty/],
-  ['secret names and redacted values', /secret names only[\s\S]*?\[REDACTED\]/i],
-  ['secret classification', /confirmed[\s\S]*?possible[\s\S]*?none/],
-  ['secret propagation', /Propagate this protocol to every executor and reviewer/],
-  ['fast mode prohibition', /Fast mode prohibited/],
-  ['G1 through G4 sequence', /G1 -> G2 -> G3 -> G4/],
-  ['Web-only architecture', /Web-only architecture/],
-  ['Design Lock authority', /Design Lock/],
-  ['model assignment authority', /Never infer, select, or substitute models/],
-  ['exact admission authority', /Exact repository, branch, base, head, tree, blob, scope, and clean-checkout admission/],
-  ['relevant head invalidation', /relevant head movement invalidates Codex, G4, and independent Web verification/],
-  ['missing checks are not green', /Missing checks, statuses, runs, and workflows are not green/],
-  ['executor and reviewer boundaries', /reviewers remain read-only[\s\S]*?Executors never self-grade or self-finalise/],
-  ['blocking material findings', /Material findings remain blocking/],
-  ['guarded governance writes', /Guarded governance writes/],
-  ['Web-only review-thread actions', /Web-only review-thread actions/],
-  ['verified merge mechanics', /Expected-head squash merge[\s\S]*?canonical-main readback[\s\S]*?branch deletion only after verified merge/],
-  ['evaluation and Ledger gate', /Pre-closure requires an evaluation disposition and serialised Ledger intake/],
-  ['fail-closed governed work', /Fail closed for governed repository actions/],
-  ['current-chat precedence', /Current-chat explicit Web instructions override defaults/],
+  ['accuracy and verification precedence', /PRIORITY: Accuracy > Insight > Brevity > Entertainment|Accuracy and verification come before/],
+  ['current-information lookup', /Look up current information when facts may have changed|Search for the latest information whenever the topic may have changed/],
+  ['secret names and redacted values', /Secret:names only;values \[REDACTED\]|secret names only[\s\S]*?\[REDACTED\]/i],
+  ['secret classification', /confirmed=credential[\s\S]*?possible=[\s\S]*?none=|confirmed[\s\S]*?possible[\s\S]*?none/],
+  ['secret propagation', /send protocol to every executor\/reviewer|Propagate this protocol to every executor and reviewer/i],
+  ['fast mode prohibition', /Fast prohibited|Fast mode prohibited/],
+  ['G1 through G4 sequence', /G1(?:\u2192| ->)G2(?:\u2192| ->)G3(?:\u2192| ->)G4/],
+  ['Web-only architecture', /Web=sole:arch|Web-only architecture/],
+  ['Design Lock authority', /Design Lock|\bDL\b/],
+  ['model assignment authority', /Never infer, select, or substitute models|Never infer, self-select, substitute|agents never self-select\/substitute/],
+  ['exact admission authority', /exact repo\/branch\/base\/head\/tree\/blob\/scope\+clean-checkout admission|Exact repository, branch, base, head, tree, blob, scope, and clean-checkout admission/],
+  ['relevant head invalidation', /head movement invalidates(?: exact-head)?(?: validation\/green evidence)?/],
+  ['missing checks are not green', /absent status\/check\/run\/workflow\u2260green|Missing checks, statuses, runs, and workflows are not green/],
+  ['executor and reviewer boundaries', /reviewers never edit\/self-finalise|reviewers remain read-only[\s\S]*?Executors never self-grade/],
+  ['blocking material findings', /finding\u2192tests\u2192green validation|findings\u2192tests\u2192green validation|Material findings remain blocking/],
+  ['guarded governance writes', /Governance writes=guarded|Guarded governance writes/],
+  ['Web-only review-thread actions', /Controller-only thread actions|Web-only review-thread actions/],
+  ['verified merge mechanics', /Safe final merge execution|expected-head squash merge[\s\S]*?canonical-main readback/i],
+  ['evaluation and Ledger gate', /Before accept\/merge\/close\/next|before accept, merge, close, or dispatching the next run or task|Pre-closure requires an evaluation disposition and serialised Ledger intake/i],
+  ['fail-closed governed work', /fail closed/],
+  ['current-chat precedence', /latest applicable explicit Web instruction|Current-chat explicit Web instructions override defaults/],
 ]);
 
 const PROTOCOL_CATEGORIES = Object.freeze([
@@ -205,34 +219,56 @@ function parsePayloads(customText) {
     errors.push(`unsupported or ambiguous Markdown fence at line ${index + 1}`);
   });
   if (openFence) errors.push(`unclosed Markdown fence at line ${openFence.index + 1}`);
-  if (fences.length !== 2) errors.push(`expected exactly two balanced payload fences, found ${fences.length}`);
+  if (fences.length !== 3) errors.push(`expected exactly three balanced payload fences, found ${fences.length}`);
 
   const payloads = {};
-  for (let i = 0; i < headingIndexes.length; i += 1) {
-    const heading = headingIndexes[i];
-    const sectionEnd = headingIndexes[i + 1]?.index ?? lines.length;
-    const sectionFences = fences.filter(({ open, close }) => open > heading.index && close < sectionEnd);
-    if (sectionFences.length !== 1) {
-      errors.push(`${heading.name}: expected exactly one payload fence, found ${sectionFences.length}`);
-      continue;
+  let sourceBlocks = [];
+  const customHeading = headingIndexes.find(({ name }) => name === 'Custom Instructions');
+  const moreHeading = headingIndexes.find(({ name }) => name === 'More about you');
+  const customEnd = moreHeading?.index ?? lines.length;
+  const customFences = customHeading
+    ? fences.filter(({ open, close }) => open > customHeading.index && close < customEnd)
+    : [];
+  const moreFences = moreHeading
+    ? fences.filter(({ open }) => open > moreHeading.index)
+    : [];
+
+  if (customFences.length !== 2) {
+    errors.push(`Custom Instructions: expected exactly two immutable source fences, found ${customFences.length}`);
+  } else {
+    sourceBlocks = customFences.map(({ open, close }) => lines.slice(open + 1, close).join('\n'));
+    for (let index = 0; index < customFences.length; index += 1) {
+      const fence = customFences[index];
+      const marker = `<!-- immutable-source-block:${index + 1} -->`;
+      const closeMarker = `<!-- /immutable-source-block:${index + 1} -->`;
+      const section = lines.slice(customHeading.index + 1, customEnd);
+      if (section.filter((line) => line === marker).length !== 1 || section.filter((line) => line === closeMarker).length !== 1) {
+        errors.push(`Custom Instructions source block ${index + 1}: markers must appear exactly once`);
+      }
+      if (lines[fence.open - 1] !== marker || lines[fence.close + 1] !== closeMarker) {
+        errors.push(`Custom Instructions source block ${index + 1}: markers must directly surround its fence`);
+      }
     }
-    const [fence] = sectionFences;
-    const marker = heading.name === 'Custom Instructions' ? 'custom-instructions' : 'more-about-you';
-    const openMarker = `<!-- payload:${marker} -->`;
-    const closeMarker = `<!-- /payload:${marker} -->`;
-    const section = lines.slice(heading.index + 1, sectionEnd);
-    const openMarkerCount = section.filter((line) => line === openMarker).length;
-    const closeMarkerCount = section.filter((line) => line === closeMarker).length;
-    if (openMarkerCount !== 1 || closeMarkerCount !== 1) {
-      errors.push(`${heading.name}: payload markers must appear exactly once`);
-    }
-    if (lines[fence.open - 1] !== openMarker || lines[fence.close + 1] !== closeMarker) {
-      errors.push(`${heading.name}: payload markers must directly surround its fence`);
-    }
-    payloads[heading.name] = lines.slice(fence.open + 1, fence.close).join('\n');
+    payloads['Custom Instructions'] = sourceBlocks.join('\n'.repeat(TOP_FIELD_IDENTITIES.separatorLf));
   }
 
-  return { source, payloads, errors };
+  if (moreFences.length !== 1) {
+    errors.push(`More about you: expected exactly one replacement payload fence, found ${moreFences.length}`);
+  } else {
+    const [fence] = moreFences;
+    const openMarker = '<!-- payload:more-about-you -->';
+    const closeMarker = '<!-- /payload:more-about-you -->';
+    const section = lines.slice(moreHeading.index + 1);
+    if (section.filter((line) => line === openMarker).length !== 1 || section.filter((line) => line === closeMarker).length !== 1) {
+      errors.push('More about you: payload markers must appear exactly once');
+    }
+    if (lines[fence.open - 1] !== openMarker || lines[fence.close + 1] !== closeMarker) {
+      errors.push('More about you: payload markers must directly surround its fence');
+    }
+    payloads['More about you'] = lines.slice(fence.open + 1, fence.close).join('\n');
+  }
+
+  return { source, payloads, sourceBlocks, errors };
 }
 
 function extractPayloads(customText) {
@@ -249,13 +285,14 @@ function checkDocumentedMeasurements(customText, payloads, errors) {
   }
   if (!source.includes(header)) errors.push('payload measurement table header is missing or changed');
 
-  const rows = [...source.matchAll(/^\| (Custom Instructions|More about you) \| (\d+) \| (\d+) \| (\d+) \| (\d+) \| ([0-9a-f]{64}) \|$/gm)];
+  const rows = [...source.matchAll(/^\| (Custom Instructions \(combined logical field\)|More about you) \| (\d+) \| (\d+) \| (\d+) \| (\d+) \| ([0-9a-f]{64}) \|$/gm)];
   if (rows.length !== 2) {
     errors.push(`expected exactly two documented measurement rows, found ${rows.length}`);
     return;
   }
   const documented = {};
-  for (const [, name, unicodeChars, lfChars, crlfChars, utf8Bytes, sha256] of rows) {
+  for (const [, documentedName, unicodeChars, lfChars, crlfChars, utf8Bytes, sha256] of rows) {
+    const name = documentedName === 'Custom Instructions (combined logical field)' ? 'Custom Instructions' : documentedName;
     if (documented[name]) errors.push(`duplicate documented measurement row for ${name}`);
     documented[name] = {
       unicodeChars: Number(unicodeChars),
@@ -292,10 +329,44 @@ function checkPayloadLimits(payloads, errors) {
   }
 }
 
-function checkKernelInvariants(payloads, errors) {
-  const kernel = Object.values(payloads).join('\n');
+function checkKernelInvariants(payloads, protocolText, errors) {
+  const kernel = Object.values(payloads).join('\n') + '\n' + protocolText;
   for (const [label, pattern] of KERNEL_INVARIANTS) {
     if (!pattern.test(kernel)) errors.push(`missing global-kernel invariant: ${label}`);
+  }
+}
+
+function checkTopFieldIdentity(sourceBlocks, topPayload, errors) {
+  if (!Array.isArray(sourceBlocks) || sourceBlocks.length !== TOP_FIELD_IDENTITIES.sourceBlocks.length || typeof topPayload !== 'string') {
+    errors.push('top-field identity mismatch: expected exactly two canonical source blocks');
+    return;
+  }
+  sourceBlocks.forEach((block, index) => {
+    const actual = measurePayload(block);
+    const expected = TOP_FIELD_IDENTITIES.sourceBlocks[index];
+    for (const field of Object.keys(expected)) {
+      if (actual[field] !== expected[field]) {
+        errors.push(`top-field identity mismatch: source block ${index + 1} ${field} ${actual[field]} does not match ${expected[field]}`);
+      }
+    }
+  });
+  const combined = measurePayload(topPayload);
+  for (const field of Object.keys(TOP_FIELD_IDENTITIES.combined)) {
+    if (combined[field] !== TOP_FIELD_IDENTITIES.combined[field]) {
+      errors.push(`top-field identity mismatch: combined ${field} ${combined[field]} does not match ${TOP_FIELD_IDENTITIES.combined[field]}`);
+    }
+  }
+}
+
+function checkOwnerPreservation(customText, errors) {
+  for (const [label, pattern] of OWNER_PRESERVATION_RULES) {
+    if (!pattern.test(customText)) errors.push('missing owner-preservation instruction: ' + label);
+  }
+}
+
+function checkMoreAboutYouPointer(morePayload, errors) {
+  if (!/For governed repository work, require the current authoritative handoff and applicable GOVERNED_REPOSITORY_PROTOCOL\.md in context; fail closed rather than inventing missing authority\./i.test(morePayload)) {
+    errors.push('missing More about you governed-work fail-closed pointer');
   }
 }
 
@@ -376,13 +447,16 @@ function validateText(customText, protocolText) {
   checkTextHygiene(customText, CUSTOM_FILE, errors);
   checkTextHygiene(protocolText, PROTOCOL_FILE, errors);
   checkReusableAuthority(customText, protocolText, errors);
+  checkOwnerPreservation(customText, errors);
   const parsed = parsePayloads(customText);
   errors.push(...parsed.errors);
   checkPayloadLimits(parsed.payloads, errors);
+  checkTopFieldIdentity(parsed.sourceBlocks, parsed.payloads['Custom Instructions'], errors);
   if (Object.keys(parsed.payloads).length === 2) {
     checkDocumentedMeasurements(customText, parsed.payloads, errors);
-    checkKernelInvariants(parsed.payloads, errors);
+    checkKernelInvariants(parsed.payloads, protocolText, errors);
     checkSourceContract(parsed.payloads['Custom Instructions'], errors);
+    checkMoreAboutYouPointer(parsed.payloads['More about you'], errors);
   }
   checkProtocol(protocolText, errors);
   return {
@@ -459,6 +533,7 @@ module.exports = {
   FOCUSED_FILES,
   FORBIDDEN_LEDGER_ORDERING,
   LEGACY_FIXTURE_FILE,
+  OWNER_PRESERVATION_RULES,
   PROTOCOL_FILE,
   KERNEL_INVARIANTS,
   MAPPING_LABELS,
@@ -468,11 +543,15 @@ module.exports = {
   REQUIRED_LEDGER_ORDERING,
   SOURCE_CONTRACT_INVARIANTS,
   TASK_SPECIFIC_AUTHORITY_PATTERNS,
+  TOP_FIELD_IDENTITIES,
   checkPayloadLimits,
   checkLedgerOrdering,
   checkPerRunStaging,
+  checkMoreAboutYouPointer,
+  checkOwnerPreservation,
   checkReusableAuthority,
   checkSourceContract,
+  checkTopFieldIdentity,
   decodeUtf8,
   extractPayloads,
   findTaskSpecificAuthorityViolations,
