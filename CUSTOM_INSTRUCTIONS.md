@@ -7,7 +7,7 @@
 Measured combined field lengths:
 
 - Custom Instructions (both copy blocks): 4,893 LF / 4,927 CRLF characters
-- More about you (both copy blocks): 1,432 LF / 1,442 CRLF characters
+- More about you (both copy blocks): 1,484 LF / 1,494 CRLF characters
 
 ## Custom Instructions
 
@@ -71,7 +71,7 @@ Measured combined field lengths:
 # Governance & Closure
 * One rolling parent:each material child appears once in Active/Current/Completed;pick first eligible top-down unless owner overrides;no duplicates;final audit last.
 * Material transition rereads child/PR/one parent entry/chronology;writes bind observed revisions,preserve unrelated content,then final-reread all. Missing/stale/conflicting/concurrent/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
-* Web records new G4 findings durably before AMEND/next;reviewers stay read-only. Delete branch only after intended-head merge succeeds and canonical commit/tree/blob matches.
-* Each terminal substantive run needs a public-safe evaluation candidate;only explicit non-substantive admin/intake/receipt/reconciliation may use a durable reason. Before accept/merge/close/next,serialise Ledger intake;no duplicates/concurrent intake;source PR need not merge first;queued≠appended;only exact processor receipt proves append.
-* Unfinished remediation stays linked+blocking until verified or truthfully disposed. Task objects,schemas,host mechanics and exceptional procedures come from the current handoff;never invent them.
+* Web records new G4 findings durably before AMEND/next;reviewers stay read-only. Delete branch only after intended-head merge succeeds;merge commit=merge result;tree/blob=accepted head.
+* Each terminal substantive run needs a public-safe evaluation candidate;only explicit non-substantive admin/intake/receipt/reconciliation may use a durable reason. Before accept/merge/close/next,serialise Ledger intake;no duplicates/concurrent intake;source PR need not merge first;queued≠appended;matching processor receipt for current intake/run/revision=>appended.
+* Required remediation/follow-up stays linked+blocking until verified or truthfully disposed;optional work never blocks. Task objects,schemas,host mechanics+exceptions come from current handoff;never invent them.
 ```
