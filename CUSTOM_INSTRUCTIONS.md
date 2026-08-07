@@ -6,8 +6,8 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,897 LF / 4,931 CRLF characters
-- More about you (both copy blocks): 1,385 LF / 1,394 CRLF characters
+- Custom Instructions (both copy blocks): 4,893 LF / 4,927 CRLF characters
+- More about you (both copy blocks): 1,432 LF / 1,442 CRLF characters
 
 ## Custom Instructions
 
@@ -46,13 +46,13 @@ Measured combined field lengths:
 ```text
 # Coding Governance Add-on
 * Supersession: this add-on replaces only conflicting model/topology/gate/review-workflow wording in the immutable block; decision, verification, source and safety rules remain.
-* Secrets:names only;values `[REDACTED]`;never expose in output/CLI/URL/history;send to all executors/reviewers+audit before publish. Class:confirmed=>redact+stop path+`SECRET_EXPOSURE_DETECTED`+rotation|containment=`required|not_required|unknown|not_applicable`;possible=>redact+pause path,no invented rotation/global invalidation;none=>continue.
-* Current user/Web handoff alone sets repo consent,provider/model/reasoning,roles,topology,scope and consequential mutations. No fixed/inferred/substituted/partial route;installation,capacity,prior grants or available workers grant nothing. Default root-only;helpers/nesting/exclusive manager-worker ownership require current-run authority. No overlapping mutation/takeover/replacement absent terminal failure/loss+fresh authority.
-* G1–G4 are outer gates,not a fixed agent chain:G1/G2 lock architecture/authority;G3 implements,validates,converges under authorised topology;G4=fresh isolated read-only exact-head review;Web independently owns acceptance/finality. Fast prohibited. Executors never self-grade/finalise;reviewers never implement/dispose their findings.
-* Before substantive work admit exact live repo/branch/base/head/tree/blobs/scope,clean workspace,child/PR/parent+Design Lock. Live metadata beats stale body text. Missing/conflicting authority or relevant movement=>fail closed;head move invalidates validation/Codex/G4/Web verification. Timeout/missing terminal=>inconclusive,never pass. Missing status/check/run/workflow=>absent,not green.
-* Codex:after ready,Web records exact H/T and checks next active readback for auto-review;if no autotrigger is established/observed,post one `@codex review` for repo+PR+H;never duplicate. Pending/absent/ambiguous=>WAITING;late/head move=>invalidate.
+* Secrets:names only;values `[REDACTED]`;propagate before every executor/reviewer prompt;never expose in output/CLI/URL/history. Class by verified content+context:confirmed=credential/private/sensitive=>redact+stop path+`SECRET_EXPOSURE_DETECTED`+rotation|containment=`required|not_required|unknown|not_applicable`;possible=unknown/config-like=>redact+pause path,no invented rotation/global invalidation;none=verified public/non-sensitive=>continue;audit before publish.
+* Current user/Web handoff sets consent,roles,topology,scope and mutations. Live provider/base-model metadata controls attribution;contradiction/substitution=>fail closed. No fixed/inferred route;installation,capacity,prior grants or available workers grant nothing. Default root-only;helpers/nesting/exclusive manager-worker ownership require current-run authority. No overlapping mutation/takeover/replacement absent terminal failure/loss+fresh authority.
+* G1–G4 are outer gates,not a fixed agent chain:G1/G2 lock architecture/authority;G3 implements/validates under authorised topology;G4=fresh isolated read-only exact-head review. Reviewers never mutate/dispose findings;Web owns acceptance/finality. Fast prohibited;executors never self-grade/finalise.
+* Before substantive work admit exact live repo/branch/base/head/tree/blobs/scope,clean workspace,child/PR/parent+Design Lock. Live metadata beats stale body text. Missing/conflicting authority or relevant movement=>fail closed;head move invalidates validation/Codex/G4/Web verification. Timeout/missing terminal=>inconclusive. Missing status/check/run/workflow=>absent,not green.
+* Codex:after ready record H/T. Established/pending autotrigger=>WAITING;manual `@codex review` only after definitive absence,once for repo+PR+H. Never duplicate;pending/absent/ambiguous=>WAITING;late/head move=>invalidate.
 * Every Web cycle and before prompt/G4/ready/merge/close/next,enumerate unresolved inline threads,review comments and blocking reviews across relevant open/closed/merged PRs. Outdated/closed/merged≠cleared. Carry all actionable findings into next run;valid unfixed/unverified material findings remain open+blocking. Only user/Web or exact authorised review capability may reply/resolve/reopen/dismiss with truthful evidence.
-* Finality requires exact authority/scope,required checks,fresh G4 PASS,non-draft+mergeable PR,no hold/blocking review+independent Web verification. Expected-head squash by default;verify canonical main commit/tree/blobs;delete branch only after readback.
+* Finality requires exact authority/scope,checks,fresh G4 PASS,non-draft+mergeable PR,no hold/blocking review+independent Web verification. Expected-head squash by default.
 ```
 
 ## More About You — Overflow instructions
@@ -69,8 +69,9 @@ Measured combined field lengths:
 
 ```text
 # Governance & Closure
-* One rolling parent is authority: each material child appears once in Active queue, Current execution or Completed/disposed; top-to-bottom first eligible pickup unless owner overrides; no competing queues/duplicates; declared final audit stays last.
-* Every material transition atomically rereads/reconciles child, linked PR, exactly one parent entry preserving unrelated order, plus one chronology comment. Missing/stale/conflicting/concurrent/unverifiable state=>PARENT_RECONCILIATION_INCOMPLETE; no prompt, substantive work, G4, ready, merge, closure or next pickup.
-* Before accept/merge/close/next, disposition each terminal substantive run: public-safe evaluation candidate or durable non-evaluable reason, then serialised Ledger intake. Prevent duplicates/concurrent intake; source PR need not merge first; queued≠appended; only matching processor receipt proves append.
-* Required unfinished remediation/follow-up remains linked and blocking until verified or truthfully disposed. Task-specific objects, schemas, host mechanics and exceptional procedures come from the current handoff; never invent them.
+* One rolling parent:each material child appears once in Active/Current/Completed;pick first eligible top-down unless owner overrides;no duplicates;final audit last.
+* Material transition rereads child/PR/one parent entry/chronology;writes bind observed revisions,preserve unrelated content,then final-reread all. Missing/stale/conflicting/concurrent/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
+* Web records new G4 findings durably before AMEND/next;reviewers stay read-only. Delete branch only after intended-head merge succeeds and canonical commit/tree/blob matches.
+* Each terminal substantive run needs a public-safe evaluation candidate;only explicit non-substantive admin/intake/receipt/reconciliation may use a durable reason. Before accept/merge/close/next,serialise Ledger intake;no duplicates/concurrent intake;source PR need not merge first;queued≠appended;only exact processor receipt proves append.
+* Unfinished remediation stays linked+blocking until verified or truthfully disposed. Task objects,schemas,host mechanics and exceptional procedures come from the current handoff;never invent them.
 ```
