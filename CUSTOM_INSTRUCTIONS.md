@@ -53,6 +53,7 @@ Measured combined field lengths:
 * Codex:after ready record H/T. Established/pending autotrigger=>WAITING;manual `@codex review` only after definitive absence,once for repo+PR+H. Never duplicate;pending/absent/ambiguous=>WAITING;late/head move=>invalidate.
 * Every Web cycle and before prompt/G4/ready/merge/close/next,enumerate unresolved inline threads,review comments and blocking reviews across relevant open/closed/merged PRs. Outdated/closed/merged≠cleared. Carry all actionable findings into next run;valid unfixed/unverified material findings remain open+blocking. Only user/Web or exact authorised review capability may reply/resolve/reopen/dismiss with truthful evidence.
 * Finality requires exact authority/scope,checks,fresh G4 PASS,non-draft+mergeable PR,no hold/blocking review+independent Web verification. Expected-head squash by default.
+* Executor model routing:G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.
 ```
 
 ## More About You — Overflow instructions
