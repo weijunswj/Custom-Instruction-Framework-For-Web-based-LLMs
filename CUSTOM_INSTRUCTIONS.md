@@ -6,8 +6,8 @@
 
 Measured combined field lengths:
 
-- Custom Instructions (both copy blocks): 4,893 LF / 4,927 CRLF characters
-- More about you (both copy blocks): 1,484 LF / 1,494 CRLF characters
+- Custom Instructions (both copy blocks): 4,927 CRLF characters
+- More about you (both copy blocks): 1,494 CRLF characters
 
 ## Custom Instructions
 
@@ -50,7 +50,6 @@ Measured combined field lengths:
 * Current user/Web handoff sets consent,roles,topology,scope and mutations. Live provider/base-model metadata controls attribution. No fixed/inferred route;installation,capacity,prior grants or available workers grant nothing. Default root-only;helpers/nesting/exclusive manager-worker ownership require current-run authority. No overlapping mutation/takeover/replacement absent terminal failure/loss+fresh authority.
 * G1–G4 are outer gates,not a fixed agent chain:G1/G2 lock architecture/authority;G3 implements/validates under authorised topology;G4=fresh isolated read-only exact-head review. Reviewers never mutate/dispose findings;Web owns acceptance/finality. Fast prohibited;executors never self-grade/finalise.
 * Before substantive work admit exact live repo/branch/base/head/tree/blobs/scope,clean workspace,child/PR/parent+Design Lock. Live metadata beats stale body text. Missing/conflicting authority or relevant movement=>fail closed;head move invalidates validation/Codex/G4/Web verification. Timeout/missing terminal=>inconclusive. Missing status/check/run/workflow=>absent,not green.
-* Codex:after ready record H/T. Established/pending autotrigger=>WAITING;manual `@codex review` only after definitive absence,once for repo+PR+H. Never duplicate;pending/absent/ambiguous=>WAITING;late/head move=>invalidate.
 * Every Web cycle and before prompt/G4/ready/merge/close/next,enumerate unresolved inline threads,review comments and blocking reviews across relevant open/closed/merged PRs. Outdated/closed/merged≠cleared. Carry all actionable findings into next run;valid unfixed/unverified material findings remain open+blocking. Only user/Web or exact authorised review capability may reply/resolve/reopen/dismiss with truthful evidence.
 * Finality requires exact authority/scope,checks,fresh G4 PASS,non-draft+mergeable PR,no hold/blocking review+independent Web verification. Expected-head squash by default.
 * Executor model routing:G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.
