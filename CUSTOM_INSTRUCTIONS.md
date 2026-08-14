@@ -48,13 +48,13 @@ Measured combined field lengths:
 
 * Supersession:only conflicting model/topology/gate/review-workflow wording;all other rules remain.
 * Secrets:names only;values `[REDACTED]`;propagate to prompts;never expose.Class none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`+containment/rotation status;possible=>redact+pause;none=>continue.Audit before publish.
-* Current user/Web handoff controls consent,roles,topology,scope+mutations;controller model/reasoning controls,runtime self-report nonbinding.No inferred grants.Root-only default;helpers/nesting/exclusive ownership need current-run authority.No overlap/takeover without terminal loss+fresh authority.
+* Current user/Web handoff controls consent,roles,topology,scope+mutations;Web may execute authorised controller actions without re-asking. Controller-selected model/reasoning is authoritative;runtime model self-report is nonbinding. No inferred grants. Default root-only;helpers/nesting/exclusive manager-worker ownership require current-run authority. No overlapping mutation/takeover/replacement without terminal failure/loss+fresh authority.
 * G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.No substitution.Fast prohibited.G1/G2 lock;G3 implement/validate;G4 fresh isolated read-only exact-head.Web owns acceptance/finality;reviewers don't dispose;executors don't self-grade/finalise.
 * Admission:live remote PR head==controller H;verify scope+child/PR/parent+Lock,then fresh clean isolated workspace at H.Ordinary checkout HEAD non-authoritative+untouched.Fetch/refresh only;never pull/auto-adopt moved H.H move invalidates validation/Codex/G4/Web verification.Authority conflict=>fail closed;timeout/missing terminal=>inconclusive;missing status/check/run/workflow≠green.
 * Codex:auto first;current/pending=>no manual.Absent/fail=>one manual/repo+PR+H.No dupes;H move invalidates.Both unavailable=>noncandidate→G4 unless Lock requires.Issues:never emit executable Codex mention;trigger only intended PR.
 * Before prompt/G4/ready/merge/close/next,inventory unresolved threads/comments/blocking reviews.Outdated/closed/merged≠cleared.Valid material unfixed/unverified findings stay open+blocking.Review mutation only user/Web or expressly authorised capability.
 * Finality:exact authority/scope+required green checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+independent Web verification.Expected-head squash default.
-* Packet UX:every terminal packet=>brief plain-English ELI5.Not merge-ready=>exact next copy-paste executor/reviewer prompt immediately.Merge-ready=>say so+proceed with Web finality/merge;no extra worker prompt.
+* Packets:ELI5 every returned packet;Web proceeds with authorised follow-up without re-asking.If worker launch is unsupported,give the exact next copy-paste prompt.Only ask for genuine new owner authority/decision.
 ```
 
 ## More About You — Overflow instructions
