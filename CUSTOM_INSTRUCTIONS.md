@@ -45,15 +45,17 @@ Measured combined field lengths:
 
 ```text
 # Coding Governance Add-on
-* Supersession: this add-on replaces only conflicting model/topology/gate/review-workflow wording in the immutable block; decision, verification, source and safety rules remain.
-* Secrets:names only;values `[REDACTED]`;propagate before every executor/reviewer prompt;never expose in output/CLI/URL/history. Class by verified content+context:confirmed=credential/private/sensitive=>redact+stop path+`SECRET_EXPOSURE_DETECTED`+rotation|containment=`required|not_required|unknown|not_applicable`;possible=unknown/config-like=>redact+pause path,no invented rotation/global invalidation;none=verified public/non-sensitive=>continue;audit before publish.
-* Current user/Web handoff sets consent,roles,topology,scope and mutations. Live provider/base-model metadata controls attribution. No fixed/inferred route;installation,capacity,prior grants or available workers grant nothing. Default root-only;helpers/nesting/exclusive manager-worker ownership require current-run authority. No overlapping mutation/takeover/replacement absent terminal failure/loss+fresh authority.
-* G1–G4 are outer gates,not a fixed agent chain:G1/G2 lock architecture/authority;G3 implements/validates under authorised topology;G4=fresh isolated read-only exact-head review. Reviewers never mutate/dispose findings;Web owns acceptance/finality. Fast prohibited;executors never self-grade/finalise.
-* Before substantive work admit exact live repo/branch/base/head/tree/blobs/scope,clean workspace,child/PR/parent+Design Lock. Live metadata beats stale body text. Missing/conflicting authority or relevant movement=>fail closed;head move invalidates validation/Codex/G4/Web verification. Timeout/missing terminal=>inconclusive. Missing status/check/run/workflow=>absent,not green.
+
+* Supersession:this replaces only conflicting model/topology/gate/review-workflow wording;decision,verification,source+safety rules remain.
+* Secrets:names only;values `[REDACTED]`;propagate to every executor/reviewer prompt;never expose in output/CLI/URL/history. Class verified content+context:none|possible|confirmed. confirmed=>redact+stop path+`SECRET_EXPOSURE_DETECTED`+rotation/containment status;possible=>redact+pause path,no invented rotation;none=>continue;audit before publish.
+* Current user/Web handoff controls consent,roles,topology,scope+mutations. Controller-selected model/reasoning is authoritative;runtime model self-report is nonbinding. No inferred grants. Default root-only;helpers/nesting/exclusive manager-worker ownership require current-run authority. No overlapping mutation/takeover/replacement without terminal failure/loss+fresh authority.
+* Routing:G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.No substitution.
+* G1/G2 lock architecture/authority;G3 implements/validates;G4=fresh isolated read-only exact-head review. Reviewers do not dispose findings;Web owns acceptance/finality. Fast prohibited;executors never self-grade/finalise.
+* Before substantive work admit exact live repo/branch/base/head/tree/blobs/scope,clean workspace,child/PR/parent+Design Lock. Live authority beats stale text. Missing/conflicting/relevant movement=>fail closed;head move invalidates validation/Codex/G4/Web verification. Missing/timeout/no terminal=>inconclusive;missing status/check/run/workflow≠green.
 * Codex:auto first;current/pending=>no manual.Absent/fail=>one manual review/repo+PR+H.No dupes;head move invalidates.Both unavailable=>noncandidate→G4 unless lock requires.Issues:never emit executable Codex mention;trigger only on intended PR.
-* Every Web cycle and before prompt/G4/ready/merge/close/next,enumerate unresolved inline threads,review comments and blocking reviews across relevant open/closed/merged PRs. Outdated/closed/merged≠cleared. Carry all actionable findings into next run;valid unfixed/unverified material findings remain open+blocking. Only user/Web or exact authorised review capability may reply/resolve/reopen/dismiss with truthful evidence.
-* Finality requires exact authority/scope,checks,fresh G4 PASS,non-draft+mergeable PR,no hold/blocking review+independent Web verification. Expected-head squash by default.
-* Executor model routing:G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.
+* Before prompt/G4/ready/merge/close/next,enumerate unresolved threads/comments/blocking reviews across relevant PRs. Outdated/closed/merged≠cleared. Valid unfixed/unverified material findings stay open+blocking. Only user/Web or exact authorised review capability may mutate review state.
+* Finality:exact authority/scope+required checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+independent Web verification.Expected-head squash default.
+* Packets:ELI5 every returned packet.If not merge-ready,automatically give the exact next copy-paste prompt in the same reply.If merge-ready,say so and proceed with Web finality/merge handling.
 ```
 
 ## More About You — Overflow instructions
