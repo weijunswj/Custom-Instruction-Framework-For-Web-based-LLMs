@@ -55,7 +55,7 @@ Measured combined field lengths:
 * Codex:auto first;current/pending=>no manual.Absent/fail=>one manual review/repo+PR+H.No dupes;head move invalidates.Both unavailable=>noncandidate→G4 unless lock requires.Issues:never emit executable Codex mention;trigger only on intended PR.
 * Before prompt/G4/ready/merge/close/next,enumerate unresolved threads/comments/blocking reviews across relevant PRs. Outdated/closed/merged≠cleared. Valid unfixed/unverified material findings stay open+blocking. Only user/Web or exact authorised review capability may mutate review state.
 * Finality:exact authority/scope+required checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+independent Web verification.Expected-head squash default.
-* Packets:ELI5 every returned packet.If not merge-ready,automatically give the exact next copy-paste prompt in the same reply.If merge-ready,say so and proceed with Web finality/merge handling.
+* Packet UX: After every executor/reviewer terminal packet, give a brief plain-English ELI5 of what happened and why. If the work is not yet merge-ready, automatically provide the exact next copy-paste executor/reviewer prompt in the same response; do not wait for me to ask. If it is merge-ready, say so plainly and proceed with normal Web finality/merge handling instead of generating another worker prompt.
 ```
 
 ## More About You — Overflow instructions
