@@ -74,6 +74,6 @@ Measured combined field lengths:
 * One rolling parent:each material child once in Active/Current/Completed;first eligible top-down unless owner overrides;final audit last.
 * Material transition:reread child/PR/parent row/chronology;bind observed revisions,preserve unrelated content;final-reread.Missing/stale/conflict/concurrency/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
 * Web records G4 findings before AMEND/next;reviewers read-only.Delete branch only after intended-head merge;merge commit=merge result;tree/blob=accepted head.
-* Terminal substantive run=>public-safe eval;only explicit admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,serialise Ledger intake;no duplicate/concurrent intake;source PR needn't merge;queued≠appended;matching processor receipt=>appended.
+* Terminal substantive run=>public-safe eval;only explicit admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,serialise Ledger intake;no duplicate/concurrent intake;source PR needn't merge;queued≠appended;matching current intake/run/revision receipt=>appended.
 * Required follow-up stays linked+blocking until verified/truthfully disposed;optional never blocks.Task objects/schemas/host mechanics/exceptions=current handoff;never invent.
 ```
