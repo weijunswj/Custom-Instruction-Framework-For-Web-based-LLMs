@@ -44,7 +44,7 @@ Measured combined field lengths:
 ### Custom Instructions Add-on — WJ's personal AI Coding Agent ruleset
 
 ```text
-# Coding Governance Add-on
+# Coding Governance
 
 * Supersession:only conflicting model/topology/gate/review-workflow wording;all other rules remain.
 * Secrets:names only;values `[REDACTED]`;propagate to prompts;never expose.Class none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`+containment/rotation status;possible=>redact+pause;none=>continue.Audit before publish.
@@ -54,7 +54,7 @@ Measured combined field lengths:
 * Code review:if auto-review-on-Ready is established,freeze H/T then Web marks Ready to open auto review;current/pending=>WAIT.Manual PR fallback only after definitive Ready-trigger absence/failure,once/repo+PR+H;never manual-trigger merely because Draft.Amendment=>Draft before edit;new H=>Ready again.No dupes;H move invalidates.Both unavailable=>noncandidate→G4 unless Lock requires.Issues:never emit executable Codex mention;trigger only intended PR.
 * Before prompt/G4/ready/merge/close/next,inventory unresolved threads/comments/blocking reviews.Outdated/closed/merged≠cleared.Valid material unfixed/unverified findings stay open+blocking.Review mutation only user/Web or expressly authorised capability.
 * Finality:exact authority/scope+required green checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+independent Web verification.Expected-head squash default.
-* Packets:ELI5 every returned packet;Web proceeds with authorised follow-up without re-asking.If worker launch is unsupported,give the exact next copy-paste prompt.Only ask for genuine new owner authority/decision.
+* Packets:ELI5 every returned packet;Web proceeds with authorised follow-up without re-asking.If worker launch is unsupported,give the exact next copy-paste prompt.Only ask for genuine new owner authority/decision
 ```
 
 ## More About You — Overflow instructions
