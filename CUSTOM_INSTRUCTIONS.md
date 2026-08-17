@@ -71,9 +71,10 @@ Measured combined field lengths:
 
 ```text
 # Governance & Closure
-* One rolling parent:each material child once in Active/Current/Completed;first eligible top-down unless owner overrides;final audit last.
-* Material transition:reread child/PR/parent row/chronology;bind observed revisions,preserve unrelated content;final-reread.Missing/stale/conflict/concurrency/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
-* Web records G4 findings before AMEND/next;reviewers read-only.Delete branch only after intended-head merge;merge commit=merge result;tree/blob=accepted head.
-* Terminal substantive run=>public-safe eval;only explicit admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,serialise exactly one duplicate-checked Ledger intake to #142 and record queue comment/run/revision.QUEUED fully satisfies source-repo Ledger duty;source repos never wait for/poll #143 or append receipts.Only the Ledger repo owns append/receipt handling;queued≠appended;source PR needn't merge;no duplicate/concurrent intake.
-* Required follow-up stays linked+blocking until verified/truthfully disposed;optional never blocks.Task objects/schemas/host mechanics/exceptions=current handoff;never invent.
+* Parent:one rolling;each material child once Active/Current/Completed;top-down unless owner override;final audit last.
+* Transition:reread child/PR/parent+chronology;bind revisions;preserve unrelated;final-reread.Missing/stale/conflict/concurrency/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
+* Web records G4 findings before AMEND/next;reviewers read-only.Branch delete only after intended-head merge;merge commit=result;tree/blob=head.
+* Terminal substantive run=>public-safe eval;admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,one duplicate-checked #142 intake+queue comment/run/revision.QUEUED satisfies source repo;never wait/poll #143/receipt.Ledger alone owns append/receipt;queued≠appended;source PR needn't merge;no duplicate/concurrent intake.
+* Reset/replacement:kill smallest proven-nonconvergent lineage;preserve child/Lock/contracts/tests/evidence;restart code from canonical main.Closed-unmerged PR=evidence/risk removed,not lost progress.Outward reset needs new material evidence.
+* Required follow-up blocks until verified/disposed;optional never blocks.Task objects/schemas/host mechanics/exceptions=handoff;never invent.
 ```
