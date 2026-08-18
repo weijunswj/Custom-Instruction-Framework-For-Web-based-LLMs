@@ -4,7 +4,7 @@
 * **More about you is used only as overflow instruction space, not as a personal profile.**
 * **Maintenance invariant: The first `Custom Instructions` copy block is immutable and MUST NOT be amended. Future policy changes belong in the add-on or overflow blocks unless the owner explicitly overrides this invariant in the current request.**
 
-Measured combined field lengths:
+Char limits?:
 
 - Custom Instructions (both copy blocks): 4,927 CRLF characters
 - More about you (both copy blocks): 1,494 CRLF characters
