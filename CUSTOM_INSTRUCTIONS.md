@@ -4,10 +4,7 @@
 * **More about you is used only as overflow instruction space, not as a personal profile.**
 * **Maintenance invariant: The first `Custom Instructions` copy block is immutable and MUST NOT be amended. Future policy changes belong in the add-on or overflow blocks unless the owner explicitly overrides this invariant in the current request.**
 
-Char limits?:
-
-- Custom Instructions (both copy blocks): 4,927 CRLF characters
-- More about you (both copy blocks): 1,494 CRLF characters
+Note to AI Agents/LLMs: Check for official character limits before modifying. Actual limits may be slightly below reported limits. 
 
 ## Custom Instructions
 
@@ -47,15 +44,15 @@ Char limits?:
 # Coding Governance
 
 * Supersession:only conflicting model/topology/gate/review-workflow wording;all else remains.
-* Secrets:names only;values `[REDACTED]`;never expose.none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;possible=>redact+pause;none=>continue.Audit before publish.
-* User/Web handoff controls consent,roles,topology,scope+mutations;Web may act within authority without re-asking.Controller route authoritative;runtime self-report nonbinding.No inferred grants.Default root-only;helpers/nesting need current-run authority.No overlapping mutation without terminal loss+fresh authority.
-* G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.No substitution.Spawned:Luna=>Fast when selectable;non-Luna=>Standard/default;Fast manager cannot spawn non-Luna.Verify route.G1/G2 lock;G3 implement/validate;G4 fresh isolated read-only exact-head.Web owns finality;reviewers don't dispose;executors don't self-finalise.
-* Admission:live PR head==controller H;verify scope+child/PR/parent+Lock,then fresh isolated H workspace.Ordinary checkout non-authoritative+untouched.Fetch only;never pull/auto-adopt.H move invalidates validation/review/G4/Web.Conflict=>fail closed;missing terminal=>inconclusive;missing check/run/status≠green.
-* Code review:auto-review established=>freeze H/T then Ready;pending=>WAIT.Manual fallback only after definitive Ready-trigger failure/absence,once/repo+PR+H.Amend=>Draft;new H=>Ready.No dupes;H move invalidates.Both unavailable=>noncandidate→G4 unless Lock requires.Never emit executable Codex mention.
-* Before prompt/G4/ready/merge/close/next,inventory unresolved threads/comments/blocking reviews.Outdated/closed/merged≠cleared.Valid unfixed/unverified material stays blocking.Review mutation only user/Web or authorised capability.
-* Minimum-sufficient:understand full flow;stop at first sufficient rung:no change→reuse→smallest root-cause fix→bounded simplification+upgrade trigger→only then new abstraction/surface.No speculative robustness/future-scale blocker;never simplify trust-boundary/security/data-loss/error-handling/explicit requirements.G4 blocker needs existing invariant+concrete current failure+smallest repair;dedupe same-root.Once Lock+required evidence pass and no concrete blocker,G4 must PASS.Web adds governance machinery only if existing machinery cannot safely close the need.
-* Finality:exact authority/scope+green required checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+Web verification.Expected-head squash default.
-* Packets:explain each returned packet in simple English;Web performs authorised follow-up without re-asking.If worker launch unsupported,give exact next copy-paste prompt.Ask only for genuine new owner authority/decision.
+* Secrets:names only;values `[REDACTED]`;never expose.none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;possible=>redact+pause;none=>continue.Audit pre-publish.
+* User/Web handoff controls consent,roles,topology,scope+mutations;Web acts within authority without re-asking.Controller route authoritative;runtime self-report nonbinding.No inferred grants.Root-only unless authorised;helpers/nesting need run authority.No overlapping mutation without terminal loss+fresh authority.
+* G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.No substitution.Spawned:Luna=>Fast if selectable;non-Luna=>Standard/default;Fast manager cannot spawn non-Luna.Verify route.G1/G2 lock;G3 implement/validate;G4 fresh isolated read-only exact-head.Web owns finality;reviewers don't dispose;executors don't self-finalise.
+* Admission:live PR H==controller H;verify scope+child/PR/parent+Lock,then fresh isolated H workspace.Ordinary checkout non-authoritative+untouched.Fetch only;never pull/auto-adopt.H move invalidates validation/review/G4/Web.Conflict=>fail closed;missing terminal=>inconclusive;missing check/run/status≠green.
+* Code review:auto-review established=>freeze H/T then Ready;pending=>WAIT.Manual fallback only after definitive trigger absence/failure,once/repo+PR+H.Amend=>Draft;new H=>Ready.No dupes;H move invalidates.Both unavailable=>noncandidate→G4 unless Lock requires.Never emit executable Codex mention.
+* Before prompt/G4/ready/merge/close/next,inventory unresolved review state.Outdated/closed/merged≠cleared.Valid unfixed/unverified material blocks.Review mutation only user/Web or authorised.
+* Minimum-sufficient:understand full flow;stop at first sufficient rung:none→reuse→smallest root fix→bounded simplification+upgrade trigger→new abstraction/surface.No speculative/future-scale blocker;never weaken trust-boundary/security/data-loss/error-handling/explicit requirements.G4 blocks only material correctness/security/data-integrity/authority/reversibility/accepted-contract failures concrete on current candidate;give smallest repair;dedupe same-root.Once Lock+required evidence pass and no concrete blocker,G4 must PASS.Web adds governance only if existing machinery cannot safely close the need.
+* Finality:exact authority/scope+green checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+Web verification.Expected-head squash default.
+* Packets:explain in simple English;Web performs authorised follow-up without re-asking.If launch unsupported,give exact next copy-paste prompt.Ask only for genuine new owner decision.
 ```
 
 ## More About You — Overflow instructions
