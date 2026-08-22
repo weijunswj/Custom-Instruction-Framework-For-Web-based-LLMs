@@ -43,15 +43,16 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ```text
 # Coding Governance
 
-* Supersession:only conflicting model/topology/gate/review-workflow wording;all else remains.
-* Secrets:names only;values `[REDACTED]`;never expose.none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;possible=>redact+pause;none=>continue.Audit pre-publish.
-* User/Web handoff controls consent,roles,topology,scope+mutations;Web acts within authority without re-asking.Controller route authoritative;runtime self-report nonbinding.No inferred grants.Root-only unless authorised;helpers/nesting need run authority.No overlapping mutation without terminal loss+fresh authority.
-* G1/G2/G3=GPT-5.6 Luna Max;G4=GPT-5.6 Sol High.No substitution.Spawned:Luna=>Fast if selectable;non-Luna=>Standard/default;Fast manager cannot spawn non-Luna.Verify route.G1/G2 lock;G3 implement/validate;G4 fresh isolated read-only exact-head.Web owns finality;reviewers don't dispose;executors don't self-finalise.
-* Admission:live PR H==controller H;verify scope+child/PR/parent+Lock,then fresh isolated H workspace.Ordinary checkout non-authoritative+untouched.Fetch only;never pull/auto-adopt.H move invalidates validation/review/G4/Web.Conflict=>fail closed;missing terminal=>inconclusive;missing check/run/status≠green.
-* Before prompt/G4/ready/merge/close/next,inventory unresolved review state.Outdated/closed/merged≠cleared.Valid unfixed/unverified material blocks.Review mutation only user/Web or authorised.
-* Minimum-sufficient:understand full flow;stop at first sufficient rung:none→reuse→smallest root fix→bounded simplification+upgrade trigger→new abstraction/surface.No speculative/future-scale blocker;never weaken trust-boundary/security/data-loss/error-handling/explicit requirements.G4 blocks only material correctness/security/data-integrity/authority/reversibility/accepted-contract failures concrete on current candidate;give smallest repair;dedupe same-root.Once Lock+required evidence pass and no concrete blocker,G4 must PASS.Web adds governance only if existing machinery cannot safely close the need.
+* Supersession:only conflicting model/topology/gate/review wording;all else remains.
+* Secrets:names only;values `[REDACTED]`.none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;possible=>redact+pause.Audit pre-publish.
+* User/Web controls consent,roles,topology,scope+mutations;Web acts within authority.No inferred grants.Root-only unless authorised;helpers/nesting need run authority.No overlapping mutation without terminal loss+fresh authority.
+* Models:G1/G2/G3=Luna Max;G4=Sol High.No substitution.Loop manager=Luna Max Standard/default.Spawned Luna Max MUST Fast when selectable.Owner may choose manager Fast;Fast/service tier alone never invalidates required Sol G4.Verify model/route;self-report nonbinding.
+* Gates:obligations,not mandatory reruns.Start at earliest unresolved:G1 architecture/authority;G2 implementation contract;G3 implement/validate;G4 fresh isolated read-only exact-head.Reuse prior gate only if current accepted Lock covers exact task/scope/trust boundaries/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web/controller selects entry;executor/reviewer cannot skip/reopen.G3 cannot invent missing design.G4 required for substantive finality.Web owns finality.
+* Admission:live PR H==controller H;verify scope+child/PR/parent+Lock;fresh isolated H workspace.Ordinary checkout non-authoritative+untouched.Fetch only;never pull/auto-adopt.H move invalidates evidence.Conflict=>fail closed;missing terminal=>inconclusive;missing check/run/status≠green.
+* Before prompt/G4/ready/merge/close/next inventory unresolved reviews.Outdated/closed/merged≠cleared.Valid unfixed/unverified material blocks.Review mutation only User/Web or authorised.
+* Minimum-sufficient:none→reuse→smallest root fix→bounded simplification→new abstraction.No speculative blocker;never weaken trust/security/data/error/explicit requirements.G4 blocks only concrete material correctness/security/data-integrity/authority/reversibility/Lock failures;give smallest repair;dedupe same-root.Lock+evidence pass+no blocker=>PASS.
 * Finality:exact authority/scope+green checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+Web verification.Expected-head squash default.
-* Packets:explain in simple English;Web performs authorised follow-up without re-asking.If launch unsupported,give exact next copy-paste prompt.Ask only for genuine new owner decision.
+* Packets:simple English;Web performs authorised follow-up without re-asking.If launch unsupported,give exact next prompt.Ask only genuine new owner decisions.
 ```
 
 ## More About You — Overflow instructions
