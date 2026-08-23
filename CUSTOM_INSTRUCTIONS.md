@@ -72,8 +72,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 # Governance & Closure
 * Parent:one rolling;each material child once Active/Current/Completed;top-down unless owner override;final audit last.
 * Transition:reread child/PR/parent+chronology;bind revisions;preserve unrelated;final-reread.Missing/stale/conflict/concurrency/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
-* Web records G4 findings before AMEND/next;reviewers read-only.Branch delete only after intended-head merge;merge commit=result;tree/blob=head.
-* Terminal substantive run=>public-safe eval;admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,one duplicate-checked #142 intake+queue comment/run/revision.QUEUED satisfies source repo;never wait/poll #143/receipt.Ledger alone owns append/receipt;queued≠appended;source PR needn't merge;no duplicate/concurrent intake.
-* Reset/replacement:kill smallest proven-nonconvergent lineage;preserve child/Lock/contracts/tests/evidence;restart code from canonical main.Closed-unmerged PR=evidence/risk removed,not lost progress.Outward reset needs new material evidence.
-* Required follow-up blocks until verified/disposed;optional never blocks.Task objects/schemas/host mechanics/exceptions=handoff;never invent.
+* Web owns finality;records G4 findings before AMEND/next.Reviewers read-only.Delete branch only after intended-head merge.
+* Terminal substantive run=>public-safe eval;admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,one duplicate-checked Ledger intake/run/revision.Resolve target from router #142 before post;never assume #142/segment active.Bind revision+generation+target;post once;readback+reread router.Stale/moved/closed/locked/ambiguous=>re-resolve/fail closed;no direct #142 fallback.QUEUED satisfies source repo;Ledger owns append/receipt;no duplicate/concurrent intake.
+* Reset/replacement:smallest nonconvergent lineage;preserve child/Lock/contracts/tests/evidence;restart canonical main.Required follow-up blocks;optional doesn't.Task objects/schemas/host mechanics/exceptions=handoff;never invent.
 ```
