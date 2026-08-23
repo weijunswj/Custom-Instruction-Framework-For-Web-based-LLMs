@@ -53,7 +53,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Before prompt/G4/ready/merge/close/next inventory unresolved reviews.Valid unfixed/unverified material blocks.Review mutation only User/Web or authorised.
 * Minimum-sufficient:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/data/error/explicit requirements.G4 blocks only concrete material correctness/security/data-integrity/authority/reversibility/Lock failures;smallest repair;dedupe same-root.
 * Finality:exact authority/scope+green checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+Web verification.Expected-head squash default.
-* Packets:simple English;Web performs authorised follow-up without re-asking.If launch unsupported,give exact next prompt.Ask only genuine new owner decisions.
+* Packets:include ELI5;Web performs authorised follow-up without re-asking.If launch unsupported,give exact next prompt.Ask only genuine new owner decisions.
 ```
 
 ## More About You — Overflow instructions
