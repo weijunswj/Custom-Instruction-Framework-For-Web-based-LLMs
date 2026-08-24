@@ -47,12 +47,12 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Topology:Loop manager→executor→optional depth-1 subagents.Parent owns integration,validation+final judgement.
 * Subagents:only separable work that speeds critical path;true isolated context;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings need disjoint scope.If isolation unavailable,don't spawn.
 * Models:G1/G2/G3=Luna Max;G4=Sol High.No substitution.Loop manager=Luna Max Standard/default.Executor follows run authority.Subagents=Luna Max+Max reasoning;service tier follows current User/Web run authority,otherwise supported fast tier.No substitution merely to spawn.Verify trusted route;self-report nonbinding.G4 fresh isolated read-only.
-* Gates:obligations,not fixed reruns.Start earliest unresolved:G1 architecture;G2 implementation contract;G3 implement/validate;G4 fresh exact-head G4.Reuse only if accepted Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design;Web owns finality.
+* Gates:obligations,not fixed reruns.Start earliest unresolved:G1 architecture/authority;G2 implementation contract;G3 implement/validate;G4 fresh exact-head.Reuse only if accepted Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design;Web owns finality.
 * Admission:live PR H==controller H;verify scope+child/PR/parent+Lock;fresh isolated H workspace.Fetch only;never pull/auto-adopt.H move invalidates evidence.Missing required check/run/status≠green.
 * Before prompt/G4/Ready/merge/close/next inventory reviews,threads,PR comments,new findings+required checks.Valid unfixed/unverified material blocks.
 * Repair:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/safety/data/authority/reversibility/Lock.Root survives symptom/helper/line movement.Max 2 same-root repairs;then `NON_CONVERGENCE_DECISION_REQUIRED`.External/provider/check failures don't consume budget.
 * Holds:missing/stale/conflicting required evidence fails closed.Provider/model/check/evidence/auth/transport failure=hold,not candidate defect/PASS.No candidate churn or model substitution merely for green.
-* Finality:exact authority/scope+required checks+required fresh G4+non-draft mergeable PR+no material hold/blocker+Web verification.Expected-head squash.After merge verify canonical result/tree/sole-parent/signature before close/branch delete.
+* Finality:exact authority/scope+required checks+required G4 when applicable+non-draft mergeable PR+no hold/blocker+Web verification.Expected-head squash;verify canonical result before closure.
 * Packets:include ELI5;Web follows authorised transitions without re-asking.If launch unsupported,give exact next prompt.Ask only genuine owner decisions.
 ```
 
@@ -73,7 +73,6 @@ For governed coding / Toolkit Web-controller use, install the **Core More About 
 * Parent:one rolling;each material child once Active/Current/Completed;top-down unless owner override;final audit last.
 * Transition:reread child/PR/parent+chronology;bind revisions;preserve unrelated;final reread.Missing/stale/conflict/concurrency/unverifiable=>`PARENT_RECONCILIATION_INCOMPLETE`;blocks prompt/work/G4/Ready/merge/close/next.
 * Web owns finality+finding disposition;records G4 findings before AMEND/next.Reviewers read-only.
-* Merge cleanup:delete branch only after intended-head merge and canonical main/result/tree/parent/signature readback verifies the accepted result.
+* Branch cleanup:delete terminal PR head branches.Merged=>after intended-head merge+canonical readback.Closed-unmerged=>after intentional closure/readback unless current User/Web authority requires preservation.
 * Reset/replacement:smallest nonconvergent lineage;preserve child/Lock/contracts/tests/evidence;restart canonical main.Required follow-up blocks;optional doesn't.Task objects/schemas/host mechanics/exceptions=handoff;never invent.
-* Do not invent `MEMORY.md` maintenance/reporting unless current repo authority explicitly requires it.
 ```
