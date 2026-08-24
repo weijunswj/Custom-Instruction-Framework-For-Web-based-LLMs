@@ -60,8 +60,6 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 For governed coding / Toolkit Web-controller use, install the **Core More About You** block below.
 
-The **Executor Evaluation Ledger Integration** block is optional. Install it only when using the external AI Executor Evaluation Ledger workflow. Toolkit core governance does not depend on the Ledger.
-
 ### Core More About You — Response Style + Governance & Closure
 
 ```text
@@ -76,17 +74,4 @@ The **Executor Evaluation Ledger Integration** block is optional. Install it onl
 * Transition:reread child/PR/parent+chronology;bind revisions;preserve unrelated;final-reread.Missing/stale/conflict/concurrency/unverifiable=>PARENT_RECONCILIATION_INCOMPLETE;blocks prompt/work/G4/ready/merge/close/next.
 * Web owns finality;records G4 findings before AMEND/next.Reviewers read-only.Delete branch only after intended-head merge.
 * Reset/replacement:smallest nonconvergent lineage;preserve child/Lock/contracts/tests/evidence;restart canonical main.Required follow-up blocks;optional doesn't.Task objects/schemas/host mechanics/exceptions=handoff;never invent.
-```
-
-### Optional More About You Add-on — Executor Evaluation Ledger Integration
-
-Install this block only when using:
-
-`weijunswj/ai-executor-evaluation-ledger`
-
-Toolkit itself does not require this add-on.
-
-```text
-# Executor Evaluation Ledger Integration
-* Terminal substantive run=>public-safe eval;admin/intake/receipt/reconciliation exempt.Before accept/merge/close/next,one duplicate-checked Ledger intake/run/revision.Resolve target from router #142 before post;never assume #142/segment active.Bind revision+generation+target;post once;readback+reread router.Stale/moved/closed/locked/ambiguous=>re-resolve/fail closed;no direct #142 fallback.QUEUED satisfies source repo;Ledger owns append/receipt;no duplicate/concurrent intake.
 ```
