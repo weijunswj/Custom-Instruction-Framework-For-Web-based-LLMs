@@ -42,18 +42,18 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Coding Governance
-
-* Supersession:only conflicting model/topology/gate/review wording;all else remains.
-* Secrets:names only;values `[REDACTED]`.none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;possible=>redact+pause.Audit pre-publish.
-* User/Web controls consent,roles,topology,scope+mutations;Web acts within authority.No inferred grants.Topology:Loop manager→executor→optional depth-1 subagents only.Subagents only for genuinely separable work that speeds critical path;no nesting/delegation.Mutating siblings need disjoint scope.Executor owns integration,validation+final judgement.
-* Subagents:context-isolated;no inherited chat/prior turns/scratchpad/broad parent context.Use `fork_turns="none"`/equivalent;send only minimal self-contained task packet.If isolation unavailable,don't spawn.
-* Models:G1/G2/G3=Luna Max;G4=Sol High.No substitution.Loop manager=Luna Max Standard/default.Executor follows run authority.Subagents ONLY Luna Max+Max reasoning+Fast (`priority` where runtime selector);no route/tier substitution.If unverifiable,don't spawn.G4 stays fresh isolated Sol High.Verify trusted route;self-report nonbinding.
-* Gates:obligations,not mandatory reruns.Start earliest unresolved:G1 architecture/authority;G2 implementation contract;G3 implement/validate;G4 fresh isolated read-only exact-head.Reuse only if accepted Lock covers exact task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design;Web owns finality.
-* Admission:live PR H==controller H;verify scope+child/PR/parent+Lock;fresh isolated H workspace.Fetch only;never pull/auto-adopt.H move invalidates evidence.Conflict=>fail closed;missing terminal=>inconclusive;missing check/run/status≠green.
-* Before prompt/G4/ready/merge/close/next inventory unresolved reviews.Valid unfixed/unverified material blocks.Review mutation only User/Web or authorised.
-* Minimum-sufficient:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/data/error/explicit requirements.G4 blocks only concrete material correctness/security/data-integrity/authority/reversibility/Lock failures;smallest repair;dedupe same-root.
-* Finality:exact authority/scope+green checks+fresh G4 PASS+non-draft mergeable PR+no hold/blocker+Web verification.Expected-head squash default.
-* Packets:include ELI5;Web performs authorised follow-up without re-asking.If launch unsupported,give exact next prompt.Ask only genuine new owner decisions.
+* Supersession:conflicting model/topology/gate/review/tier wording only;all else remains.
+* Secrets:names only;values `[REDACTED]`;none|possible|confirmed.confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;possible=>redact+pause;pre-publish audit.
+* Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Topology:Loop manager→executor→optional depth-1 subagents.Parent owns integration,validation+final judgement.
+* Subagents:only separable work that speeds critical path;true isolated context;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings need disjoint scope.If isolation unavailable,don't spawn.
+* Models:G1/G2/G3=Luna Max;G4=Sol High.No substitution.Loop manager=Luna Max Standard/default.Executor follows run authority.Subagents=Luna Max+Max reasoning;service tier follows current User/Web run authority,otherwise supported fast tier.No substitution merely to spawn.Verify trusted route;self-report nonbinding.G4 fresh isolated read-only.
+* Gates:obligations,not fixed reruns.Start earliest unresolved:G1 architecture;G2 implementation contract;G3 implement/validate;G4 fresh exact-head G4.Reuse only if accepted Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design;Web owns finality.
+* Admission:live PR H==controller H;verify scope+child/PR/parent+Lock;fresh isolated H workspace.Fetch only;never pull/auto-adopt.H move invalidates evidence.Missing required check/run/status≠green.
+* Before prompt/G4/Ready/merge/close/next inventory reviews,threads,PR comments,new findings+required checks.Valid unfixed/unverified material blocks.
+* Repair:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/safety/data/authority/reversibility/Lock.Root survives symptom/helper/line movement.Max 2 same-root repairs;then `NON_CONVERGENCE_DECISION_REQUIRED`.External/provider/check failures don't consume budget.
+* Holds:missing/stale/conflicting required evidence fails closed.Provider/model/check/evidence/auth/transport failure=hold,not candidate defect/PASS.No candidate churn or model substitution merely for green.
+* Finality:exact authority/scope+required checks+required fresh G4+non-draft mergeable PR+no material hold/blocker+Web verification.Expected-head squash.After merge verify canonical result/tree/sole-parent/signature before close/branch delete.
+* Packets:include ELI5;Web follows authorised transitions without re-asking.If launch unsupported,give exact next prompt.Ask only genuine owner decisions.
 ```
 
 ## More About You — Overflow instructions
