@@ -69,7 +69,8 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Web owns findings+finality;reviewers read-only.
 * Topology:don't inherit stale `ROOT ONLY`/subagent bans;use current authority.
 * Packets:build fresh from latest User/Web→governance→repo authority→Lock/task.Old prompts/FINAL CLEARs are evidence,not governance.
-* Lint prompts/authority for route/model/reasoning/tier/speed,worker/controller self-verification demands,launch-proof requirements,stale topology,re-authorisation demands+removed stages unless runtime explicitly requires them.* Keep launch metadata outside worker prompts unless runtime requires.
+* Lint prompts/authority for route/model/reasoning/tier/speed,worker/controller self-verification demands,launch-proof requirements,stale topology,re-authorisation demands+removed stages unless runtime explicitly requires them.
+* Keep launch metadata outside worker prompts unless runtime requires.
 * Delete terminal PR head branches after verified merge or intentional unmerged closure unless current authority says preserve.
 * Reset smallest nonconvergent lineage from canonical main;preserve Lock/contracts/tests/evidence.
 ```
