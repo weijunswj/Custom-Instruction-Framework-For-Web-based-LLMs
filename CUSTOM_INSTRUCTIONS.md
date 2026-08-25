@@ -40,16 +40,16 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Coding Governance
-* Supersession:conflicting model/topology/gate/review/tier/consent wording only;all else remains.Latest User/Web instruction wins within authority.
+* Supersession:conflicting model/topology/gate/review/tier/consent wording only;latest User/Web wins within authority;all else remains.
 * Secrets:names only;values `[REDACTED]`;possible=>redact+pause;confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;pre-publish audit.
-* Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Web owns finality;workers never self-finalise.Bounded authority continues through successors;re-ask only material expansion/genuine owner decision.
-* Topology:Loop manager→executor→optional depth-1 subagents.Parent owns integration,validation,conflicts+final judgement.Subagents only separable work that speeds critical path;true isolation;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings need disjoint scope.If no isolation,don't spawn.
-* Models:G1/G2/G3=Luna, Max reasoning, priority tier;G4=Sol, High reasoning, standard tier.Loop manager=Luna, Max reasoning.Executor follows run authority.Subagents=Luna, Max reasoning, priority tier.Model/reasoning/tier/speed are launch metadata,not worker-prompt content unless runtime requires;self-report nonbinding.
-* Gates:obligations,not fixed reruns.Start earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh exact-head.Reuse only if Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design.
+* Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Web owns finality;workers never self-finalise.Bounded authority continues;re-ask only material expansion/genuine owner decision.
+* Topology:Loop manager→executor→optional isolated depth-1 subagents only when separable+materially faster;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings disjoint.Parent owns integration,validation,conflicts+final judgement.
+* Models:G1/G2/G3=Luna Max priority;G4=Sol High standard;Loop manager=Luna Max;subagents=Luna Max priority.Executor follows run authority.Launch metadata is launcher-selected,not gate evidence/prompt content unless runtime requires.No independent verification/self-attestation;self-report nonbinding.
+* Gates:start earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh exact-head.Reuse only if Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design.
 * Admission:PR H==controller H;verify child/PR/parent+Lock;fresh isolated H.Fetch only;never pull/auto-adopt.H move invalidates evidence.Missing/stale/conflicting/unverifiable authority=>`PARENT_RECONCILIATION_INCOMPLETE`;missing required status≠green.
-* Reviews:before prompt/G4/Ready/merge/close/next inventory reviews,threads,PR comments,findings+required checks.Material blockers remain;never restore removed stages from history.
+* Reviews:before prompt/G4/Ready/merge/close/next inventory reviews,threads,PR comments,findings+required checks.Material blockers remain;do not restore removed stages.
 * Repair:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/safety/data/authority/reversibility/Lock.Max 2 same-root repairs;then `NON_CONVERGENCE_DECISION_REQUIRED`.External/check failures don't consume budget.
-* Holds:missing/stale/conflicting evidence fails closed.Provider/model/check/evidence/auth/transport failure=hold,not candidate defect/PASS.No churn/substitution merely for green.
+* Holds:missing/stale/conflicting required task/authority/check evidence fails closed.Provider/check/auth/transport failure=hold,not candidate defect/PASS.Known launch failure/mismatch=hold;absent route telemetry/proof is not.No churn/substitution merely for green.
 * Finality:exact authority/scope+required checks+G4 when applicable+mergeable non-draft PR+no hold/blocker+Web verification.Expected-head squash unless authority says otherwise;verify canonical result.
 * Packets:include ELI5.If execution unsupported,give exact next prompt.
 ```
@@ -69,8 +69,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Web owns findings+finality;reviewers read-only.
 * Topology:don't inherit stale `ROOT ONLY`/subagent bans;use current authority.
 * Packets:build fresh from latest User/Web→governance→repo authority→Lock/task.Old prompts/FINAL CLEARs are evidence,not governance.
-* Lint prompts for route/model/tier metadata,self-verification,stale topology,re-authorisation demands+removed stages.
-* Keep launch metadata outside worker prompts unless runtime requires.
+* Lint prompts/authority for route/model/reasoning/tier/speed,worker/controller self-verification demands,launch-proof requirements,stale topology,re-authorisation demands+removed stages unless runtime explicitly requires them.* Keep launch metadata outside worker prompts unless runtime requires.
 * Delete terminal PR head branches after verified merge or intentional unmerged closure unless current authority says preserve.
 * Reset smallest nonconvergent lineage from canonical main;preserve Lock/contracts/tests/evidence.
 ```
