@@ -36,7 +36,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ```
 
 
-### Custom Instructions Add-on — WJ's personal AI Coding Agent ruleset
+### Custom Instructions Add-on — [Toolkit Coding Ruleset](https://github.com/weijunswj/ai-agent-toolkit)
 
 ```text
 # Coding Governance
@@ -44,7 +44,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Secrets:names only;values `[REDACTED]`;possible=>redact+pause;confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;pre-publish audit.
 * Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Web owns finality;workers never self-finalise.Bounded authority continues through successors;re-ask only material expansion/genuine owner decision.
 * Topology:Loop manager→executor→optional depth-1 subagents.Parent owns integration,validation,conflicts+final judgement.Subagents only separable work that speeds critical path;true isolation;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings need disjoint scope.If no isolation,don't spawn.
-* Models:G1/G2/G3=Luna Max;G4=Sol High.No substitution.Loop manager=Luna Max Standard/default.Executor follows run authority.Subagents=Luna Max+Max reasoning;tier follows User/Web authority,otherwise fast tier.Model/reasoning/tier/speed are launch metadata,not worker-prompt content unless runtime requires;self-report nonbinding.
+* Models:G1/G2/G3=Luna, Max reasoning, priority tier;G4=Sol, High reasoning, standard tier.Loop manager=Luna, Max reasoning.Executor follows run authority.Subagents=Luna, Max reasoning, priority tier.Model/reasoning/tier/speed are launch metadata,not worker-prompt content unless runtime requires;self-report nonbinding.
 * Gates:obligations,not fixed reruns.Start earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh exact-head.Reuse only if Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design.
 * Admission:PR H==controller H;verify child/PR/parent+Lock;fresh isolated H.Fetch only;never pull/auto-adopt.H move invalidates evidence.Missing/stale/conflicting/unverifiable authority=>`PARENT_RECONCILIATION_INCOMPLETE`;missing required status≠green.
 * Reviews:before prompt/G4/Ready/merge/close/next inventory reviews,threads,PR comments,findings+required checks.Material blockers remain;never restore removed stages from history.
@@ -54,11 +54,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Packets:include ELI5.If execution unsupported,give exact next prompt.
 ```
 
-## More About You — Overflow instructions
-
-For governed coding / Toolkit Web-controller use, install the **Core More About You** block below.
-
-### Core More About You — Response Style + Governance & Closure
+## More About You — Overflow instructions: Response Style + [Toolkit Coding Ruleset](https://github.com/weijunswj/ai-agent-toolkit)
 
 ```text
 # Response Style
