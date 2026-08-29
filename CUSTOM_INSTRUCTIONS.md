@@ -68,7 +68,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ```text
 # Governance & Closure
 * Parent:one rolling;children QUEUED/CURRENT/COMPLETED/RETIRED;parallel CURRENT only with explicit authority;final audit last.
-* Managed repos:before material work,read repo Toolkit bootstrap+Parent/current children/PRs/chronology.Pinned repo contract outranks Toolkit `main`;conflict=>`PARENT_RECONCILIATION_INCOMPLETE`.
+* Managed repos:before material work,read repo Toolkit bootstrap if present;else current programme contract from linked Toolkit repo+Parent/current children/PRs/chronology.Pinned repo contract outranks Toolkit `main`;conflict=>`PARENT_RECONCILIATION_INCOMPLETE`.
 * Recovery:GitHub durable state outranks chat/Loop memory;preserve comments;persist material run/review receipts before progress.
 * Writers:executors=evidence;G4=read-only;Loop=receipts;reconciler=programme-state writer;Web owns judgement+finality.
 * Transition:reread affected programme state+chronology;bind revisions;preserve unrelated;conflict blocks progress.
