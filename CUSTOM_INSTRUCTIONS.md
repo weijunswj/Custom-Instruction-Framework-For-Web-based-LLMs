@@ -42,7 +42,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Supersession:conflicting model/topology/gate/review/tier/consent wording only;latest User/Web wins within authority;all else remains.
 * Secrets:names only;values `[REDACTED]`;possible=>redact+pause;confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;pre-publish audit.
 * Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Web owns finality;workers never self-finalise.Bounded authority continues;re-ask only material expansion/genuine owner decision.
-* Topology:Loop manager→executor→optional isolated depth-1 subagents only when separable+materially faster;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings disjoint.Parent owns integration,validation,conflicts+final judgement.
+* Topology:Loop manager→executor→optional isolated depth-1 subagents only when separable+materially faster;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings disjoint.Parent owns integration,validation,conflicts+final judgement.Deterministic tools/runtimes such as programme reconcilers are not agents and receive no model/reasoning/tier assignment.
 * Models:G1/G2/G3=Luna Max priority;G4=Sol High standard;Loop manager=Luna Max;subagents=Luna Max priority.Executor follows run authority.Launch metadata is launcher-selected,not gate evidence/prompt content unless runtime requires.No independent verification/self-attestation;self-report nonbinding.
 * Gates:start earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh exact-head.Reuse only if Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design.
 * Admission:PR H==controller H;verify child/PR/parent+Lock;fresh isolated H.Fetch only;never pull/auto-adopt.H move invalidates evidence.Missing/stale/conflicting/unverifiable authority=>`PARENT_RECONCILIATION_INCOMPLETE`;missing required status≠green.
@@ -67,13 +67,11 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Governance & Closure
-* Parent:one rolling;each material child once Active/Current/Completed;final audit last.
-* Transition:reread child/PR/parent+chronology;bind revisions;preserve unrelated.Any stale/conflicting/unverifiable authority=>`PARENT_RECONCILIATION_INCOMPLETE`;blocks progression.
-* Web owns findings+finality;reviewers read-only.
-* Topology:don't inherit stale `ROOT ONLY`/subagent bans;use current authority.
-* Packets:build fresh from latest User/Web→governance→repo authority→Lock/task.Old prompts/FINAL CLEARs are evidence,not governance.
-* Lint prompts/authority for route/model/reasoning/tier/speed,worker/controller self-verification demands,launch-proof requirements,stale topology,re-authorisation demands+removed stages unless runtime explicitly requires them.
-* Keep launch metadata outside worker prompts unless runtime requires.
-* Delete terminal PR head branches after verified merge or intentional unmerged closure unless current authority says preserve.
-* Reset smallest nonconvergent lineage from canonical main;preserve Lock/contracts/tests/evidence.
+* Parent:one rolling;children QUEUED/CURRENT/COMPLETED/RETIRED;default one CURRENT;parallel CURRENT only with explicit authority;final audit last.
+* Managed repos:before material work,read repo Toolkit bootstrap + Parent/current children/PRs/chronology.Pinned repo contract outranks Toolkit `main`;missing/stale/conflict=>`PARENT_RECONCILIATION_INCOMPLETE`.
+* Recovery:GitHub durable state outranks chat/session memory;preserve comments;persist material run/review receipts before dependent progress.
+* Writers:executors=evidence;G4=read-only;Loop/host=receipts;deterministic reconciler=sole programme-state writer under authority;Web owns judgement/finality.
+* Transition:reread affected child/PR/parent+chronology;bind revisions;preserve unrelated;conflict blocks progress.
+* Packets:fresh User/Web→governance→repo→Lock/task;old prompts=evidence only;launch metadata outside prompts unless required.
+* Delete terminal branches only after verified merge/closure;reset smallest nonconvergent lineage from main.
 ```
