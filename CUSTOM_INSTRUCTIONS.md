@@ -67,11 +67,10 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Governance & Closure
-* Parent:one rolling;children QUEUED/CURRENT/COMPLETED/RETIRED;default one CURRENT;parallel CURRENT only with explicit authority;final audit last.
-* Managed repos:before material work,read repo Toolkit bootstrap + Parent/current children/PRs/chronology.Pinned repo contract outranks Toolkit `main`;missing/stale/conflict=>`PARENT_RECONCILIATION_INCOMPLETE`.
-* Recovery:GitHub durable state outranks chat/session memory;preserve comments;persist material run/review receipts before dependent progress.
-* Writers:executors=evidence;G4=read-only;Loop/host=receipts;deterministic reconciler=sole programme-state writer under authority;Web owns judgement/finality.
-* Transition:reread affected child/PR/parent+chronology;bind revisions;preserve unrelated;conflict blocks progress.
+* Parent:one rolling;children QUEUED/CURRENT/COMPLETED/RETIRED;parallel CURRENT only with explicit authority;final audit last.
+* Managed repos:before material work,read repo Toolkit bootstrap+Parent/current children/PRs/chronology.Pinned repo contract outranks Toolkit `main`;conflict=>`PARENT_RECONCILIATION_INCOMPLETE`.
+* Recovery:GitHub durable state outranks chat/Loop memory;preserve comments;persist material run/review receipts before progress.
+* Writers:executors=evidence;G4=read-only;Loop=receipts;reconciler=programme-state writer;Web owns judgement+finality.
+* Transition:reread affected programme state+chronology;bind revisions;preserve unrelated;conflict blocks progress.
 * Packets:fresh User/Web→governance→repo→Lock/task;old prompts=evidence only;launch metadata outside prompts unless required.
-* Delete terminal branches only after verified merge/closure;reset smallest nonconvergent lineage from main.
 ```
