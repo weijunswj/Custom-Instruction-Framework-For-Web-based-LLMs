@@ -50,7 +50,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Repair:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/safety/data/authority/reversibility/Lock.Max 2 same-root repairs;then `NON_CONVERGENCE_DECISION_REQUIRED`.External/check failures don't consume budget.
 * Holds:missing/stale/conflicting required task/authority/check evidence fails closed.Provider/check/auth/transport failure=hold,not candidate defect/PASS.Known launch failure/mismatch=hold;absent route telemetry/proof is not.No churn/substitution merely for green.
 * Finality:exact authority/scope+required checks+G4 when applicable+mergeable non-draft PR+no hold/blocker+Web verification.Expected-head squash unless authority says otherwise;verify canonical result.
-* Packets:include ELI5.If execution unsupported,give exact next prompt.
+* Web:after packet reconciliation,give ELI5.If unsupported,give exact next prompt.
 ```
 
 ## More About You — Overflow instructions: Owner Preferred Response Style
