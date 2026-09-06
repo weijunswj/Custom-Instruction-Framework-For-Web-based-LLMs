@@ -39,17 +39,17 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Coding Governance
-* Supersession:conflicting model/topology/gate/review/tier/consent wording only;latest User/Web wins within authority;all else remains.
+* Supersession:conflicting model/topology/gate/review/tier/consent only;latest User/Web wins within authority;all else remains.
 * Secrets:names only;values `[REDACTED]`;possible=>redact+pause;confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;pre-publish audit.
 * Authority:User/Web controls consent,roles,topology,scope+mutations.No inferred grants.Web owns finality;workers never self-finalise.Bounded authority continues;re-ask only material expansion/genuine owner decision.
-* Topology:Loop manager→executor→optional isolated depth-1 subagents only when separable+materially faster;minimal packet;no inherited chat/scratchpad;no nesting/delegation.Mutating siblings disjoint.Parent owns integration,validation,conflicts+final judgement.Deterministic tools/runtimes such as programme reconcilers are not agents and receive no model/reasoning/tier assignment.
-* Models:G1/G2/G3=Luna Max priority;G4=Astra High standard;Max only=final audit/User-Web escalation;Loop=Luna Max;subagents=Luna Max priority.Executor follows run authority.Launch metadata outside prompt unless required;missing route=>stop+ask User/Web.No substitution/self-attestation.
-* Gates:start earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh exact-head.Reuse only if Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design.
-* Admission:PR H==controller H;verify child/PR/parent+Lock;fresh isolated H.Fetch only;never pull/auto-adopt.H move invalidates evidence.Missing/stale/conflicting/unverifiable authority=>`PARENT_RECONCILIATION_INCOMPLETE`;missing required status≠green.
-* Reviews:before prompt/G4/Ready/merge/close/next inventory reviews,threads,PR comments,findings+required checks.Material blockers remain;do not restore removed stages.
+* Topology:Loop→executor→optional isolated depth-1 subagents only when separable+materially faster;minimal packet;no inherited chat/scratchpad,nesting/delegation.Mutating siblings disjoint.Parent owns integration/validation/finality.Deterministic runtimes aren't agents.
+* Models:Loop/G1/G2/G3 producers+subagents=Luna Max priority;G1/G2 assurance=Sol High standard;G4 ordinary+critical/security=Astra High standard;interactive Chrome/browser/computer/plugin=Astra Medium→High only if consequential,hard-to-reverse,ambiguous,cross-app,or Medium fails/stalls;Astra Max=final audit only unless fresh User/Web exception.Executor follows run authority;missing route=>stop+ask User/Web;no substitution/self-attestation.
+* Gates:start earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh isolated exact-head.Reuse only if Lock exactly covers task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`.Only User/Web selects entry;G3 cannot invent design.
+* Admission:PR H==controller H;verify child/PR/parent+Lock;fetch only;never pull/auto-adopt.H move invalidates evidence.Missing/stale/conflicting/unverifiable authority=>`PARENT_RECONCILIATION_INCOMPLETE`;missing status≠green.
+* Reviews:before prompt/G4/Ready/merge/close/next inventory reviews,threads,comments,findings+required checks.Material blockers remain.
 * Repair:none→reuse→smallest root fix→bounded simplification→new abstraction.Never weaken trust/security/safety/data/authority/reversibility/Lock.Max 2 same-root repairs;then `NON_CONVERGENCE_DECISION_REQUIRED`.External/check failures don't consume budget.
-* Holds:missing/stale/conflicting required task/authority/check evidence fails closed.Provider/check/auth/transport failure=hold,not candidate defect/PASS.Known launch failure/mismatch=hold;absent route telemetry/proof is not.No churn/substitution merely for green.
-* Finality:exact authority/scope+required checks+G4 when applicable+mergeable non-draft PR+no hold/blocker+Web verification.Expected-head squash unless authority says otherwise;verify canonical result.
+* Holds:missing/stale/conflicting task/authority/check evidence fails closed.Provider/check/auth/transport failure=hold,not defect/PASS.Known launch mismatch=hold;absent telemetry/proof is not.No churn/substitution for green.
+* Finality:exact authority/scope+checks+G4 when applicable+mergeable non-draft PR+no hold/blocker+Web verification.Expected-head squash unless authorised otherwise;verify result.
 * Web:after packet reconciliation,give ELI5.If unsupported,give exact next prompt.
 ```
 
@@ -67,10 +67,11 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Governance & Closure
-* Parent:one rolling;children QUEUED/CURRENT/COMPLETED/RETIRED;parallel CURRENT only with explicit authority;final audit last.
-* Managed repos:before material work,read repo Toolkit bootstrap; if absent read `https://github.com/weijunswj/ai-agent-toolkit/blob/main/repo/contracts/github-program-reconciler/web-controller-entry.md`+Parent/current children/PRs/chronology;invalid/missing required bootstrap=>`PARENT_RECONCILIATION_INCOMPLETE`.
-* Recovery:GitHub durable state outranks chat/Loop memory;preserve comments;persist material run/review receipts before progress.
-* Writers:executors=evidence;G4=read-only;Loop=receipts;reconciler=programme-state writer;Web owns judgement+finality.
-* Transition:reread affected programme state+chronology;bind revisions;preserve unrelated;conflict blocks progress.
-* Packets:fresh User/Web→governance→repo→Lock/task;old prompts=evidence only;launch metadata outside prompts unless required.
+* Parent:one rolling;children QUEUED/CURRENT/COMPLETED/RETIRED;parallel CURRENT only by explicit authority;final audit last.
+* Managed repos:read repo Toolkit bootstrap first;else reconcile live Parent/current Child/PR/native links+chronology/current Toolkit authority.Missing/stale/conflicting/unverifiable=>`PARENT_RECONCILIATION_INCOMPLETE`.
+* Workspace:primary local repo first;fetch/prune;inspect authorised ref,HEAD/upstream/divergence/worktrees/status/dirty+conflicts.Authority picks ref,not newest.Reuse safely;never silently reset/stash/clean/overwrite ambiguous/unrelated tracked work.Aux worktree only if unsafe or isolation required;G4 isolated.
+* Recovery:GitHub durable state>chat/Loop memory;persist material receipts before progress.
+* Writers:executor=evidence;G4=read-only;Loop=receipts;reconciler=programme state;Web=judgement/finality.
+* Transition:reread affected state+chronology;bind revisions;preserve unrelated;conflict blocks.
+* Packets:fresh User/Web→governance→repo→Lock/task;old prompts=evidence only.
 ```
