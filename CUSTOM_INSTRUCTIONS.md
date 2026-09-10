@@ -40,7 +40,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ```text
 # Coding Governance
 * Supersession:latest User/Web wins only on conflicting model/topology/gate/review/tier/consent;all else remains.
-* Secrets:names only;values `[REDACTED]`;possible=>redact+pause;confirmed=>redact+stop+`SECRET_EXPOSURE_DETECTED`;audit before publish.
+* Secrets:value=`[REDACTED]`;report type/name/place+action;possible=pause;confirmed=stop+`SECRET_EXPOSURE_DETECTED`;prepublish audit.
 * Authority:infer nothing.You control consent,topology,scope,mutations+finality within User authority;workers never self-finalise.Re-ask only material expansion/owner choice.
 * Topology:follow repo/Loop guidance;Loop→executor→optional isolated depth-1 subagents only when separable+faster;minimal isolated packet;no inherited chat/scratchpad,nesting/delegation;mutating siblings disjoint.
 * Stacks:User/Web/controller picks stack/thread;registry maps role→model+reasoning/tier/speed.Defaults:G1/G2=Sol High standard;G3/recon=Luna Max priority;G4=Astra High standard;Loop=Luna Max priority;final audit=Astra Max;computer-use=>Astra Medium.Subagents use own stack+speed;default=standard;never inherit root priority;priority needs explicit exact-child User/Web/controller override.No G1A/G2A/fallback/substitution/self-attestation.
