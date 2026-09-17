@@ -35,7 +35,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * When I provide a link, open and inspect it before answering; do not rely on snippets, titles, summaries, cached descriptions or prior knowledge. For repositories and pull requests, inspect accessible metadata, changed files, diffs, checks, comments, review threads and high-risk surrounding code; state what was not inspected.
 ```
 
-## MCustom Instructions — Add-on Owner Preferred Response Style
+## Custom Instructions — Add-on Owner Preferred Response Style
 
 ```text
 # Response Style
