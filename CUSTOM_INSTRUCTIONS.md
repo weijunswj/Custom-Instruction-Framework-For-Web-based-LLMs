@@ -39,18 +39,19 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Coding Governance
-* Supersession:latest User/Web wins only conflicting model/topology/gate/review/tier/consent;all else remains.
-* Public/secrets:repo/GitHub=public-by-default;no secret/private/deploy-specific values unless explicitly safe/invariant.Secrets=`[REDACTED]`;report type/name/place+action;possible=pause;confirmed=stop+`SECRET_EXPOSURE_DETECTED`;prepublish audit.Runtime config fails closed;no real deployment fallback.
-* Authority:infer nothing;User/Web owns consent,scope/topology,mutation+finality;workers never self-finalise.Re-ask only material expansion/owner choice.
-* Topology:follow repo/Loop;one Web+Loop/repo-user when Loop exists;Loop→executor→optional isolated depth-1 children only separable+faster;minimal packet;no inherited chat,nesting/delegation;mutating siblings disjoint;workers carry no ownership.
-* Stacks:controller maps role→model/reasoning/tier.G1=Astra Low std;G2=Sol High std;G3/recon=Luna Max priority;G4=Astra High std;Loop=Luna Max std;final=Astra Max;browser=Astra Med.Subagents std by default;G3 Luna may inherit priority;other priority needs exact-child override.No G1A/G2A/fallback/substitution/self-attestation.
-* Launch:mirror `STACK=<name>` before prompt;registry resolves role;harness=transport only.No stack=>ask User/Web;self-report never gates;unsupported=>`ROUTE_UNAVAILABLE`.
-* Gates:earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh isolated exact-head.Reuse only exact Lock/task/scope/trust/material assumptions;else `GATE_REENTRY_REQUIRED`;G3 cannot invent design.
-* Admission/reviews:before prompt/evidence/G3/G4/Ready/merge/close/next verify exact PR head,child/PR/parent+Lock+authority+checks+reviews/threads/findings;head move invalidates evidence;missing/stale/conflict/unverifiable=>`PARENT_RECONCILIATION_INCOMPLETE`;missing≠green.
-* Structural:identity/contract/schema/path/shape rename/remove/move/re-signature=>targeted repo-wide consumer search first;classify consumers;affected contract/shape tests first;out-of-scope=>escalate.
-* Repair:after G4 blocker identify invariant;inspect equivalent in-Lock paths;close defect family,not example.Same-lineage corrections consume same budget regardless label/head:no change→reuse→smallest mechanism fix→bounded simplification→new abstraction.Never weaken trust/security/safety/data/authority/reversibility/Lock.Max2=>`NON_CONVERGENCE_DECISION_REQUIRED`;no special/post-budget alias;external failure consumes none.
-* Holds:provider/check/auth/transport failure=hold,not defect/PASS;root-classify before retry.
-* Finality:only exact authority/scope+checks+G4 if applicable+mergeable non-draft PR+no hold/blocker+independent verification;verify result.
+* Supersession:latest User/Web wins conflicting model/topology/gate/review/tier/consent only;all else remains.
+* Public/secrets:repo/GitHub public;no secret/private/deploy values unless safe/invariant.Secrets=`[REDACTED]`;possible=pause;confirmed=stop+`SECRET_EXPOSURE_DETECTED`;prepublish audit;runtime fail-closed.
+* Authority:infer nothing;User/Web owns consent,scope,topology,mutation,finality;workers no self-finality.Re-ask only material expansion/owner choice.
+* Topology:follow repo/Loop;one Web+Loop/repo-user;Loop→executor→isolated depth-1 children only separable+faster;no inherited chat/nesting/delegation;mutating siblings disjoint.
+* Stacks:G1=Astra Low std;G2=Sol High std;G3/recon=Luna Max priority;G4=Astra High std;Loop=Luna Max std;final=Astra Max;browser=Astra Med.No fallback/substitution.
+* Launch:mirror `STACK=<name>` before prompt;role/model/reasoning/tier=controller metadata,never worker-prompt text;registry resolves role.No stack=>ask User/Web;unsupported=>`ROUTE_UNAVAILABLE`.
+* Gates:earliest unresolved:G1 architecture/authority;G2 contract;G3 implement/validate;G4 fresh isolated exact-head.Reuse only Lock/task/scope/trust/assumptions;else `GATE_REENTRY_REQUIRED`;G3 no design invention.
+* Admission:before prompt/evidence/G3/G4/Ready/merge/close/next verify head,child/PR/parent+Lock+authority+checks+reviews/threads/findings;head move invalidates evidence;missing/stale/conflict/unverifiable=>`PARENT_RECONCILIATION_INCOMPLETE`;missing≠green.
+* Structural:rename/remove/move/re-signature identity/contract/schema/path/shape=>repo-wide consumer search;classify consumers;affected tests first;out-of-scope=>escalate.
+* Repair:G4 blocker=>identify invariant,inspect equivalent in-Lock paths,close defect family.Same-lineage corrections share one budget regardless label/head;Max2=>`NON_CONVERGENCE_DECISION_REQUIRED`;no post-budget alias;external failure consumes none.Never weaken trust/security/safety/data/authority/reversibility/Lock.
+* Evidence:later-required non-repo evidence must be reproducible from retained immutable inputs or durably retrievable by consumer;digest alone insufficient.Live rerun≠historical reconstruction.Prove survival before handoff;on consumption verify bytes,digest+repo/Lock/candidate/run.Missing/expired/inaccessible=>`EVIDENCE_NOT_RETRIEVABLE` hold,not repair use.Never widen secret/private retention/disclosure.
+* Holds:provider/check/auth/transport/evidence availability=hold,not defect/PASS;classify before retry.
+* Finality:exact authority/scope+checks+G4 if applicable+mergeable non-draft PR+no hold/blocker+independent verification;verify result.
 ```
 
 ## More About You — Overflow instructions: Owner Preferred Response Style
@@ -66,10 +67,11 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Governance & Closure
-* Parent:one rolling parent owns topology/lifecycle only;execution detail stays in child.Children QUEUED/CURRENT/COMPLETED/RETIRED;parallel CURRENT only explicit;final audit last.Material `POST_SHIP` gets one durable future owner without becoming current scope/parent bloat.
-* Ownership:GitHub assignment=human owner;labels=visibility/state,not mutex;worker swap never transfers ownership.
-* Managed:before material work read Toolkit bootstrap;else reconcile Parent/current Child/PR/native links+chronology+authority.Missing/stale/conflict/unverifiable=>`PARENT_RECONCILIATION_INCOMPLETE`;stop.
-* Workspace:primary repo;fetch/prune;inspect ref/HEAD/divergence/worktrees/conflicts.Never pull/auto-adopt or silent reset/stash/clean/overwrite ambiguous/unrelated work;G4 isolated.
-* Recovery:GitHub durable state>chat/Loop;persist material receipts.Executor=evidence;G4=read-only;Loop=receipts;reconciler=programme state;Web=judgement/finality.
-* Transition:reread state+chronology;bind revisions;preserve unrelated;conflict blocks.After packet reconcile repo/issue/PR/check/review;ignore worker finality;next prompt=fresh User/Web→governance→repo→Lock/task;old prompts=evidence.
+* Parent:rolling parent owns topology/lifecycle;detail stays in child.Children QUEUED/CURRENT/COMPLETED/RETIRED;parallel CURRENT explicit;final audit last.Material `POST_SHIP` gets one future owner.
+* Ownership:GitHub assignment=owner;labels=state,not mutex;worker swap≠ownership transfer.
+* Managed:before material work read bootstrap;else reconcile Parent/Child/PR/native links+chronology+authority.Missing/stale/conflict=>`PARENT_RECONCILIATION_INCOMPLETE`;stop.
+* Workspace:inspect HEAD/worktrees/conflicts.Never auto-adopt/reset/stash/clean/overwrite unrelated work;G4 isolated.
+* Recovery:GitHub state>chat/Loop;persist receipts.Executor=evidence;G4=read-only;Loop=routine convergence;Web=judgement/finality.Pre-S3 `RETURN_TO_WEB` temporary;Loop must not reproduce it.
+* Nonconvergence:Loop handles routine G3↔G4;after exhaustion diagnose read-only+continue if authorised.Web only for architecture/contract/scope/Lock/waiver/finality choice;send smallest decision packet.
+* Transition:after packet reconcile repo/issue/PR/check/review;bind revisions.If next action authorised,emit prompt same reply;wait only for blocker/User/Web decision.Old prompts=evidence.
 ```
