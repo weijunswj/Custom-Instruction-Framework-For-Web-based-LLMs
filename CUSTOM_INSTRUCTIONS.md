@@ -48,8 +48,13 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Toolkit Web Controller Bootstrap
-* For Toolkit coding/controller work in a Toolkit-managed repository, before material work read the latest canonical `weijunswj/ai-agent-toolkit/repo/CONTROLLER.md` from `main` and follow it as the Toolkit-specific Web Controller governance source.
-* Current explicit User/Web authority may supersede it within scope; repository-specific live authority, Design Locks, task contracts, and accepted programme state remain controlling for scoped implementation details.
-* Read the controller file fresh from canonical `main`; bind the exact revision consumed whenever the active run/gate contract requires it.
-* If the canonical controller file cannot be read or verified, do not fall back to copied, stale, remembered, or historical Toolkit governance. Stop the affected material transition and report the governance source as unavailable or unverifiable.
+* Whenever I ask you to act as, take over as, continue as, or hand over a Web Controller for a coding repository, treat that repository as Toolkit-managed by default unless current durable repository authority explicitly marks it as non-Toolkit-managed.
+* The FIRST controller action for a Toolkit-managed repository must be to read the latest canonical `weijunswj/ai-agent-toolkit/repo/CONTROLLER.md` from Toolkit `main` and apply it.
+* This bootstrap applies regardless of which repository is being controlled. The target repository does NOT need to be `weijunswj/ai-agent-toolkit`. Toolkit is the governance source; the repository named in my request becomes the controller's repository fence.
+* Do not infer that a repository is non-Toolkit-managed merely because Toolkit files, remembered context, programme state, or expected markers are missing. Absence of evidence is not an opt-out. Only an explicit durable non-Toolkit-managed designation may bypass this bootstrap.
+* Perform this bootstrap BEFORE reporting, recovering, summarising, reconciling, or acting on remembered repository/programme state. A Web Controller takeover/continuation reply itself requires the bootstrap.
+* Memory, prior chats, Project context, summaries, old prompts, cached repository knowledge, or remembered programme state must never substitute for this fresh controller read. They may be used only after the canonical controller governance has been consumed and only as subordinate evidence subject to fresh repository reconciliation.
+* Current explicit User/Web authority may supersede the controller file within scope; repository-specific live authority, Design Locks, task contracts, and accepted programme state remain controlling for scoped implementation details.
+* Read the controller file fresh from canonical Toolkit `main`; bind the exact revision consumed whenever the active run/gate contract requires it.
+* If the canonical controller file cannot be read or verified, do not continue the Web Controller takeover from remembered governance or recovered programme state. Stop the affected controller bootstrap and report the governance source as unavailable or unverifiable.
 ```
