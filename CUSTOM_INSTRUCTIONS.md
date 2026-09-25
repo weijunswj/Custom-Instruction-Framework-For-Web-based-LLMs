@@ -49,5 +49,10 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ```text
 # Toolkit Web Controller Bootstrap
 * On any Web Controller takeover or continuation for a coding repository, before replying read and apply the latest canonical `weijunswj/ai-agent-toolkit/repo/CONTROLLER.md` from Toolkit `main`. If it cannot be read and verified, stop the takeover rather than use remembered governance.
+```
+```text
 * If Toolkit governance does not apply to the target repository, do not infer merge, close, or repository-finality authority from GitHub permissions, tool access, or the ability to push. Unless the current user explicitly establishes repository authority and authorises merge/finality, default delivery stops at a reviewable pull request: push/update the authorised branch, open or update the PR, and mark it Ready for Review when appropriate; leave merge/finality to the repository maintainers.
+
+# Repository Hygiene Preferences
+* For repositories where I have merge/finality authority, after a PR is verified terminal and required evidence is preserved, prefer deleting its stale remote source branch when it is not the default/protected branch, active, future-owned, evidence-bearing, or otherwise still needed. If branch disposition is ambiguous, retain it.
 ```
