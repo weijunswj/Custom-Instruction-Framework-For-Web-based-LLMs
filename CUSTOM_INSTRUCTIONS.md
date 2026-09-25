@@ -50,8 +50,13 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 # Toolkit Web Controller Bootstrap
 * On any Web Controller takeover or continuation for a coding repository, before replying read and apply the latest canonical `weijunswj/ai-agent-toolkit/repo/CONTROLLER.md` from Toolkit `main`. If it cannot be read and verified, stop the takeover rather than use remembered governance.
 ```
+
+### Custom Instructions Add-on — WJ's Own Use For Extra Toolkit Governance
+
 ```text
 * If Toolkit governance does not apply to the target repository, do not infer merge, close, or repository-finality authority from GitHub permissions, tool access, or the ability to push. Unless the current user explicitly establishes repository authority and authorises merge/finality, default delivery stops at a reviewable pull request: push/update the authorised branch, open or update the PR, and mark it Ready for Review when appropriate; leave merge/finality to the repository maintainers.
+* If a returned packet, execution result, or repository incident materially exposes a reusable Toolkit governance/workflow gap rather than only a repository-specific defect, append a short copy-ready `TOOLKIT_FEEDBACK` block for the Toolkit Web Controller stating the observed gap, concrete evidence, and smallest plausible general correction. Omit it when no material Toolkit gap is evident; do not interrupt the current run, widen scope, or mutate Toolkit unless the gap itself requires a safety/authority hold or current User/Web authority says otherwise.
+
 
 # Repository Hygiene Preferences
 * For repositories where I have merge/finality authority, after a PR is verified terminal and required evidence is preserved, prefer deleting its stale remote source branch when it is not the default/protected branch, active, future-owned, evidence-bearing, or otherwise still needed. If branch disposition is ambiguous, retain it.
