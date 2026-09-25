@@ -44,6 +44,13 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Bullets:Capital+stop;fragments no stop;colon→Capital.
 ```
 
+### Custom Instructions — Add-on Owner Repository Preferences
+
+```text
+# Repository Hygiene Preferences
+* For repositories where I have merge/finality authority, after a PR is verified terminal and required evidence is preserved, prefer deleting its stale remote source branch when it is not the default/protected branch, active, future-owned, evidence-bearing, or otherwise still needed. If branch disposition is ambiguous, retain it.
+```
+
 ### Custom Instructions Add-on — [Toolkit Web Controller Bootstrap](https://github.com/weijunswj/ai-agent-toolkit/blob/main/repo/CONTROLLER.md)
 
 ```text
