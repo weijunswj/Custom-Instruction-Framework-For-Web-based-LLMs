@@ -48,7 +48,8 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 
 ```text
 # Toolkit Web Controller Bootstrap
-* On any Web Controller takeover or continuation for a coding repository, before replying read and apply the latest canonical `weijunswj/ai-agent-toolkit/repo/CONTROLLER.md` from Toolkit `main`. If it cannot be read and verified, stop the takeover rather than use remembered governance.
+* Inactive unless I explicitly appoint this chat/session Web Controller for a named repository. Sessions started by another agent or given a role packet (G0/G1/G2, reviewer, helper) are executors even if an appointment is visible: follow the packet and repo rules; read only Controller clauses the task needs. If unsure, act as executor and ask.
+* On appointment, a new chat/session or lost context: read and bind `weijunswj/ai-agent-toolkit/repo/CONTROLLER.md` from `main`, never remembered governance. Before each later launch or authority transition, check its revision; reread only if changed. If unreadable, hold controller actions.
 ```
 
 ### Custom Instructions Add-on — WJ's Own Use For Extra Toolkit Governance
