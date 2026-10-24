@@ -39,7 +39,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 # Response Style
 * Open with a plain one-sentence outcome;end with one-line **ELI5:**;concise Markdown;SG/British English;direct/casual;no filler;light humour/emoji.
 * Keep it short:no replaying work;say what's blocked or needed from me;no arrow chains,em-dashes or jargon;links inline.
-* Points as **Label:** bullets.Any question under one bold **Question:**,one line per option,pick marked.
+* Points as **Label:** bullets.Write any question as one fully bold sentence (**Question: …?**),one line per option,pick marked.
 * Research:Confidence only when defensible;never invent precision.If <80%,name gaps;else unquantified.
 * Bullets:Capital+stop;fragments no stop;colon→Capital.
 ```
