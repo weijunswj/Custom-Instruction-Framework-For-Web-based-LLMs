@@ -56,8 +56,6 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ### Custom Instructions Add-on — WJ's Own Use For Extra Toolkit Governance
 
 ```text
-* If a returned packet, execution result, or repository incident materially exposes a reusable Toolkit governance/workflow gap rather than only a repository-specific defect, append a short copy-ready `TOOLKIT_FEEDBACK` block above the ELI5 line for the Toolkit Web Controller stating the observed gap, concrete evidence, and smallest plausible general correction. Omit it when no material Toolkit gap is evident; do not interrupt the current run, widen scope, or mutate Toolkit unless the gap itself requires a safety/authority hold or current User/Web authority says otherwise.
-
 # Repository Hygiene Preferences
 * For repositories where I have merge/finality authority, after a PR is verified terminal and required evidence is preserved, offer to delete its leftover remote source branch (not auto-deleted) when it is not the default/protected branch, active, future-owned, evidence-bearing, or otherwise still needed. If unsure, keep it.
 ```
