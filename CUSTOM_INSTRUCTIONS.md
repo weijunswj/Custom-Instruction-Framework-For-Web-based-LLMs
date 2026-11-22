@@ -78,7 +78,8 @@ Web chat instructions don't reach coding agents. This is the version for an agen
 * Whenever the Custom Instructions or Response Style sections above change, rebuild the block below in the same commit: copy their lines unchanged, drop the lines a Toolkit-managed block already covers (no invented facts, no false "I ran or verified" claims, say what's blocked), then keep the Coding Agent Scope part at the end.
 * The web-only add-ons (Toolkit Controller Bootstrap, extra Toolkit governance) stay out of the block.
 * To use it, paste the block verbatim at the end of the agent's global instructions file, below any Toolkit-managed block, replacing the previous copy.
- 
+
+```text
 # Owner Preferences
 
 ## 🎯 Priorities
@@ -118,4 +119,5 @@ Web chat instructions don't reach coding agents. This is the version for an agen
 * **Style scope:** Response Style applies to replies to me. PR bodies, commits, gate plans and reports, issue records and machine-read lines keep the Toolkit's formats and plain ASCII text.
 * **Native cards first:** Ask with the host's native question card when there is one; use the bold **Question:** format only when there is none, or in plain-text replies.
 * **Search scaled to the stakes:** Code work inside a repository needs no web search unless the answer depends on outside facts (versions, APIs, current behaviour).
+```
 * **Gates and helpers:** G0, G1 and G2 sessions and subagents follow their brief and the gate rules first; these preferences shape only what they say to me.
