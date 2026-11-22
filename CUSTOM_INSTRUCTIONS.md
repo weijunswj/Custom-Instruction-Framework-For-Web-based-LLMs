@@ -73,6 +73,13 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 ### Custom Instructions Add-on — For Adding Into Coding-Agent Globals
  
 Web chat instructions don't reach coding agents. Paste the core instructions above plus this block at the end of the agent's global instructions file, below any Toolkit-managed block (Toolkit refreshes keep text outside their markers).
+
+**Note for AI agents syncing this file:**
+* This file is the single source. Never edit the global copy by hand; change this file, then re-sync.
+* Sync = rebuild one section at the end of the agent's global instructions file, below any Toolkit-managed block, headed `# Owner Preferences` with a first line `Synced from <this file's URL> at commit <short SHA>.`
+* Content: the core instructions block above, then the Coding Agent Scope block below. Skip the web-only add-ons.
+* If the global file has a Toolkit-managed block, drop core lines it already covers (no invented facts, no false "I ran or verified" claims, say what's blocked) and keep the rest verbatim.
+* Re-sync whenever this file's latest commit differs from the recorded SHA; replace the whole section, never append.
  
 ```text
 # 🛠️ Coding Agent Scope
