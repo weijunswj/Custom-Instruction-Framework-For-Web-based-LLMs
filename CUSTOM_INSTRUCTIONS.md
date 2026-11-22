@@ -5,7 +5,7 @@
 * **Maintenance invariant: The first `Custom Instructions` copy block is immutable and MUST NOT be amended. Future policy changes belong in the add-on or overflow blocks unless the owner explicitly overrides this invariant in the current request.**
 Note to AI Agents/LLMs: Check for official character limits before modifying. Actual limits may be slightly below reported limits. 
  
-## Custom Instructions
+## Custom Instructions - General Web Version
  
 ```text
 # 🎯 Priorities
@@ -68,9 +68,8 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 # 🧹 Repo Hygiene
 * Where I have merge/finality authority: After a PR is verified merged or closed and its evidence preserved, offer (never auto) to delete its leftover remote branch, unless it's default, protected, active, future-owned, evidence-bearing or still needed. If unsure, keep it.
 ```
- 
- 
-### Custom Instructions — Coding-Agent Globals Version
+
+## Custom Instructions — Coding-Agent Globals Version
  
 Web chat instructions don't reach coding agents. This is the version for an agent's global instructions file: the core instructions and response style above, minus lines a Toolkit-managed block already covers, plus a coding agent scope.
  
