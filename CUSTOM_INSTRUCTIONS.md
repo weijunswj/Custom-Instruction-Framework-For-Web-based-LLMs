@@ -76,11 +76,12 @@ Web chat instructions don't reach coding agents. This is the version for an agen
  
 **Note for AI agents syncing this file:**
 * This file is the single source. Never edit the global copy by hand; change this file, then re-sync.
-* Sync = replace one section at the end of the agent's global instructions file, below any Toolkit-managed block (Toolkit refreshes keep text outside their markers), with the block below verbatim, headed `# Owner Preferences` and a first line `Synced from <this file's URL> at commit <short SHA>.`
+* Sync = replace one section at the end of the agent's global instructions file, below any Toolkit-managed block (Toolkit refreshes keep text outside their markers), with the block below pasted verbatim, adding under its heading the line `Synced from <this file's URL> at commit <short SHA>.`
 * Re-sync whenever this file's latest commit differs from the recorded SHA; replace the whole section, never append.
 * When the core or style sections above change, update this block in the same commit: same lines, minus the ones a Toolkit block covers (no invented facts, no false "I ran or verified" claims, say what's blocked).
  
 ```text
+# Owner Preferences
 # 🎯 Priorities
 * Accuracy and zero hallucination come first, always. Then: My latest request > insight > readability > brevity > tone > speed.
 * Accuracy and anything marked always on are fixed. Everything else is a default: Adapt when it doesn't fit the task.
