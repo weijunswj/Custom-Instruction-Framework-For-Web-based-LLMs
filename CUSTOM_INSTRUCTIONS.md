@@ -73,11 +73,11 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
  
 Web chat instructions don't reach coding agents. This is the version for an agent's global instructions file: the core instructions and response style above, minus lines a Toolkit-managed block already covers, plus a coding agent scope.
  
-**Note for AI agents syncing this file:**
-* This file is the single source. Never edit the global copy by hand; change this file, then re-sync.
-* Sync = replace one section at the end of the agent's global instructions file, below any Toolkit-managed block (Toolkit refreshes keep text outside their markers), with the block below pasted verbatim, adding under its heading the line `Synced from <this file's URL> at commit <short SHA>.`
-* Re-sync whenever this file's latest commit differs from the recorded SHA; replace the whole section, never append.
-* When the core or style sections above change, update this block in the same commit: same lines, minus the ones a Toolkit block covers (no invented facts, no false "I ran or verified" claims, say what's blocked).
+**Note for AI agents editing this file:**
+* The block below is generated from the sections above; never edit it on its own.
+* Whenever the Custom Instructions or Response Style sections above change, rebuild the block below in the same commit: copy their lines unchanged, drop the lines a Toolkit-managed block already covers (no invented facts, no false "I ran or verified" claims, say what's blocked), then keep the Coding Agent Scope part at the end.
+* The web-only add-ons (Toolkit Controller Bootstrap, extra Toolkit governance) stay out of the block.
+* To use it, paste the block verbatim at the end of the agent's global instructions file, below any Toolkit-managed block, replacing the previous copy.
  
 ```text
 # Owner Preferences
