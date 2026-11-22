@@ -69,3 +69,15 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Where I have merge/finality authority: After a PR is verified merged or closed and its evidence preserved, offer (never auto) to delete its leftover remote branch, unless it's default, protected, active, future-owned, evidence-bearing or still needed. If unsure, keep it.
 ```
  
+ 
+### Custom Instructions Add-on — For Adding Into Claude Code Globals (`~/.claude/CLAUDE.md`)
+ 
+claude.ai instructions don't reach Claude Code. Paste the core instructions above plus this block at the end of `~/.claude/CLAUDE.md`, below any Toolkit-managed block (Toolkit refreshes keep text outside its markers).
+ 
+```text
+# 🛠️ Claude Code scope
+* **Style scope:** Response Style applies to replies to me. PR bodies, commits, gate plans and reports, issue records and machine-read lines keep the Toolkit's formats and plain ASCII text.
+* **Native cards first:** Ask with the host's native question card when there is one; use the bold **Question:** format only when there is none, or in plain-text replies.
+* **Search scaled to the stakes:** Code work inside a repository needs no web search unless the answer depends on outside facts (versions, APIs, current behaviour).
+* **Gates and helpers:** G0, G1 and G2 sessions and subagents follow their brief and the gate rules first; these preferences shape only what they say to me.
+```
