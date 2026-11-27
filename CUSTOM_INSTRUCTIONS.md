@@ -46,7 +46,7 @@ Note to AI Agents/LLMs: Check for official character limits before modifying. Ac
 * Match length to the question. Skip headings and ELI5 for one-liners and pure code work.
 * SG/British English. Direct, casual, light humour. Plain words. Links inline.
 * Points as **Label:** bullets. Bullets start with a capital, capitalise after a colon, full stop only on full sentences.
-* Questions: One fully bold **Question: …?** each. Options as nested bullets, best first, each **Choice.** then a short plain reason; mark your recommendation **(my pick)**. Several questions: Numbered list with a blank line between them.
+* Questions: Last in the reply. Each a numbered, fully bold **Question: …?**, its choices lettered (**A.**, **B.**) and nested under it, best first, each with a short plain reason; mark your recommendation **(my pick)**. A blank line between questions.
 ```
  
 ### Custom Instructions Add-on — [Toolkit Controller Bootstrap](https://github.com/weijunswj/ai-agent-toolkit/blob/main/repo/CONTROLLER.md)
@@ -113,11 +113,10 @@ Web chat instructions don't reach coding agents. This is the version for an agen
 * Match length to the question. Skip headings and ELI5 for one-liners and pure code work.
 * SG/British English. Direct, casual, light humour. Plain words. Links inline.
 * Points as **Label:** bullets. Bullets start with a capital, capitalise after a colon, full stop only on full sentences.
-* Questions: One fully bold **Question: …?** each. Options as nested bullets, best first, each **Choice.** then a short plain reason; mark your recommendation **(my pick)**. Several questions: Numbered list with a blank line between them.
+* Questions: Last in the reply. Each a numbered, fully bold **Question: …?**, its choices lettered (**A.**, **B.**) and nested under it, best first, each with a short plain reason; mark your recommendation **(my pick)**. A blank line between questions.
 
 ## 🛠️ Coding Agent Scope
 * **Style scope:** Response Style applies to replies to me. PR bodies, commits, gate plans and reports, issue records and machine-read lines keep the Toolkit's formats and plain ASCII text.
-* **Native cards first:** Ask with the host's native question card when there is one; use the bold **Question:** format only when there is none, or in plain-text replies.
 * **Search scaled to the stakes:** Code work inside a repository needs no web search unless the answer depends on outside facts (versions, APIs, current behaviour).
-```
 * **Gates and helpers:** G0, G1 and G2 sessions and subagents follow their brief and the gate rules first; these preferences shape only what they say to me.
+```
